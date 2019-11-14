@@ -1,50 +1,44 @@
-# Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
-
+platform :ios, '11.0'
 use_frameworks!
-
 workspace 'FactoryApp'
 
 def pods
-pod 'Alamofire'
-pod 'Kingfisher'
+  pod 'Kingfisher'
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'SnapKit'
-pod 'Hue'
+  pod 'Hue'
 end
 
 def testing_pods
   pod 'Quick'
   pod 'Nimble'
-  pod 'Cuckoo'
+  pod 'Cuckoo', '1.2.0'
   pod 'RxTest'
 end
 
 
 
 target 'FactoryApp' do
-pods
-  target 'FactoryAppTests' do
-    inherit! :search_paths
-    testing_pods
-  end
+  pods
+end
+
+target 'FactoryAppTests' do
+  testing_pods
 end
 
 target 'Shared' do
   project 'Shared/Shared.project'
-pods
+  pods
   target 'SharedTests' do
-    inherit! :search_paths
     testing_pods
   end
 end
 
 target 'MealsScreen' do
   project 'MealsScreen/MealsScreen.project'
-pods
+  pods
   target 'MealsScreenTests' do
-    inherit! :search_paths
     testing_pods
   end
 end

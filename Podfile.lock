@@ -1,8 +1,7 @@
 PODS:
-  - Alamofire (4.9.1)
-  - Cuckoo (1.3.0):
-    - Cuckoo/Swift (= 1.3.0)
-  - Cuckoo/Swift (1.3.0)
+  - Cuckoo (1.2.0):
+    - Cuckoo/Swift (= 1.2.0)
+  - Cuckoo/Swift (1.2.0)
   - Hue (5.0.0)
   - Kingfisher (5.9.0):
     - Kingfisher/Core (= 5.9.0)
@@ -20,8 +19,7 @@ PODS:
   - SnapKit (5.0.1)
 
 DEPENDENCIES:
-  - Alamofire
-  - Cuckoo
+  - Cuckoo (= 1.2.0)
   - Hue
   - Kingfisher
   - Nimble
@@ -33,7 +31,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Alamofire
     - Cuckoo
     - Hue
     - Kingfisher
@@ -46,8 +43,7 @@ SPEC REPOS:
     - SnapKit
 
 SPEC CHECKSUMS:
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
-  Cuckoo: 4045c5a8ce378c919c20c5ff3d6dd11ded0ec699
+  Cuckoo: f5f4e7c308c512cc2dedbdce23f5dc6985cb5173
   Hue: c129cb67be7d093a82bbbc30ce8a96757bf6f37a
   Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
   Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
@@ -58,6 +54,6 @@ SPEC CHECKSUMS:
   RxTest: 0132f952a61da82d5233abedaa559df91e5330e5
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: 54c92c2ab7b959781376d3cc8d600efcaec3b4ab
+PODFILE CHECKSUM: b68445bb25962fa024ac9c4de998c1c9535328fa
 
 COCOAPODS: 1.8.4
