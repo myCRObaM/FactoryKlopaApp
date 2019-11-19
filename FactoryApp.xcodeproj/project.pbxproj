@@ -157,6 +157,7 @@
 				F0F225B7237D2E9D003C1AD2 /* MainView */,
 				F0F225B6237D2E8A003C1AD2 /* Delegate */,
 				F0F22598237D2D43003C1AD2 /* ViewController.swift */,
+				F0F225B8237D2EA7003C1AD2 /* Coordinator */,
 				F0F225C3237D2EDD003C1AD2 /* Resource */,
 				F0F2259D237D2D44003C1AD2 /* Assets.xcassets */,
 				F0F2259F237D2D44003C1AD2 /* LaunchScreen.storyboard */,
@@ -188,7 +189,6 @@
 			children = (
 				F0F225BA237D2EB2003C1AD2 /* ViewModel */,
 				F0F225B9237D2EAE003C1AD2 /* UI */,
-				F0F225B8237D2EA7003C1AD2 /* Coordinator */,
 			);
 			path = MainView;
 			sourceTree = "<group>";

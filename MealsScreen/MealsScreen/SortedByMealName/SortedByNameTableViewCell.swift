@@ -16,6 +16,7 @@ class SortedByNameTableViewCell: UITableViewCell {
         let view = UILabel()
         let customFont = UIFont(name: "Rubik-Regular", size: 14.0)
         view.font = customFont
+        
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -24,6 +25,7 @@ class SortedByNameTableViewCell: UITableViewCell {
         let view = UILabel()
         let customFont = UIFont(name: "Rubik-Regular", size: 14.0)
         view.font = customFont
+        view.textColor = .darkGray
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -32,14 +34,16 @@ class SortedByNameTableViewCell: UITableViewCell {
         let view = UILabel()
         let customFont = UIFont(name: "Rubik-Regular", size: 14.0)
         view.font = customFont
+        view.textColor = .darkGray
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     let ingredientsLabel: UILabel = {
         let view = UILabel()
-        let customFont = UIFont(name: "Rubik-Regular", size: 14.0)
+        let customFont = UIFont(name: "Rubik-Italic", size: 14.0)
         view.font = customFont
+        view.textColor = .darkGray
         view.numberOfLines = 0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -87,7 +91,7 @@ class SortedByNameTableViewCell: UITableViewCell {
             make.leading.equalTo(contentView).offset(8)
         }
         ingredientsLabel.snp.makeConstraints { (make) in
-            make.leading.equalTo(contentView.snp.centerX).offset(-UIScreen.main.bounds.width/9.7)
+            make.leading.equalTo(contentView.snp.centerX).offset(-UIScreen.main.bounds.width/10)
             make.top.equalTo(contentView).offset(5)
             make.bottom.equalTo(contentView).offset(-5)
             make.trailing.equalTo(contentView.snp.centerX).offset(UIScreen.main.bounds.width/3)

@@ -57,6 +57,7 @@ class MainChooserScreenController: UIViewController {
     init(viewModel: MainScreenViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -65,12 +66,14 @@ class MainChooserScreenController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        newScreenDelegate?.openNewOrder()
         setupViewModel()
         // Do any additional setup after loading the view.
     }
     
     //MARK: SetupViewModel
     func setupViewModel() {
+        
         let newOrder = UITapGestureRecognizer(target: self, action: #selector(openNewOrderScreen))
         newOrderButton.addGestureRecognizer(newOrder)
         

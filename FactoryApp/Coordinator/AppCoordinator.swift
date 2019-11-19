@@ -9,17 +9,19 @@
 import Foundation
 import Shared
 import UIKit
+import MealsScreen
+
 
 class AppCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var window: UIWindow?
     var navController: UINavigationController
-    var mainCoordinator: MainScreenCoordinator
+    var mainCoordinator: RestorauntsCoordinator
     
     init(window: UIWindow) {
         self.window = window
         self.navController = UINavigationController()
-        self.mainCoordinator = MainScreenCoordinator(presenter: navController)
+        self.mainCoordinator = RestorauntsCoordinator(presenter: navController)
         self.store(coordinator: mainCoordinator)
         navController.setNavigationBarHidden(true, animated: false)
     }

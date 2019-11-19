@@ -37,16 +37,16 @@ class SortedByNameVC: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         view.layer.cornerRadius = 5
-            view.layer.masksToBounds = true
+        view.layer.masksToBounds = true
         return view
     }()
     
     let backButton: UIButton = {
-         let view = UIButton()
-         view.setImage(UIImage(named: "leftArrow"), for: .normal)
-         view.translatesAutoresizingMaskIntoConstraints = false
-         return view
-     }()
+        let view = UIButton()
+        view.setImage(UIImage(named: "leftArrow"), for: .normal)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     let mealNameLabel: UILabel = {
         let view = UILabel()
@@ -124,15 +124,15 @@ class SortedByNameVC: UIViewController {
         }
         
         backgroundImage.snp.makeConstraints { (make) in
-                   make.top.leading.trailing.equalTo(view)
-                   make.height.equalTo(UIScreen.main.bounds.height/4.8)
-               }
+            make.top.leading.trailing.equalTo(view)
+            make.height.equalTo(UIScreen.main.bounds.height/4.8)
+        }
         
         backButton.snp.makeConstraints { (make) in
-                   make.bottom.equalTo(customView.snp.top).offset(-5)
-                   make.leading.equalTo(customView).offset(5)
-                   make.height.width.equalTo(40)
-               }
+            make.bottom.equalTo(customView.snp.top).offset(5)
+            make.leading.equalTo(customView).offset(-5)
+            make.height.width.equalTo(40)
+        }
         
         mealNameLabel.snp.makeConstraints { (make) in
             make.top.equalTo(customView).offset(17)
@@ -157,19 +157,19 @@ class SortedByNameVC: UIViewController {
         }
         
         output.dataReady
-        .observeOn(MainScheduler.instance)
-        .subscribeOn(viewModel.dependencies.scheduler)
-        .subscribe(onNext: { [unowned self] bool in
-            self.setupView()
-            self.setupConstrints()
-        }).disposed(by: disposeBag)
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(viewModel.dependencies.scheduler)
+            .subscribe(onNext: { [unowned self] bool in
+                self.setupView()
+                self.setupConstrints()
+            }).disposed(by: disposeBag)
         
         viewModel.input.getData.onNext(true)
     }
     
     @objc func backButtonPressed(){
         navigationController?.popViewController(animated: false)
-     }
+    }
     //MARK: Header
     func setupHeader() -> UIView{
         let header = UIView()
@@ -189,7 +189,7 @@ class SortedByNameVC: UIViewController {
         restorauntLabel.text = "Lokacija"
         restorauntLabel.font = customFont
         
-        contactLabel.text = "Tel/Mob"
+        contactLabel.text = "Kontakt"
         contactLabel.font = customFont
         
         
@@ -207,12 +207,12 @@ class SortedByNameVC: UIViewController {
         
         restorauntLabel.snp.makeConstraints { (make) in
             make.top.equalTo(header).offset(5)
-            make.leading.equalTo(header).offset(5)
+            make.leading.equalTo(header).offset(8)
         }
         
         contactLabel.snp.makeConstraints { (make) in
             make.top.equalTo(restorauntLabel.snp.bottom).offset(3)
-            make.leading.equalTo(header).offset(5)
+            make.leading.equalTo(header).offset(8)
             make.bottom.equalTo(header).offset(-5)
         }
         
@@ -232,17 +232,18 @@ class SortedByNameVC: UIViewController {
     
 }
 
- 
+
 extension SortedByNameVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.dependencies.meals.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MTC", for: indexPath) as? SortedByNameTableViewCell  else {
-                   fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MTC", for: indexPath) as? SortedByNameTableViewCell  else {
+            fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
         }
         cell.setupCell(name: viewModel.dependencies.meals[indexPath.row])
+        cell.separatorInset = .zero
         return cell
     }    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

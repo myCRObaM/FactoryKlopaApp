@@ -36,16 +36,16 @@ class RestorauntMealTypesScreenController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         view.layer.cornerRadius = 5
-            view.layer.masksToBounds = true
+        view.layer.masksToBounds = true
         return view
     }()
     
     let backButton: UIButton = {
-         let view = UIButton()
-         view.setImage(UIImage(named: "leftArrow"), for: .normal)
-         view.translatesAutoresizingMaskIntoConstraints = false
-         return view
-     }()
+        let view = UIButton()
+        view.setImage(UIImage(named: "leftArrow"), for: .normal)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     let mealNameLabel: UILabel = {
         let view = UILabel()
@@ -95,12 +95,12 @@ class RestorauntMealTypesScreenController: UIViewController {
         }
         
         output.dataReady
-        .observeOn(MainScheduler.instance)
-        .subscribeOn(viewModel.dependencies.scheduler)
-        .subscribe(onNext: { [unowned self] bool in
-            self.setupView()
-            self.setupConstraints()
-            self.setupData()
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(viewModel.dependencies.scheduler)
+            .subscribe(onNext: { [unowned self] bool in
+                self.setupView()
+                self.setupConstraints()
+                self.setupData()
             }).disposed(by: disposeBag)
         
         viewModel.input.getData.onNext(true)
@@ -140,15 +140,15 @@ class RestorauntMealTypesScreenController: UIViewController {
         }
         
         backgroundImage.snp.makeConstraints { (make) in
-                   make.top.leading.trailing.equalTo(view)
-                   make.height.equalTo(UIScreen.main.bounds.height/4.8)
-               }
+            make.top.leading.trailing.equalTo(view)
+            make.height.equalTo(UIScreen.main.bounds.height/4.8)
+        }
         
         backButton.snp.makeConstraints { (make) in
-                   make.bottom.equalTo(customView.snp.top).offset(-5)
-                   make.leading.equalTo(customView).offset(5)
-                   make.height.width.equalTo(40)
-               }
+            make.bottom.equalTo(customView.snp.top).offset(5)
+            make.leading.equalTo(customView).offset(-5)
+            make.height.width.equalTo(40)
+        }
         
         mealNameLabel.snp.makeConstraints { (make) in
             make.top.equalTo(customView).offset(17)
@@ -184,7 +184,7 @@ class RestorauntMealTypesScreenController: UIViewController {
         }
         
         headerView.backgroundColor = .white
-    return headerView
+        return headerView
     }
     
     func setupData(){

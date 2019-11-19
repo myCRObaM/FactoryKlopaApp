@@ -163,8 +163,8 @@ class MealsScreenViewController: UIViewController {
         }
         
         backButton.snp.makeConstraints { (make) in
-            make.bottom.equalTo(customView.snp.top).offset(-5)
-            make.leading.equalTo(customView).offset(5)
+            make.bottom.equalTo(customView.snp.top).offset(5)
+            make.leading.equalTo(customView).offset(-5)
             make.height.width.equalTo(40)
         }
         logoView.snp.makeConstraints { (make) in
@@ -313,21 +313,21 @@ class MealsScreenViewController: UIViewController {
     //MARK: Expension handler
     func expensionHandler(subject: PublishSubject<ExpansionEnum>) -> Disposable {
         subject
-        .observeOn(MainScheduler.instance)
-        .subscribeOn(viewModel.dependencies.scheduler)
-        .subscribe(onNext: { [unowned self] bool in
-            switch bool {
-            case .expand(let indexpath):
-                self.tableView.insertRows(at: indexpath, with: .automatic)
-                self.tableView.reloadSections(IndexSet(arrayLiteral: indexpath[0].section), with: .none)
-                
-            case .colapse(let indexpath):
-                self.tableView.deleteRows(at: indexpath, with: .automatic)
-                self.tableView.reloadSections(IndexSet(arrayLiteral: indexpath[0].section), with: .none)
-                
-            }
-            self.view.updateConstraints()
-        })
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(viewModel.dependencies.scheduler)
+            .subscribe(onNext: { [unowned self] bool in
+                switch bool {
+                case .expand(let indexpath):
+                    self.tableView.insertRows(at: indexpath, with: .automatic)
+                    self.tableView.reloadSections(IndexSet(arrayLiteral: indexpath[0].section), with: .none)
+                    
+                case .colapse(let indexpath):
+                    self.tableView.deleteRows(at: indexpath, with: .automatic)
+                    self.tableView.reloadSections(IndexSet(arrayLiteral: indexpath[0].section), with: .none)
+                    
+                }
+                self.view.updateConstraints()
+            })
         
     }
     
