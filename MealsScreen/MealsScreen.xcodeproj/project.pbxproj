@@ -18,7 +18,6 @@
 		F02CDF552383DAD8007E0E07 /* SortedByMealNameModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF542383DAD8007E0E07 /* SortedByMealNameModelTests.swift */; };
 		F02CDFEA238416C8007E0E07 /* RestorauntDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFE7238416C8007E0E07 /* RestorauntDataRepository.swift */; };
 		F02CDFEB238416C8007E0E07 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFE9238416C8007E0E07 /* DataManager.swift */; };
-		F02CE08723842408007E0E07 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE08623842408007E0E07 /* GradientView.swift */; };
 		F0A3CDD8237D541700498E65 /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A3CDD7237D541700498E65 /* GeneratedMocks.swift */; };
 		F0F22621237D2FEA003C1AD2 /* MealsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F22620237D2FEA003C1AD2 /* MealsScreenTests.swift */; };
 		F0F22623237D2FEA003C1AD2 /* MealsScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F22615237D2FEA003C1AD2 /* MealsScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -58,7 +57,6 @@
 		F02CDF542383DAD8007E0E07 /* SortedByMealNameModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedByMealNameModelTests.swift; sourceTree = "<group>"; };
 		F02CDFE7238416C8007E0E07 /* RestorauntDataRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntDataRepository.swift; sourceTree = "<group>"; };
 		F02CDFE9238416C8007E0E07 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		F02CE08623842408007E0E07 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		F0A3CDD7237D541700498E65 /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		F0F22612237D2FEA003C1AD2 /* MealsScreen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MealsScreen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F22615237D2FEA003C1AD2 /* MealsScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MealsScreen.h; sourceTree = "<group>"; };
@@ -150,7 +148,6 @@
 		F02CDF492383C09F007E0E07 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				F02CE08623842408007E0E07 /* GradientView.swift */,
 				F02CDF4C2383C284007E0E07 /* SortedByMealNameVC.swift */,
 			);
 			path = UI;
@@ -471,7 +468,6 @@
 			files = (
 				F0F22641237D3080003C1AD2 /* RestorauntMealTypesScreenCoordinator.swift in Sources */,
 				F0F22642237D3080003C1AD2 /* RestorauntMealTypesModel.swift in Sources */,
-				F02CE08723842408007E0E07 /* GradientView.swift in Sources */,
 				F0F22658237D30A1003C1AD2 /* ExpansionEnum.swift in Sources */,
 				F0F22640237D3080003C1AD2 /* RestorauntMealTypesScreenController.swift in Sources */,
 				F02CDFEB238416C8007E0E07 /* DataManager.swift in Sources */,

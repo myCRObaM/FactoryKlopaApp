@@ -10,17 +10,17 @@ import Foundation
 import UIKit
 import Hue
 
-class GradientView: UIView {
+public class GradientView: UIView {
     
     var gradient: CAGradientLayer = [UIColor(hex: "#DCDCDC"), UIColor(hex: "#ffffff")].gradient()
     
     
-    override func layoutSublayers(of layer: CALayer) {
+    override public func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
         self.gradient.frame = self.bounds
     }
     
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
     }

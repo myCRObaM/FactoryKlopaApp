@@ -12,7 +12,6 @@
 		F02CE04F2384199C007E0E07 /* RestorauntsSingle.h in Headers */ = {isa = PBXBuildFile; fileRef = F02CE0412384199C007E0E07 /* RestorauntsSingle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F02CE06423841A03007E0E07 /* RestorauntsScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE05A23841A03007E0E07 /* RestorauntsScreenViewController.swift */; };
 		F02CE06523841A03007E0E07 /* RestorauntsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE05C23841A03007E0E07 /* RestorauntsView.swift */; };
-		F02CE06623841A03007E0E07 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE05D23841A03007E0E07 /* GradientView.swift */; };
 		F02CE06723841A03007E0E07 /* AboutUsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE05E23841A03007E0E07 /* AboutUsScreen.swift */; };
 		F02CE06823841A03007E0E07 /* RestorauntsSingleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE06023841A03007E0E07 /* RestorauntsSingleCoordinator.swift */; };
 		F02CE06923841A03007E0E07 /* RestorauntsSingleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE06223841A03007E0E07 /* RestorauntsSingleModel.swift */; };
@@ -50,7 +49,6 @@
 		F02CE04E2384199C007E0E07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F02CE05A23841A03007E0E07 /* RestorauntsScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsScreenViewController.swift; sourceTree = "<group>"; };
 		F02CE05C23841A03007E0E07 /* RestorauntsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsView.swift; sourceTree = "<group>"; };
-		F02CE05D23841A03007E0E07 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		F02CE05E23841A03007E0E07 /* AboutUsScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsScreen.swift; sourceTree = "<group>"; };
 		F02CE06023841A03007E0E07 /* RestorauntsSingleCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsSingleCoordinator.swift; sourceTree = "<group>"; };
 		F02CE06223841A03007E0E07 /* RestorauntsSingleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsSingleModel.swift; sourceTree = "<group>"; };
@@ -176,7 +174,6 @@
 			isa = PBXGroup;
 			children = (
 				F02CE05C23841A03007E0E07 /* RestorauntsView.swift */,
-				F02CE05D23841A03007E0E07 /* GradientView.swift */,
 				F02CE05E23841A03007E0E07 /* AboutUsScreen.swift */,
 			);
 			path = MealsView;
@@ -425,7 +422,6 @@
 				F02CE06423841A03007E0E07 /* RestorauntsScreenViewController.swift in Sources */,
 				F02CE06823841A03007E0E07 /* RestorauntsSingleCoordinator.swift in Sources */,
 				F02CE06923841A03007E0E07 /* RestorauntsSingleModel.swift in Sources */,
-				F02CE06623841A03007E0E07 /* GradientView.swift in Sources */,
 				F02CE07B23841CF5007E0E07 /* RestorauntDataRepository.swift in Sources */,
 				F02CE06A23841A03007E0E07 /* MealsTableViewCell.swift in Sources */,
 			);
