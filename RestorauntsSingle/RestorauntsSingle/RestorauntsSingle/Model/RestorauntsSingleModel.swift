@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import Shared
 
-class MealsScreenModel {
+class RestorauntsSingleModel {
     
     //MARK: Defining structs
     struct Input {
@@ -34,12 +34,12 @@ class MealsScreenModel {
     var output: Output!
     
     //MARK: Init
-    init(dependencies: MealsScreenModel.Dependencies) {
+    init(dependencies: RestorauntsSingleModel.Dependencies) {
         self.dependencies = dependencies
     }
     
     //MARK: Transform
-    func transform(input: MealsScreenModel.Input) -> MealsScreenModel.Output {
+    func transform(input: RestorauntsSingleModel.Input) -> RestorauntsSingleModel.Output {
         self.input = input
         var disposables = [Disposable]()
         

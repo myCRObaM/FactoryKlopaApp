@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:RestorauntsSingle/RestorauntsSingle.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:MealsScreen/MealsScreen.xcodeproj">
    </FileRef>
    <FileRef

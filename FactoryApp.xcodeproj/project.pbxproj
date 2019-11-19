@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5CB14337B39D65F158C74ADD /* Pods_FactoryApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1345FD006401F85AC91EADC5 /* Pods_FactoryApp.framework */; };
 		6C16A3873586EC177465D901 /* Pods_FactoryAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3470C75761E10BABC5104859 /* Pods_FactoryAppTests.framework */; };
-		F02CDF9E23840CDA007E0E07 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF9D23840CDA007E0E07 /* GradientView.swift */; };
 		F02CDFC9238411E3007E0E07 /* RestorauntsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFC0238411E3007E0E07 /* RestorauntsViewController.swift */; };
 		F02CDFCA238411E3007E0E07 /* RestorauntView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFC2238411E3007E0E07 /* RestorauntView.swift */; };
 		F02CDFCB238411E3007E0E07 /* RestorauntsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFC4238411E3007E0E07 /* RestorauntsCoordinator.swift */; };
@@ -22,6 +21,9 @@
 		F02CDFDF2384163A007E0E07 /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFDE2384163A007E0E07 /* GeneratedMocks.swift */; };
 		F02CDFE423841683007E0E07 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFE123841683007E0E07 /* DataManager.swift */; };
 		F02CDFE523841683007E0E07 /* RestorauntDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFE323841683007E0E07 /* RestorauntDataRepository.swift */; };
+		F02CE08223842347007E0E07 /* RestorauntsSingle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F02CE08123842347007E0E07 /* RestorauntsSingle.framework */; };
+		F02CE08323842355007E0E07 /* RestorauntsSingle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F02CE08123842347007E0E07 /* RestorauntsSingle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F02CE08523842398007E0E07 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE08423842398007E0E07 /* GradientView.swift */; };
 		F0F22595237D2D43003C1AD2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F22594237D2D43003C1AD2 /* AppDelegate.swift */; };
 		F0F22597237D2D43003C1AD2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F22596237D2D43003C1AD2 /* SceneDelegate.swift */; };
 		F0F22599237D2D43003C1AD2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F22598237D2D43003C1AD2 /* ViewController.swift */; };
@@ -58,6 +60,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F02CE08323842355007E0E07 /* RestorauntsSingle.framework in Embed Frameworks */,
 				F0F22677237D3757003C1AD2 /* MealsScreen.framework in Embed Frameworks */,
 				F0F22679237D3757003C1AD2 /* Shared.framework in Embed Frameworks */,
 			);
@@ -73,7 +76,6 @@
 		99478E0950F0AD02B2541868 /* Pods-FactoryApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FactoryApp.debug.xcconfig"; path = "Target Support Files/Pods-FactoryApp/Pods-FactoryApp.debug.xcconfig"; sourceTree = "<group>"; };
 		9D760E9D47DF27A363CF7327 /* Pods-FactoryAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FactoryAppTests.debug.xcconfig"; path = "Target Support Files/Pods-FactoryAppTests/Pods-FactoryAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AC822EAB22C9C3E17EF9FB52 /* Pods-FactoryApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FactoryApp.release.xcconfig"; path = "Target Support Files/Pods-FactoryApp/Pods-FactoryApp.release.xcconfig"; sourceTree = "<group>"; };
-		F02CDF9D23840CDA007E0E07 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GradientView.swift; path = MealsScreen/MealsScreen/MealsScreen/UI/MealsView/GradientView.swift; sourceTree = SOURCE_ROOT; };
 		F02CDFC0238411E3007E0E07 /* RestorauntsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsViewController.swift; sourceTree = "<group>"; };
 		F02CDFC2238411E3007E0E07 /* RestorauntView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntView.swift; sourceTree = "<group>"; };
 		F02CDFC4238411E3007E0E07 /* RestorauntsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsCoordinator.swift; sourceTree = "<group>"; };
@@ -86,6 +88,8 @@
 		F02CDFDE2384163A007E0E07 /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		F02CDFE123841683007E0E07 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		F02CDFE323841683007E0E07 /* RestorauntDataRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntDataRepository.swift; sourceTree = "<group>"; };
+		F02CE08123842347007E0E07 /* RestorauntsSingle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RestorauntsSingle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F02CE08423842398007E0E07 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		F0F22591237D2D43003C1AD2 /* FactoryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FactoryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F22594237D2D43003C1AD2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0F22596237D2D43003C1AD2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F02CE08223842347007E0E07 /* RestorauntsSingle.framework in Frameworks */,
 				F0F22678237D3757003C1AD2 /* Shared.framework in Frameworks */,
 				F0F22676237D3757003C1AD2 /* MealsScreen.framework in Frameworks */,
 				5CB14337B39D65F158C74ADD /* Pods_FactoryApp.framework in Frameworks */,
@@ -143,6 +148,7 @@
 		624392411F2AFF108EBF345D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F02CE08123842347007E0E07 /* RestorauntsSingle.framework */,
 				F0F22674237D3757003C1AD2 /* MealsScreen.framework */,
 				F0F22675237D3757003C1AD2 /* Shared.framework */,
 				1345FD006401F85AC91EADC5 /* Pods_FactoryApp.framework */,
@@ -282,7 +288,7 @@
 		F0F225C3237D2EDD003C1AD2 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				F02CDF9D23840CDA007E0E07 /* GradientView.swift */,
+				F02CE08423842398007E0E07 /* GradientView.swift */,
 				F0F225C4237D2EDD003C1AD2 /* Rubik-Bold.ttf */,
 				F0F225C5237D2EDD003C1AD2 /* Rubik-Medium.ttf */,
 				F0F225C6237D2EDD003C1AD2 /* Rubik-Black.ttf */,
@@ -506,7 +512,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F02CDF9E23840CDA007E0E07 /* GradientView.swift in Sources */,
 				F02CDFE423841683007E0E07 /* DataManager.swift in Sources */,
 				F0F225BC237D2EBC003C1AD2 /* AppCoordinator.swift in Sources */,
 				F02CDFCD238411E3007E0E07 /* CollectionViewCell.swift in Sources */,
@@ -517,6 +522,7 @@
 				F0F22597237D2D43003C1AD2 /* SceneDelegate.swift in Sources */,
 				F02CDFE523841683007E0E07 /* RestorauntDataRepository.swift in Sources */,
 				F02CDFCB238411E3007E0E07 /* RestorauntsCoordinator.swift in Sources */,
+				F02CE08523842398007E0E07 /* GradientView.swift in Sources */,
 				F02CDFCA238411E3007E0E07 /* RestorauntView.swift in Sources */,
 				F02CDFCC238411E3007E0E07 /* RestorauntsTableViewCell.swift in Sources */,
 			);

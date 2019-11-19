@@ -14,19 +14,19 @@ import Nimble
 import Quick
 import Cuckoo
 import Shared
-@testable import MealsScreen
+@testable import RestorauntsSingle
 
-class MealsModelTests: QuickSpec {
+class RestorauntsSingleModelTests: QuickSpec {
     override func spec() {
         describe("setup Data"){
-            var mealsViewModel: MealsScreenModel!
+            var mealsViewModel: RestorauntsSingleModel!
             var testScheduler: TestScheduler!
             var restorauntsData: [Restoraunts]!
             let disposeBag = DisposeBag()
             let mockedRepo = MockDataRepo()
             beforeSuite {
                 Cuckoo.stub(mockedRepo) { mock in
-                    let testBundle = Bundle(for: MealsModelTests.self)
+                    let testBundle = Bundle(for: RestorauntsSingleModelTests.self)
                     guard let path = testBundle.url(forResource: "JSONtests", withExtension: "json") else {return}
                     let dataFromLocation = try! Data(contentsOf: path)
                     let restoraunts = try! JSONDecoder().decode([RestorauntsModel].self, from: dataFromLocation)
@@ -40,9 +40,9 @@ class MealsModelTests: QuickSpec {
                 beforeEach {
                     testScheduler = TestScheduler(initialClock: 0)
                     
-                    mealsViewModel = MealsScreenModel(dependencies: MealsScreenModel.Dependencies(scheduler: testScheduler, meals: restorauntsData[0]))
+                    mealsViewModel = RestorauntsSingleModel(dependencies: RestorauntsSingleModel.Dependencies(scheduler: testScheduler, meals: restorauntsData[0]))
                     
-                    let output = mealsViewModel.transform(input: MealsScreenModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1)))
+                    let output = mealsViewModel.transform(input: RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1)))
                     
                     for disposable in output.disposables{
                         disposable.disposed(by: disposeBag)

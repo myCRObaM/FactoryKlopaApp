@@ -11,6 +11,7 @@ import Shared
 import UIKit
 import RxSwift
 import MealsScreen
+import RestorauntsSingle
 
 public class RestorauntsCoordinator: Coordinator {
     public var childCoordinators: [Coordinator] = []
@@ -40,7 +41,7 @@ extension RestorauntsCoordinator: SelectedRestorauntDelegate, SelectedCategoryDe
              categoryScreen.start()
     }
     public func openMealCategories(screenData: Restoraunts) {
-        let mealList = MealsScreenCoordinator(presenter: presenter, screenData: screenData)
+        let mealList = RestorauntsSingleCoordinator(presenter: presenter, screenData: screenData)
         self.store(coordinator: mealList)
         mealList.start()
     }

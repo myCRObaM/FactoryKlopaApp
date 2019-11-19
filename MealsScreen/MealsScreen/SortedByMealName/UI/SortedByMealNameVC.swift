@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import Shared
 import RxSwift
+import SnapKit
 
 class SortedByNameVC: UIViewController {
     //MARK: ViewElements

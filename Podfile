@@ -42,3 +42,12 @@ target 'MealsScreen' do
     testing_pods
   end
 end
+
+target 'RestorauntsSingle' do
+  project 'RestorauntsSingle/RestorauntsSingle.project'
+  pods
+  target 'RestorauntsSingleTests' do
+    testing_pods
+  end
+end
+

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class MealsCustomView: UIView {
+class RestorauntsView: UIView {
     
     let nameLabel: UILabel = {
         let view = UILabel()

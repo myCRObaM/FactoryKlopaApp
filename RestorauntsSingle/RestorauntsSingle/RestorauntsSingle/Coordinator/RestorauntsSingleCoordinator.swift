@@ -12,18 +12,18 @@ import RxSwift
 import UIKit
 
 
-public class MealsScreenCoordinator: Coordinator {
+public class RestorauntsSingleCoordinator: Coordinator {
     public var childCoordinators: [Coordinator] = []
     let presenter: UINavigationController
     let screenData: Restoraunts
-    let viewController: MealsScreenViewController
+    let viewController: RestorauntsScreenViewController
     
     
     public init(presenter: UINavigationController, screenData: Restoraunts) {
         self.presenter = presenter
         self.screenData = screenData
-        let viewModel = MealsScreenModel(dependencies: MealsScreenModel.Dependencies(scheduler: ConcurrentDispatchQueueScheduler(qos: .background), meals: screenData))
-        self.viewController = MealsScreenViewController(viewModel: viewModel)
+        let viewModel = RestorauntsSingleModel(dependencies: RestorauntsSingleModel.Dependencies(scheduler: ConcurrentDispatchQueueScheduler(qos: .background), meals: screenData))
+        self.viewController = RestorauntsScreenViewController(viewModel: viewModel)
     }
     
     public func start() {

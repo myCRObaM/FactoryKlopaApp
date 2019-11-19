@@ -11,7 +11,7 @@ import UIKit
 import RxSwift
 import SnapKit
 
-class MealsScreenViewController: UIViewController {
+class RestorauntsScreenViewController: UIViewController {
     
     //MARK: ViewElements
     let tableView: UITableView = {
@@ -56,8 +56,8 @@ class MealsScreenViewController: UIViewController {
         return view
     }()
     
-    let customView: MealsCustomView = {
-        let view = MealsCustomView()
+    let customView: RestorauntsView = {
+        let view = RestorauntsView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
@@ -66,7 +66,7 @@ class MealsScreenViewController: UIViewController {
     }()
     
     //MARK: Variables
-    let viewModel: MealsScreenModel
+    let viewModel: RestorauntsSingleModel
     let disposeBag = DisposeBag()
     
     
@@ -78,7 +78,7 @@ class MealsScreenViewController: UIViewController {
     
     //MARK: Init
     
-    init(viewModel: MealsScreenModel) {
+    init(viewModel: RestorauntsSingleModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -88,7 +88,7 @@ class MealsScreenViewController: UIViewController {
     }
     //MARK: ViewModel Setup
     func prepareViewModel(){
-        let input = MealsScreenModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1))
+        let input = RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1))
         
         let output = viewModel.transform(input: input)
         
@@ -364,7 +364,7 @@ class MealsScreenViewController: UIViewController {
 }
 
 //MARK: TableView delegates
-extension MealsScreenViewController: UITableViewDelegate, UITableViewDataSource {
+extension RestorauntsScreenViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return setupHeader(category: viewModel.returnHeaderName(meal: viewModel.dependencies.meals.meals[section]), section)
     }
