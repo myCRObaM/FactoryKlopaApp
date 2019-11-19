@@ -160,7 +160,7 @@ class RestorauntsViewController: UIViewController {
     
     func setupCollectionView(){
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 100, height: 100)
+        layout.itemSize = CGSize(width: 110, height: 70)
         
         collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
         collectionView.delegate = self
@@ -242,12 +242,11 @@ extension RestorauntsViewController: UICollectionViewDelegate, UICollectionViewD
         let data = viewModel.returnCellData(type: viewModel.arrayOfCategorySortedMeals(restorants: viewModel.restoraunts)[indexPath.row])
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIndetifier, for: indexPath) as! CollectionViewCell
         cell.setupCell(name: data.0, url: data.1)
-        cell.backgroundColor = .red
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        didSelectCategory?.openMealCategories(screenData: viewModel.arrayOfCategorySortedMeals(restorants: viewModel.restoraunts)[indexPath.row])
+        didSelectCategory?.openMealType(screenData: viewModel.arrayOfCategorySortedMeals(restorants: viewModel.restoraunts)[indexPath.row])
     }
     
     

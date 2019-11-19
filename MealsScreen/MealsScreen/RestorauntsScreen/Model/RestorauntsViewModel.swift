@@ -73,8 +73,8 @@ class RestorauntsViewModel {
     }
     
     //MARK: return Cell data
-      func returnCellData(type: MealTypes) -> (String, URL) {
-          switch type.type {
+      func returnCellData(type: MealCategory) -> (String, URL) {
+        switch type.type {
           case .additions:
               return ("Dodatci", URL(string: "http://klopa.factory.hr/wp-content/uploads/2019/02/lazanje.jpg")!)
           case .desert:
@@ -106,21 +106,26 @@ class RestorauntsViewModel {
           }
       }
     
-    func arrayOfCategorySortedMeals(restorants: [Restoraunts]) -> [MealTypes] {
-        var array = [MealTypes]()
+    func arrayOfCategorySortedMeals(restorants: [Restoraunts]) -> [MealCategory] {
+        var array = [MealCategory]()
+        var meals = [MealsWithRestoraunt]()
         var didAdd: Bool = false
         for restoratunt in restorants {
             for mealType in restoratunt.meals{
+                for individualMeal in mealType.meals {
+                    meals.append(MealsWithRestoraunt(name: individualMeal.name, priceNormal: individualMeal.priceNormal, priceJumbo: individualMeal.priceJumbo, price: individualMeal.price, ingredients: individualMeal.ingredients, restorauntName: restoratunt.name, mobLabel: restoratunt.mob, telLabel: restoratunt.tel))
+                }
                 for (n, arrayMealType) in array.enumerated() {
                     if mealType.type == arrayMealType.type {
-                        array[n].meals.append(contentsOf: mealType.meals)
+                        array[n].meals.append(contentsOf: meals)
                         didAdd = true
                     }
                 }
                 if !didAdd {
-                    array.append(mealType)
+                    array.append(MealCategory(type: mealType.type, meals: meals))
                 }
                 didAdd = false
+                meals.removeAll()
             }
         }
         return array

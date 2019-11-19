@@ -106,7 +106,6 @@ class MealsScreenModel {
             return dependencies.meals.meals[section].meals.count
         }
     }
-    
     func expandableHandler(section: Int) {
         var indexpath = [IndexPath]()
         
@@ -125,7 +124,6 @@ class MealsScreenModel {
             self.output.expandableHandler.onNext(.colapse(indexpath))
         }
     }
-    
     func isButtonSelected(section: Int) -> Bool {
         return !dependencies.meals.meals[section].isCollapsed
     }

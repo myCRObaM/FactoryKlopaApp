@@ -24,7 +24,7 @@ class RestorauntMealTypesModel  {
     
     struct Dependencies {
         var scheduler: SchedulerType
-        var restoraunts: MealTypes
+        var mealCategory: MealCategory
     }
     
     //MARK: Variables
@@ -55,5 +55,49 @@ class RestorauntMealTypesModel  {
         .subscribe(onNext: { [unowned self] bool in
             self.output.dataReady.onNext(true)
         })
+    }
+    
+    func returnLabelData(meal: MealCategory) -> String {
+        switch meal.type {
+        case .desert:
+            return "Desert"
+        case .additions:
+            return "Dodatci"
+        case .hamburgers:
+            return "Hamburger"
+        case .mealsByOrder:
+            return "Jela po narudzbi"
+        case .grillMeals:
+            return "Jela s rostilja"
+        case .kebab:
+            return "Kebab"
+        case .other:
+            return "Ostalo"
+        case .pizza:
+            return "Pizza"
+        case .side:
+            return "Prilozi"
+        case .fishMeals:
+            return "Riblja jela"
+        case .riceMeals:
+            return "Rizoto"
+        case .salad:
+            return "Salata"
+        case .sendwich:
+            return "Sendvic"
+        case .pasta:
+            return "Tjestenina"
+        }
+    }
+    func didSelectRow(mealWithName: [MealsWithRestoraunt], name: String) -> [MealsWithRestoraunt]{
+        var array = [MealsWithRestoraunt]()
+        
+        for meal in mealWithName {
+            if meal.name == name{
+                array.append(meal)
+            }
+        }
+        return array
+        
     }
 }

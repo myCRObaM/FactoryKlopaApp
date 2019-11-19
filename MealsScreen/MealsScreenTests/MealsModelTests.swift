@@ -32,8 +32,6 @@ class MealsModelTests: QuickSpec {
                     let restoraunts = try! JSONDecoder().decode([RestorauntsModel].self, from: dataFromLocation)
                     let convertToStruct = ConvertToStruct()
                     restorauntsData = convertToStruct.convertToStruct(restoraunts: restoraunts)
-                    
-                    
                 }
             }
             context("initialize viewModel"){

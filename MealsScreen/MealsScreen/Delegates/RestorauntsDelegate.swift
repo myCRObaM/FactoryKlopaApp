@@ -19,6 +19,6 @@ protocol SelectedRestorauntDelegate: class {
 }
 
 protocol SelectedCategoryDelegate: class {
-    func openMealCategories(screenData: MealTypes)
+    func openMealType(screenData: MealCategory)
 }
 

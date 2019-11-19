@@ -38,6 +38,14 @@ class MealsScreenViewController: UIViewController {
         return view
     }()
     
+    let logoView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "Logo")
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleToFill
+        return view
+    }()
+    
     
     
     let backgroundImage: UIImageView = {
@@ -107,6 +115,7 @@ class MealsScreenViewController: UIViewController {
         view.addSubview(tableView)
         view.insertSubview(gradientBackground, belowSubview: backgroundImage)
         view.addSubview(backButton)
+        view.insertSubview(logoView, aboveSubview: backgroundImage)
         
         setupData()
     }
@@ -154,9 +163,15 @@ class MealsScreenViewController: UIViewController {
         }
         
         backButton.snp.makeConstraints { (make) in
-            make.bottom.equalTo(customView.snp.top).offset(-10)
+            make.bottom.equalTo(customView.snp.top).offset(-5)
             make.leading.equalTo(customView).offset(5)
             make.height.width.equalTo(40)
+        }
+        logoView.snp.makeConstraints { (make) in
+            make.leading.equalTo(customView).offset(30)
+            make.bottom.equalTo(customView.snp.top).offset(-30)
+            make.width.equalTo(175)
+            make.height.equalTo(48)
         }
         
     }

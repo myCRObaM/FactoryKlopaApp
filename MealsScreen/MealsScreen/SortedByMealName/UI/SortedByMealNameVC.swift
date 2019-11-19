@@ -1,16 +1,17 @@
 //
-//  RestorauntMealTypesScreenController.swift
-//  NewOrderScreen
+//  SortedByMealNameVC.swift
+//  MealsScreen
 //
-//  Created by Matej Hetzel on 28/10/2019.
+//  Created by Matej Hetzel on 19/11/2019.
 //  Copyright © 2019 Matej Hetzel. All rights reserved.
 //
 
 import Foundation
 import UIKit
+import Shared
 import RxSwift
 
-class RestorauntMealTypesScreenController: UIViewController {
+class SortedByNameVC: UIViewController {
     //MARK: ViewElements
     let tableView: UITableView = {
         let view = UITableView()
@@ -53,7 +54,7 @@ class RestorauntMealTypesScreenController: UIViewController {
         let customFont = UIFont(name: "Rubik-Medium", size: 28.51)
         view.font = customFont
         view.text = ""
-        view.numberOfLines = 1
+        view.numberOfLines = 0
         return view
     }()
     
@@ -65,9 +66,12 @@ class RestorauntMealTypesScreenController: UIViewController {
         return view
     }()
     
+    //MARK: Variables
+    let viewModel: SortedByMealNameModel
+    let disposeBag = DisposeBag()
     
-    //MARK: init
-    init(viewModel: RestorauntMealTypesModel) {
+    //MARK: Init
+    init(viewModel: SortedByMealNameModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -76,37 +80,14 @@ class RestorauntMealTypesScreenController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: Variables
-    let viewModel: RestorauntMealTypesModel
-    let disposeBag = DisposeBag()
-    weak var didSelectMealName: didSelectMealName?
-    
+    //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewModel()
     }
     
-    func setupViewModel(){
-        let input = RestorauntMealTypesModel.Input(getData: ReplaySubject<Bool>.create(bufferSize: 1))
-        let output = viewModel.transform(input: input)
-        
-        for disposable in output.disposables {
-            disposable.disposed(by: disposeBag)
-        }
-        
-        output.dataReady
-        .observeOn(MainScheduler.instance)
-        .subscribeOn(viewModel.dependencies.scheduler)
-        .subscribe(onNext: { [unowned self] bool in
-            self.setupView()
-            self.setupConstraints()
-            self.setupData()
-            }).disposed(by: disposeBag)
-        
-        viewModel.input.getData.onNext(true)
-    }
-    
-    func setupView(){        
+    //MARK: setupView
+    func setupView(){
         view.addSubview(backgroundImage)
         view.insertSubview(customView, aboveSubview: backgroundImage)
         view.insertSubview(tableView, aboveSubview: customView)
@@ -116,13 +97,16 @@ class RestorauntMealTypesScreenController: UIViewController {
         view.insertSubview(mealNameLabel, aboveSubview: customView)
         view.insertSubview(logoView, aboveSubview: backgroundImage)
         
-        tableView.register(MealTypeCell.self, forCellReuseIdentifier: "MTC")
+        tableView.register(SortedByNameTableViewCell.self, forCellReuseIdentifier: "MTC")
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableFooterView = UIView()
+        
+        mealNameLabel.text = viewModel.dependencies.meals[0].name.uppercased()
         backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
     }
     
-    func setupConstraints(){
+    func setupConstrints(){
         customView.snp.makeConstraints { (make) in
             make.leading.trailing.bottom.equalTo(view).inset(10)
             make.top.equalTo(view).inset(UIScreen.main.bounds.height/6)
@@ -153,6 +137,7 @@ class RestorauntMealTypesScreenController: UIViewController {
         mealNameLabel.snp.makeConstraints { (make) in
             make.top.equalTo(customView).offset(17)
             make.leading.equalTo(customView).offset(29)
+            make.trailing.equalTo(customView).offset(-29)
         }
         
         logoView.snp.makeConstraints { (make) in
@@ -162,64 +147,105 @@ class RestorauntMealTypesScreenController: UIViewController {
             make.height.equalTo(48)
         }
     }
-    
-    func setupHeader() -> UIView{
-        let headerView = UIView()
-        let priceAndNumberLabel = UILabel()
-        let customFont = UIFont(name: "Rubik-Bold", size: 14)
+    //MARK: Setup ViewModel
+    func setupViewModel(){
+        let input = SortedByMealNameModel.Input(getData: ReplaySubject<Bool>.create(bufferSize: 1))
+        let output = viewModel.transform(input: input)
         
-        priceAndNumberLabel.translatesAutoresizingMaskIntoConstraints = false
-        priceAndNumberLabel.numberOfLines = 2
-        
-        priceAndNumberLabel.font = customFont
-        
-        headerView.addSubview(priceAndNumberLabel)
-        
-        priceAndNumberLabel.text = "Naziv jela:"
-        
-        priceAndNumberLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(headerView)
-            make.leading.equalTo(headerView).offset(7)
-            make.bottom.equalTo(headerView).offset(-20)
+        for disposable in output.disposables{
+            disposable.disposed(by: disposeBag)
         }
         
-        headerView.backgroundColor = .white
-    return headerView
-    }
-    
-    func setupData(){
-        mealNameLabel.text = viewModel.returnLabelData(meal: viewModel.dependencies.mealCategory)
+        output.dataReady
+        .observeOn(MainScheduler.instance)
+        .subscribeOn(viewModel.dependencies.scheduler)
+        .subscribe(onNext: { [unowned self] bool in
+            self.setupView()
+            self.setupConstrints()
+        }).disposed(by: disposeBag)
+        
+        viewModel.input.getData.onNext(true)
     }
     
     @objc func backButtonPressed(){
         navigationController?.popViewController(animated: false)
+     }
+    //MARK: Header
+    func setupHeader() -> UIView{
+        let header = UIView()
+        let restorauntLabel = UILabel()
+        let contactLabel = UILabel()
+        let ingredientsLabel = UILabel()
+        let priceLabel = UILabel()
+        
+        let customFont = UIFont(name: "Rubik-Bold", size: 14.0)
+        header.backgroundColor = .white
+        
+        restorauntLabel.translatesAutoresizingMaskIntoConstraints = false
+        contactLabel.translatesAutoresizingMaskIntoConstraints = false
+        ingredientsLabel.translatesAutoresizingMaskIntoConstraints = false
+        priceLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        restorauntLabel.text = "Lokacija"
+        restorauntLabel.font = customFont
+        
+        contactLabel.text = "Tel/Mob"
+        contactLabel.font = customFont
+        
+        
+        ingredientsLabel.text = "Sastojci"
+        ingredientsLabel.font = customFont
+        
+        priceLabel.text = "Cijena"
+        priceLabel.font = customFont
+        
+        header.addSubview(restorauntLabel)
+        header.addSubview(contactLabel)
+        header.addSubview(ingredientsLabel)
+        header.addSubview(priceLabel)
+        
+        
+        restorauntLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(header).offset(5)
+            make.leading.equalTo(header).offset(5)
+        }
+        
+        contactLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(restorauntLabel.snp.bottom).offset(3)
+            make.leading.equalTo(header).offset(5)
+            make.bottom.equalTo(header).offset(-5)
+        }
+        
+        ingredientsLabel.snp.makeConstraints { (make) in
+            make.centerX.equalTo(header)
+            make.top.equalTo(header).offset(5)
+        }
+        priceLabel.snp.makeConstraints { (make) in
+            make.trailing.equalTo(header).offset(-5)
+            make.top.equalTo(header).offset(5)
+        }
+        
+        
+        
+        return header
     }
+    
 }
 
-extension RestorauntMealTypesScreenController: UITableViewDelegate, UITableViewDataSource {
+ 
+extension SortedByNameVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.dependencies.mealCategory.meals.count
+        return viewModel.dependencies.meals.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MTC", for: indexPath) as? MealTypeCell  else {
-            fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
+         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MTC", for: indexPath) as? SortedByNameTableViewCell  else {
+                   fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
         }
-        cell.setupCell(meal: viewModel.dependencies.mealCategory.meals[indexPath.row].name)
+        cell.setupCell(name: viewModel.dependencies.meals[indexPath.row])
         return cell
-    }
-    
+    }    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return setupHeader()
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let data = viewModel.dependencies.mealCategory.meals
-        didSelectMealName?.openNewCoordinator(meals: viewModel.didSelectRow(mealWithName: data, name: data[indexPath.row].name))
-    }
-    
 }

@@ -34,6 +34,8 @@ class CollectionViewCell: UICollectionViewCell {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleToFill
+        view.layer.cornerRadius = 5
+        view.layer.masksToBounds = true
         return view
     }()
     
@@ -62,7 +64,6 @@ class CollectionViewCell: UICollectionViewCell {
         
         image.snp.makeConstraints { (make) in
             make.edges.equalTo(contentView)
-            make.height.width.equalTo(100)
         }
     }
     //MARK: Setup Cell

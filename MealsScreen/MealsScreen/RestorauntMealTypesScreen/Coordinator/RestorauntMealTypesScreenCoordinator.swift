@@ -15,18 +15,28 @@ class RestorauntMealTypesScreenCoordinator: Coordinator {
     let presenter: UINavigationController
     var childCoordinators: [Coordinator] = []
     let viewController: RestorauntMealTypesScreenController
-    let restoraunts: MealTypes
+    let restoraunts: MealCategory
     
-    init(restoraunts: MealTypes, presenter: UINavigationController) {
+    init(restoraunts: MealCategory, presenter: UINavigationController) {
         self.restoraunts = restoraunts
         self.presenter = presenter
-        let viewModel = RestorauntMealTypesModel(dependencies: RestorauntMealTypesModel.Dependencies(scheduler: ConcurrentDispatchQueueScheduler(qos: .background), restoraunts: restoraunts))
+        let viewModel = RestorauntMealTypesModel(dependencies: RestorauntMealTypesModel.Dependencies(scheduler: ConcurrentDispatchQueueScheduler(qos: .background), mealCategory: restoraunts))
         self.viewController = RestorauntMealTypesScreenController(viewModel: viewModel)
+        viewController.didSelectMealName = self
     }
     
     func start() {
-        presenter.pushViewController(viewController, animated: true)
+        presenter.pushViewController(viewController, animated: false)
     }
     
+    
+}
+extension RestorauntMealTypesScreenCoordinator: didSelectMealName{
+    
+    func openNewCoordinator(meals: [MealsWithRestoraunt]) {
+        let sortedByCoord = SortedByMealNameCoordinator(presenter: presenter, meals: meals)
+        self.store(coordinator: sortedByCoord)
+        sortedByCoord.start()
+    }
     
 }
