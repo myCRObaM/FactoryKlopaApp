@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		A57DE6AC3E7A4F6D229013AD /* Pods_Shared_SharedTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89AB1941BA0252F983A19A17 /* Pods_Shared_SharedTests.framework */; };
 		A99D377AC66B437B6CCC7E30 /* Pods_Shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB3DA8980F1A3DE74FF0827D /* Pods_Shared.framework */; };
+		F02CDFA023840DAD007E0E07 /* ExpandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF9F23840DAD007E0E07 /* ExpandButton.swift */; };
+		F02CDFA223840DD7007E0E07 /* RestorauntsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFA123840DD7007E0E07 /* RestorauntsDelegate.swift */; };
+		F02CDFA423840E11007E0E07 /* MealNameDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFA323840E11007E0E07 /* MealNameDelegate.swift */; };
 		F0F225E4237D2F57003C1AD2 /* Shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F225DA237D2F57003C1AD2 /* Shared.framework */; };
 		F0F225E9237D2F57003C1AD2 /* SharedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F225E8237D2F57003C1AD2 /* SharedTests.swift */; };
 		F0F225EB237D2F57003C1AD2 /* Shared.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F225DD237D2F57003C1AD2 /* Shared.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -40,6 +43,9 @@
 		BB3DA8980F1A3DE74FF0827D /* Pods_Shared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1822E2CD9AE1E53A2A5C6B8 /* Pods-SharedTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SharedTests.release.xcconfig"; path = "Target Support Files/Pods-SharedTests/Pods-SharedTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED7C7B315F934EB01EC36610 /* Pods-Shared.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared.debug.xcconfig"; path = "Target Support Files/Pods-Shared/Pods-Shared.debug.xcconfig"; sourceTree = "<group>"; };
+		F02CDF9F23840DAD007E0E07 /* ExpandButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandButton.swift; sourceTree = "<group>"; };
+		F02CDFA123840DD7007E0E07 /* RestorauntsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsDelegate.swift; sourceTree = "<group>"; };
+		F02CDFA323840E11007E0E07 /* MealNameDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealNameDelegate.swift; sourceTree = "<group>"; };
 		F0F225DA237D2F57003C1AD2 /* Shared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Shared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F225DD237D2F57003C1AD2 /* Shared.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
 		F0F225DE237D2F57003C1AD2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -162,6 +168,9 @@
 		F0F225FA237D2F7E003C1AD2 /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
+				F02CDF9F23840DAD007E0E07 /* ExpandButton.swift */,
+				F02CDFA323840E11007E0E07 /* MealNameDelegate.swift */,
+				F02CDFA123840DD7007E0E07 /* RestorauntsDelegate.swift */,
 				F0F225FB237D2F7E003C1AD2 /* CoordinatorDelegate.swift */,
 				F0F225FC237D2F7E003C1AD2 /* NavigationDelegate.swift */,
 			);
@@ -363,8 +372,11 @@
 				F0F22604237D2F90003C1AD2 /* DataModel.swift in Sources */,
 				F0F225F9237D2F7A003C1AD2 /* DataStruct.swift in Sources */,
 				F0F22673237D3183003C1AD2 /* ConvertToStruct.swift in Sources */,
+				F02CDFA023840DAD007E0E07 /* ExpandButton.swift in Sources */,
+				F02CDFA223840DD7007E0E07 /* RestorauntsDelegate.swift in Sources */,
 				F0F225F6237D2F74003C1AD2 /* Coordinator.swift in Sources */,
 				F0F22607237D2F9D003C1AD2 /* MealTypeEnum.swift in Sources */,
+				F02CDFA423840E11007E0E07 /* MealNameDelegate.swift in Sources */,
 				F0F225FE237D2F7E003C1AD2 /* NavigationDelegate.swift in Sources */,
 				F0F225FD237D2F7E003C1AD2 /* CoordinatorDelegate.swift in Sources */,
 			);

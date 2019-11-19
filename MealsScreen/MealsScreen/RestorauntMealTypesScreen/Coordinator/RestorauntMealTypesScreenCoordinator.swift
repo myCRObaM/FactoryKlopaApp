@@ -11,13 +11,13 @@ import UIKit
 import Shared
 import RxSwift
 
-class RestorauntMealTypesScreenCoordinator: Coordinator {
+public class RestorauntMealTypesScreenCoordinator: Coordinator {
     let presenter: UINavigationController
-    var childCoordinators: [Coordinator] = []
+    public var childCoordinators: [Coordinator] = []
     let viewController: RestorauntMealTypesScreenController
     let restoraunts: MealCategory
     
-    init(restoraunts: MealCategory, presenter: UINavigationController) {
+    public init(restoraunts: MealCategory, presenter: UINavigationController) {
         self.restoraunts = restoraunts
         self.presenter = presenter
         let viewModel = RestorauntMealTypesModel(dependencies: RestorauntMealTypesModel.Dependencies(scheduler: ConcurrentDispatchQueueScheduler(qos: .background), mealCategory: restoraunts))
@@ -25,15 +25,15 @@ class RestorauntMealTypesScreenCoordinator: Coordinator {
         viewController.didSelectMealName = self
     }
     
-    func start() {
+    public func start() {
         presenter.pushViewController(viewController, animated: false)
     }
     
     
 }
-extension RestorauntMealTypesScreenCoordinator: didSelectMealName{
+extension RestorauntMealTypesScreenCoordinator: didSelectMealName {
     
-    func openNewCoordinator(meals: [MealsWithRestoraunt]) {
+    public func openNewCoordinator(meals: [MealsWithRestoraunt]) {
         let sortedByCoord = SortedByMealNameCoordinator(presenter: presenter, meals: meals)
         self.store(coordinator: sortedByCoord)
         sortedByCoord.start()

@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import Shared
 
-protocol didSelectMealName: class {
+public protocol didSelectMealName: class {
     func openNewCoordinator(meals: [MealsWithRestoraunt])
 }

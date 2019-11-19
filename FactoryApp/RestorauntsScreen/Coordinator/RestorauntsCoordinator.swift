@@ -10,6 +10,7 @@ import Foundation
 import Shared
 import UIKit
 import RxSwift
+import MealsScreen
 
 public class RestorauntsCoordinator: Coordinator {
     public var childCoordinators: [Coordinator] = []
@@ -33,12 +34,12 @@ public class RestorauntsCoordinator: Coordinator {
     
 }
 extension RestorauntsCoordinator: SelectedRestorauntDelegate, SelectedCategoryDelegate {
-    func openMealType(screenData: MealCategory) {
+    public func openMealType(screenData: MealCategory) {
            let categoryScreen = RestorauntMealTypesScreenCoordinator(restoraunts: screenData, presenter: presenter)
              self.store(coordinator: categoryScreen)
              categoryScreen.start()
     }
-    func openMealCategories(screenData: Restoraunts) {
+    public func openMealCategories(screenData: Restoraunts) {
         let mealList = MealsScreenCoordinator(presenter: presenter, screenData: screenData)
         self.store(coordinator: mealList)
         mealList.start()

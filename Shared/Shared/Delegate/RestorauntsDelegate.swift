@@ -7,18 +7,17 @@
 //
 
 import Foundation
-import Shared
 
-protocol SelectedButton: class {
+public protocol SelectedButton: class {
     func openRestorauntScreen()
     func openCategoriesScreen()
 }
 
-protocol SelectedRestorauntDelegate: class {
+public protocol SelectedRestorauntDelegate: class {
     func openMealCategories(screenData: Restoraunts)
 }
 
-protocol SelectedCategoryDelegate: class {
+public protocol SelectedCategoryDelegate: class {
     func openMealType(screenData: MealCategory)
 }
 

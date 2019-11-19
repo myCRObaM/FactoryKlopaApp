@@ -9,7 +9,6 @@
 import Foundation
 import Shared
 import UIKit
-import MealsScreen
 
 
 class AppCoordinator: Coordinator {

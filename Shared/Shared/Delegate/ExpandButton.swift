@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol ExpandButton {
-    func buttonPressed()
+public protocol ExpandButton {
+   func buttonPressed()
 }

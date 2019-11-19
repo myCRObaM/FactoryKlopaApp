@@ -27,7 +27,7 @@ class RestorauntMealTypesModelTests: QuickSpec {
             var restorauntsViewModel: RestorauntMealTypesModel!
             beforeSuite {
                 Cuckoo.stub(mockedRepo) { mock in
-                    let testBundle = Bundle(for: RestorauntsModelTests.self)
+                    let testBundle = Bundle(for: RestorauntMealTypesModelTests.self)
                     guard let path = testBundle.url(forResource: "JSONtests", withExtension: "json") else {return}
                     let dataFromLocation = try! Data(contentsOf: path)
                     let restoraunts = try! JSONDecoder().decode([RestorauntsModel].self, from: dataFromLocation)

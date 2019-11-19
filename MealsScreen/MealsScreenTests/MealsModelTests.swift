@@ -26,7 +26,7 @@ class MealsModelTests: QuickSpec {
             let mockedRepo = MockDataRepo()
             beforeSuite {
                 Cuckoo.stub(mockedRepo) { mock in
-                    let testBundle = Bundle(for: RestorauntsModelTests.self)
+                    let testBundle = Bundle(for: MealsModelTests.self)
                     guard let path = testBundle.url(forResource: "JSONtests", withExtension: "json") else {return}
                     let dataFromLocation = try! Data(contentsOf: path)
                     let restoraunts = try! JSONDecoder().decode([RestorauntsModel].self, from: dataFromLocation)

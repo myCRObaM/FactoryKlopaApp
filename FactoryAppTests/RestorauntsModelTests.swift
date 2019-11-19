@@ -14,7 +14,7 @@ import Nimble
 import Quick
 import Cuckoo
 import Shared
-@testable import MealsScreen
+@testable import FactoryApp
 
 class RestorauntsModelTests: QuickSpec {
     override func spec() {
