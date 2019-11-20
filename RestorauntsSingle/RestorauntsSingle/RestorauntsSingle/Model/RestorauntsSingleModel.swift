@@ -10,36 +10,50 @@ import Foundation
 import RxSwift
 import Shared
 
-class RestorauntsSingleModel {
+public class RestorauntsSingleModel {
     
     //MARK: Defining structs
-    struct Input {
-        var loadScreenData: ReplaySubject<Bool>
+    public struct Input {
+        public var loadScreenData: ReplaySubject<Bool>
+        public init(loadScreenData: ReplaySubject<Bool>){
+            self.loadScreenData = loadScreenData
+        }
     }
     
-    struct Output {
-        var dataReady: ReplaySubject<Bool>
-        var disposables: [Disposable]
-        var expandableHandler: PublishSubject<ExpansionEnum>
+    public struct Output {
+        public var dataReady: ReplaySubject<Bool>
+        public var disposables: [Disposable]
+        public var expandableHandler: PublishSubject<ExpansionEnum>
+        
+        public init(dataReady: ReplaySubject<Bool>, disposables: [Disposable], expandableHandler: PublishSubject<ExpansionEnum>){
+            self.dataReady = dataReady
+            self.disposables = disposables
+            self.expandableHandler = expandableHandler
+        }
     }
     
-    struct Dependencies {
-        var scheduler: SchedulerType
-        var meals: Restoraunts
+    public struct Dependencies {
+        public var scheduler: SchedulerType
+        public var meals: Restoraunts
+        
+        public init(scheduler: SchedulerType, meals: Restoraunts){
+            self.scheduler = scheduler
+            self.meals = meals
+        }
     }
     
     //MARK: Variables
-    var dependencies: Dependencies
-    var input: Input!
-    var output: Output!
+    public var dependencies: Dependencies
+    public var input: Input!
+    public var output: Output!
     
     //MARK: Init
-    init(dependencies: RestorauntsSingleModel.Dependencies) {
+    public init(dependencies: RestorauntsSingleModel.Dependencies) {
         self.dependencies = dependencies
     }
     
     //MARK: Transform
-    func transform(input: RestorauntsSingleModel.Input) -> RestorauntsSingleModel.Output {
+    public func transform(input: RestorauntsSingleModel.Input) -> RestorauntsSingleModel.Output {
         self.input = input
         var disposables = [Disposable]()
         
@@ -49,7 +63,7 @@ class RestorauntsSingleModel {
         return output
     }
     
-    func setupData(subject: ReplaySubject<Bool>) -> Disposable {
+    public func setupData(subject: ReplaySubject<Bool>) -> Disposable {
         return subject
         .observeOn(MainScheduler.instance)
         .subscribeOn(dependencies.scheduler)
@@ -61,7 +75,7 @@ class RestorauntsSingleModel {
             })
     }
     
-    func returnHeaderName(meal: MealTypes) -> String {
+    public func returnHeaderName(meal: MealTypes) -> String {
         switch meal.type {
         case .desert:
             return "Desert"
@@ -94,11 +108,11 @@ class RestorauntsSingleModel {
         }
     }
     
-    func isPizza(category: String) -> Bool {
+    public func isPizza(category: String) -> Bool {
         return category == "Pizza"
     }
     
-    func numberOfRows(section: Int) -> Int{
+    public func numberOfRows(section: Int) -> Int{
         if dependencies.meals.meals[section].isCollapsed {
             return 0
         }
@@ -106,7 +120,7 @@ class RestorauntsSingleModel {
             return dependencies.meals.meals[section].meals.count
         }
     }
-    func expandableHandler(section: Int) {
+    public func expandableHandler(section: Int) {
         var indexpath = [IndexPath]()
         
         for (n, _) in dependencies.meals.meals[section].meals.enumerated(){
@@ -124,7 +138,7 @@ class RestorauntsSingleModel {
             self.output.expandableHandler.onNext(.colapse(indexpath))
         }
     }
-    func isButtonSelected(section: Int) -> Bool {
+    public func isButtonSelected(section: Int) -> Bool {
         return !dependencies.meals.meals[section].isCollapsed
     }
 }

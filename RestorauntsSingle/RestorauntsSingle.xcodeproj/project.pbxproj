@@ -18,11 +18,6 @@
 		F02CE06A23841A03007E0E07 /* MealsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE06323841A03007E0E07 /* MealsTableViewCell.swift */; };
 		F02CE06C23841A0A007E0E07 /* RestorauntsSingleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE06B23841A0A007E0E07 /* RestorauntsSingleTests.swift */; };
 		F02CE06F23841B57007E0E07 /* ExpansionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE06E23841B57007E0E07 /* ExpansionEnum.swift */; };
-		F02CE07323841C6B007E0E07 /* RestorauntsSingleModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE07223841C6B007E0E07 /* RestorauntsSingleModelTests.swift */; };
-		F02CE07623841CD1007E0E07 /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE07523841CD0007E0E07 /* GeneratedMocks.swift */; };
-		F02CE07B23841CF5007E0E07 /* RestorauntDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE07823841CF5007E0E07 /* RestorauntDataRepository.swift */; };
-		F02CE07C23841CF5007E0E07 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE07A23841CF5007E0E07 /* DataManager.swift */; };
-		F02CE07E23841DB6007E0E07 /* JSONtests.json in Resources */ = {isa = PBXBuildFile; fileRef = F02CE07D23841DB6007E0E07 /* JSONtests.json */; };
 		F8DEE7085AD5C479CB884B64 /* Pods_RestorauntsSingle_RestorauntsSingleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5B65B2CF6990024BBFAB35 /* Pods_RestorauntsSingle_RestorauntsSingleTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,11 +50,6 @@
 		F02CE06323841A03007E0E07 /* MealsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealsTableViewCell.swift; sourceTree = "<group>"; };
 		F02CE06B23841A0A007E0E07 /* RestorauntsSingleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsSingleTests.swift; sourceTree = "<group>"; };
 		F02CE06E23841B57007E0E07 /* ExpansionEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpansionEnum.swift; sourceTree = "<group>"; };
-		F02CE07223841C6B007E0E07 /* RestorauntsSingleModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsSingleModelTests.swift; sourceTree = "<group>"; };
-		F02CE07523841CD0007E0E07 /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
-		F02CE07823841CF5007E0E07 /* RestorauntDataRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntDataRepository.swift; sourceTree = "<group>"; };
-		F02CE07A23841CF5007E0E07 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		F02CE07D23841DB6007E0E07 /* JSONtests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = JSONtests.json; sourceTree = "<group>"; };
 		FD7367A65611C3A944913F2A /* Pods-RestorauntsSingle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RestorauntsSingle.release.xcconfig"; path = "Target Support Files/Pods-RestorauntsSingle/Pods-RestorauntsSingle.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,9 +129,6 @@
 			isa = PBXGroup;
 			children = (
 				F02CE06B23841A0A007E0E07 /* RestorauntsSingleTests.swift */,
-				F02CE07D23841DB6007E0E07 /* JSONtests.json */,
-				F02CE07523841CD0007E0E07 /* GeneratedMocks.swift */,
-				F02CE07223841C6B007E0E07 /* RestorauntsSingleModelTests.swift */,
 				F02CE04E2384199C007E0E07 /* Info.plist */,
 			);
 			path = RestorauntsSingleTests;
@@ -150,8 +137,6 @@
 		F02CE05823841A03007E0E07 /* RestorauntsSingle */ = {
 			isa = PBXGroup;
 			children = (
-				F02CE07923841CF5007E0E07 /* Manager */,
-				F02CE07723841CF5007E0E07 /* Repository */,
 				F02CE05923841A03007E0E07 /* UI */,
 				F02CE05F23841A03007E0E07 /* Coordinator */,
 				F02CE06D23841B57007E0E07 /* Enum */,
@@ -203,22 +188,6 @@
 			path = Enum;
 			sourceTree = "<group>";
 		};
-		F02CE07723841CF5007E0E07 /* Repository */ = {
-			isa = PBXGroup;
-			children = (
-				F02CE07823841CF5007E0E07 /* RestorauntDataRepository.swift */,
-			);
-			path = Repository;
-			sourceTree = "<group>";
-		};
-		F02CE07923841CF5007E0E07 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				F02CE07A23841CF5007E0E07 /* DataManager.swift */,
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -239,7 +208,6 @@
 			buildPhases = (
 				90B2390E6AF60B050EAAA60E /* [CP] Check Pods Manifest.lock */,
 				F02CE0392384199C007E0E07 /* Headers */,
-				F02CE07423841CAE007E0E07 /* ShellScript */,
 				F02CE03A2384199C007E0E07 /* Sources */,
 				F02CE03B2384199C007E0E07 /* Frameworks */,
 				F02CE03C2384199C007E0E07 /* Resources */,
@@ -322,7 +290,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F02CE07E23841DB6007E0E07 /* JSONtests.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,24 +357,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F02CE07423841CAE007E0E07 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PROJECT_DIR}/RestorauntsSingle/RestorauntsSingle/Repository/RestorauntDataRepository.swift",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Define output file. Change \"${PROJECT_DIR}/${PROJECT_NAME}Tests\" to your test's root source folder, if it's not the default name.\nOUTPUT_FILE=\"${PROJECT_DIR}/${PROJECT_NAME}Tests/GeneratedMocks.swift\"\necho \"Generated Mocks File = ${OUTPUT_FILE}\"\n\n# Define input directory. Change \"${PROJECT_DIR}/${PROJECT_NAME}\" to your project's root source folder, if it's not the default name.\nINPUT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}\"\necho \"Mocks Input Directory = ${INPUT_DIR}\"\n\n# Generate mock files, include as many input files as you'd like to create mocks for.\n\"${PODS_ROOT}/Cuckoo/run\" generate --testable \"${PROJECT_NAME}\" \\\n--output \"${OUTPUT_FILE}\" \n# ... and so forth, the last line should never end with a backslash\n\n# After running once, locate `GeneratedMocks.swift` and drag it into your Xcode test target group.\n\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -416,13 +365,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F02CE06F23841B57007E0E07 /* ExpansionEnum.swift in Sources */,
-				F02CE07C23841CF5007E0E07 /* DataManager.swift in Sources */,
 				F02CE06523841A03007E0E07 /* RestorauntsView.swift in Sources */,
 				F02CE06723841A03007E0E07 /* AboutUsScreen.swift in Sources */,
 				F02CE06423841A03007E0E07 /* RestorauntsScreenViewController.swift in Sources */,
 				F02CE06823841A03007E0E07 /* RestorauntsSingleCoordinator.swift in Sources */,
 				F02CE06923841A03007E0E07 /* RestorauntsSingleModel.swift in Sources */,
-				F02CE07B23841CF5007E0E07 /* RestorauntDataRepository.swift in Sources */,
 				F02CE06A23841A03007E0E07 /* MealsTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -431,8 +378,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F02CE07323841C6B007E0E07 /* RestorauntsSingleModelTests.swift in Sources */,
-				F02CE07623841CD1007E0E07 /* GeneratedMocks.swift in Sources */,
 				F02CE06C23841A0A007E0E07 /* RestorauntsSingleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

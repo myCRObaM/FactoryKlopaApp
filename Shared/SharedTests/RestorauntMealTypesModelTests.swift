@@ -13,8 +13,8 @@ import RxSwift
 import Nimble
 import Quick
 import Cuckoo
-import Shared
-@testable import MealsScreen
+import MealsScreen
+@testable import Shared
 
 class RestorauntMealTypesModelTests: QuickSpec {
     override func spec() {

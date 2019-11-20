@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ExpansionEnum {
+public enum ExpansionEnum {
     case expand([IndexPath])
     case colapse([IndexPath])
 }

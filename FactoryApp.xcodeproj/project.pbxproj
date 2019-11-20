@@ -15,12 +15,8 @@
 		F02CDFCC238411E3007E0E07 /* RestorauntsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFC5238411E3007E0E07 /* RestorauntsTableViewCell.swift */; };
 		F02CDFCD238411E3007E0E07 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFC6238411E3007E0E07 /* CollectionViewCell.swift */; };
 		F02CDFCE238411E3007E0E07 /* RestorauntsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFC8238411E3007E0E07 /* RestorauntsViewModel.swift */; };
-		F02CDFD023841240007E0E07 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = F02CDFCF23841240007E0E07 /* data.json */; };
-		F02CDFD223841448007E0E07 /* RestorauntsModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFD123841448007E0E07 /* RestorauntsModelTests.swift */; };
 		F02CDFD423841461007E0E07 /* JSONtests.json in Resources */ = {isa = PBXBuildFile; fileRef = F02CDFD323841461007E0E07 /* JSONtests.json */; };
 		F02CDFDF2384163A007E0E07 /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFDE2384163A007E0E07 /* GeneratedMocks.swift */; };
-		F02CDFE423841683007E0E07 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFE123841683007E0E07 /* DataManager.swift */; };
-		F02CDFE523841683007E0E07 /* RestorauntDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFE323841683007E0E07 /* RestorauntDataRepository.swift */; };
 		F02CE08223842347007E0E07 /* RestorauntsSingle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F02CE08123842347007E0E07 /* RestorauntsSingle.framework */; };
 		F02CE08323842355007E0E07 /* RestorauntsSingle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F02CE08123842347007E0E07 /* RestorauntsSingle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F02CE08523842398007E0E07 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE08423842398007E0E07 /* GradientView.swift */; };
@@ -82,12 +78,8 @@
 		F02CDFC5238411E3007E0E07 /* RestorauntsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsTableViewCell.swift; sourceTree = "<group>"; };
 		F02CDFC6238411E3007E0E07 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		F02CDFC8238411E3007E0E07 /* RestorauntsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsViewModel.swift; sourceTree = "<group>"; };
-		F02CDFCF23841240007E0E07 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
-		F02CDFD123841448007E0E07 /* RestorauntsModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsModelTests.swift; sourceTree = "<group>"; };
 		F02CDFD323841461007E0E07 /* JSONtests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = JSONtests.json; sourceTree = "<group>"; };
 		F02CDFDE2384163A007E0E07 /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
-		F02CDFE123841683007E0E07 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		F02CDFE323841683007E0E07 /* RestorauntDataRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntDataRepository.swift; sourceTree = "<group>"; };
 		F02CE08123842347007E0E07 /* RestorauntsSingle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RestorauntsSingle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F02CE08423842398007E0E07 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		F0F22591237D2D43003C1AD2 /* FactoryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FactoryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -202,22 +194,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		F02CDFE023841683007E0E07 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				F02CDFE123841683007E0E07 /* DataManager.swift */,
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
-		F02CDFE223841683007E0E07 /* Repository */ = {
-			isa = PBXGroup;
-			children = (
-				F02CDFE323841683007E0E07 /* RestorauntDataRepository.swift */,
-			);
-			path = Repository;
-			sourceTree = "<group>";
-		};
 		F0F22588237D2D43003C1AD2 = {
 			isa = PBXGroup;
 			children = (
@@ -242,14 +218,11 @@
 			isa = PBXGroup;
 			children = (
 				F02CDFBE238411E3007E0E07 /* RestorauntsScreen */,
-				F02CDFE023841683007E0E07 /* Manager */,
-				F02CDFE223841683007E0E07 /* Repository */,
 				F0F225B6237D2E8A003C1AD2 /* Delegate */,
 				F0F22598237D2D43003C1AD2 /* ViewController.swift */,
 				F0F225B8237D2EA7003C1AD2 /* Coordinator */,
 				F0F225C3237D2EDD003C1AD2 /* Resource */,
 				F0F2259D237D2D44003C1AD2 /* Assets.xcassets */,
-				F02CDFCF23841240007E0E07 /* data.json */,
 				F0F2259F237D2D44003C1AD2 /* LaunchScreen.storyboard */,
 				F0F225A2237D2D44003C1AD2 /* Info.plist */,
 			);
@@ -259,7 +232,6 @@
 		F0F225AA237D2D44003C1AD2 /* FactoryAppTests */ = {
 			isa = PBXGroup;
 			children = (
-				F02CDFD123841448007E0E07 /* RestorauntsModelTests.swift */,
 				F02CDFDE2384163A007E0E07 /* GeneratedMocks.swift */,
 				F02CDFD323841461007E0E07 /* JSONtests.json */,
 				F0F225AB237D2D44003C1AD2 /* FactoryAppTests.swift */,
@@ -388,7 +360,6 @@
 			files = (
 				F0F225A1237D2D44003C1AD2 /* LaunchScreen.storyboard in Resources */,
 				F0F225CF237D2EDD003C1AD2 /* Rubik-Regular.ttf in Resources */,
-				F02CDFD023841240007E0E07 /* data.json in Resources */,
 				F0F225CA237D2EDD003C1AD2 /* Rubik-Bold.ttf in Resources */,
 				F0F225CD237D2EDD003C1AD2 /* Rubik-Italic.ttf in Resources */,
 				F0F2259E237D2D44003C1AD2 /* Assets.xcassets in Resources */,
@@ -512,7 +483,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F02CDFE423841683007E0E07 /* DataManager.swift in Sources */,
 				F0F225BC237D2EBC003C1AD2 /* AppCoordinator.swift in Sources */,
 				F02CDFCD238411E3007E0E07 /* CollectionViewCell.swift in Sources */,
 				F02CDFCE238411E3007E0E07 /* RestorauntsViewModel.swift in Sources */,
@@ -520,7 +490,6 @@
 				F02CDFC9238411E3007E0E07 /* RestorauntsViewController.swift in Sources */,
 				F0F22595237D2D43003C1AD2 /* AppDelegate.swift in Sources */,
 				F0F22597237D2D43003C1AD2 /* SceneDelegate.swift in Sources */,
-				F02CDFE523841683007E0E07 /* RestorauntDataRepository.swift in Sources */,
 				F02CDFCB238411E3007E0E07 /* RestorauntsCoordinator.swift in Sources */,
 				F02CE08523842398007E0E07 /* GradientView.swift in Sources */,
 				F02CDFCA238411E3007E0E07 /* RestorauntView.swift in Sources */,
@@ -532,7 +501,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F02CDFD223841448007E0E07 /* RestorauntsModelTests.swift in Sources */,
 				F02CDFDF2384163A007E0E07 /* GeneratedMocks.swift in Sources */,
 				F0F225AC237D2D44003C1AD2 /* FactoryAppTests.swift in Sources */,
 			);

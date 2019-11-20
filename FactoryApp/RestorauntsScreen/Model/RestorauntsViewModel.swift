@@ -10,36 +10,51 @@ import Foundation
 import RxSwift
 import Shared
 
-class RestorauntsViewModel {
+public class RestorauntsViewModel {
     //MARK: Define structs
-    struct Input {
-        var getDataSubject: ReplaySubject<Bool>
+    public struct Input {
+        public var getDataSubject: ReplaySubject<Bool>
+        
+        public init(getDataSubject: ReplaySubject<Bool>){
+            self.getDataSubject = getDataSubject
+        }
     }
     
-    struct Output {
-        var dataIsDoneSubject: ReplaySubject<Bool>
-        var errorSubject: PublishSubject<Bool>
-        var disposables: [Disposable]
+    public struct Output {
+        public var dataIsDoneSubject: ReplaySubject<Bool>
+        public var errorSubject: PublishSubject<Bool>
+        public var disposables: [Disposable]
+        
+        public init(dataIsDoneSubject: ReplaySubject<Bool>, errorSubject: PublishSubject<Bool>, disposables: [Disposable]){
+            self.dataIsDoneSubject = dataIsDoneSubject
+            self.errorSubject = errorSubject
+            self.disposables = disposables
+        }
     }
     
-    struct Dependencies {
-        var scheduler: SchedulerType
-        var repo: DataRepo
+    public struct Dependencies {
+        public var scheduler: SchedulerType
+        public var repo: DataRepo
+        
+        public init(scheduler: SchedulerType, repo: DataRepo){
+            self.scheduler = scheduler
+            self.repo = repo
+        }
     }
     
     //MARK: Variables
-    let dependencies: Dependencies
-    var input: Input!
-    var output: Output!
-    var restoraunts = [Restoraunts]()
+    public let dependencies: Dependencies
+    public var input: Input!
+    public var output: Output!
+    public var restoraunts = [Restoraunts]()
     
     //MARK: Init
-    init(dependencies: Dependencies) {
+    public init(dependencies: Dependencies) {
         self.dependencies = dependencies
     }
     
     //MARK: Transfrom
-    func transform(input: RestorauntsViewModel.Input) -> RestorauntsViewModel.Output {
+    public func transform(input: RestorauntsViewModel.Input) -> RestorauntsViewModel.Output {
         self.input = input
         var disposables = [Disposable]()
         
@@ -50,7 +65,7 @@ class RestorauntsViewModel {
     }
     
     
-    func getData(subject: ReplaySubject<Bool>) -> Disposable {
+    public func getData(subject: ReplaySubject<Bool>) -> Disposable {
          return subject
          .flatMap({ [unowned self] bool -> Observable<[RestorauntsModel]> in
              return self.dependencies.repo.getData()
@@ -67,13 +82,13 @@ class RestorauntsViewModel {
     }
     
     //MARK: Model to Data functions
-    func convertToStruct(restoraunts: [RestorauntsModel]) -> [Restoraunts] {
+    public func convertToStruct(restoraunts: [RestorauntsModel]) -> [Restoraunts] {
         let convertClass = ConvertToStruct()
         return convertClass.convertToStruct(restoraunts: restoraunts)
     }
     
     //MARK: return Cell data
-      func returnCellData(type: MealCategory) -> (String, URL) {
+      public func returnCellData(type: MealCategory) -> (String, URL) {
         switch type.type {
           case .additions:
               return ("Dodatci", URL(string: "http://klopa.factory.hr/wp-content/uploads/2019/02/lazanje.jpg")!)
@@ -106,7 +121,7 @@ class RestorauntsViewModel {
           }
       }
     
-    func arrayOfCategorySortedMeals(restorants: [Restoraunts]) -> [MealCategory] {
+    public func arrayOfCategorySortedMeals(restorants: [Restoraunts]) -> [MealCategory] {
         var array = [MealCategory]()
         var meals = [MealsWithRestoraunt]()
         var didAdd: Bool = false
@@ -117,6 +132,9 @@ class RestorauntsViewModel {
                 }
                 for (n, arrayMealType) in array.enumerated() {
                     if mealType.type == arrayMealType.type {
+                        if mealType.type == .pizza {
+                            meals[0].isPizza = true
+                        }
                         array[n].meals.append(contentsOf: meals)
                         didAdd = true
                     }

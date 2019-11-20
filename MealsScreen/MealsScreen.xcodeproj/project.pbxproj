@@ -9,15 +9,11 @@
 /* Begin PBXBuildFile section */
 		9ABB45ED02903714F6C05C48 /* Pods_MealsScreen_MealsScreenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B28C6BE8B123B6870A8EB0CA /* Pods_MealsScreen_MealsScreenTests.framework */; };
 		F02CDF3F237D5F1C007E0E07 /* JSONtests.json in Resources */ = {isa = PBXBuildFile; fileRef = F02CDF3E237D5F1C007E0E07 /* JSONtests.json */; };
-		F02CDF43237D7B7C007E0E07 /* RestorauntMealTypesModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF42237D7B7C007E0E07 /* RestorauntMealTypesModelTests.swift */; };
 		F02CDF45237D807E007E0E07 /* MealTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF44237D807D007E0E07 /* MealTypeCell.swift */; };
 		F02CDF4B2383C0BD007E0E07 /* SortedByMealNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF4A2383C0BD007E0E07 /* SortedByMealNameModel.swift */; };
 		F02CDF4D2383C284007E0E07 /* SortedByMealNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF4C2383C284007E0E07 /* SortedByMealNameVC.swift */; };
 		F02CDF4F2383C3D2007E0E07 /* SortedByMealNameCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF4E2383C3D2007E0E07 /* SortedByMealNameCoordinator.swift */; };
 		F02CDF532383C955007E0E07 /* SortedByNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF522383C955007E0E07 /* SortedByNameTableViewCell.swift */; };
-		F02CDF552383DAD8007E0E07 /* SortedByMealNameModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF542383DAD8007E0E07 /* SortedByMealNameModelTests.swift */; };
-		F02CDFEA238416C8007E0E07 /* RestorauntDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFE7238416C8007E0E07 /* RestorauntDataRepository.swift */; };
-		F02CDFEB238416C8007E0E07 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFE9238416C8007E0E07 /* DataManager.swift */; };
 		F0A3CDD8237D541700498E65 /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A3CDD7237D541700498E65 /* GeneratedMocks.swift */; };
 		F0F22621237D2FEA003C1AD2 /* MealsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F22620237D2FEA003C1AD2 /* MealsScreenTests.swift */; };
 		F0F22623237D2FEA003C1AD2 /* MealsScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F22615237D2FEA003C1AD2 /* MealsScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -48,15 +44,11 @@
 		C8E3394FDF895FFCF66F7FCA /* Pods-MealsScreenTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MealsScreenTests.debug.xcconfig"; path = "Target Support Files/Pods-MealsScreenTests/Pods-MealsScreenTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D5EC4F0496A70CB2444970CF /* Pods-MealsScreen-MealsScreenTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MealsScreen-MealsScreenTests.release.xcconfig"; path = "Target Support Files/Pods-MealsScreen-MealsScreenTests/Pods-MealsScreen-MealsScreenTests.release.xcconfig"; sourceTree = "<group>"; };
 		F02CDF3E237D5F1C007E0E07 /* JSONtests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = JSONtests.json; sourceTree = "<group>"; };
-		F02CDF42237D7B7C007E0E07 /* RestorauntMealTypesModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorauntMealTypesModelTests.swift; sourceTree = "<group>"; };
 		F02CDF44237D807D007E0E07 /* MealTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealTypeCell.swift; sourceTree = "<group>"; };
 		F02CDF4A2383C0BD007E0E07 /* SortedByMealNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedByMealNameModel.swift; sourceTree = "<group>"; };
 		F02CDF4C2383C284007E0E07 /* SortedByMealNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedByMealNameVC.swift; sourceTree = "<group>"; };
 		F02CDF4E2383C3D2007E0E07 /* SortedByMealNameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedByMealNameCoordinator.swift; sourceTree = "<group>"; };
 		F02CDF522383C955007E0E07 /* SortedByNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedByNameTableViewCell.swift; sourceTree = "<group>"; };
-		F02CDF542383DAD8007E0E07 /* SortedByMealNameModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedByMealNameModelTests.swift; sourceTree = "<group>"; };
-		F02CDFE7238416C8007E0E07 /* RestorauntDataRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntDataRepository.swift; sourceTree = "<group>"; };
-		F02CDFE9238416C8007E0E07 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		F0A3CDD7237D541700498E65 /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		F0F22612237D2FEA003C1AD2 /* MealsScreen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MealsScreen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F22615237D2FEA003C1AD2 /* MealsScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MealsScreen.h; sourceTree = "<group>"; };
@@ -153,22 +145,6 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
-		F02CDFE6238416C8007E0E07 /* Repository */ = {
-			isa = PBXGroup;
-			children = (
-				F02CDFE7238416C8007E0E07 /* RestorauntDataRepository.swift */,
-			);
-			path = Repository;
-			sourceTree = "<group>";
-		};
-		F02CDFE8238416C8007E0E07 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				F02CDFE9238416C8007E0E07 /* DataManager.swift */,
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
 		F0988789237D432500C206C8 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,8 +178,6 @@
 			isa = PBXGroup;
 			children = (
 				F02CDF462383C079007E0E07 /* SortedByMealName */,
-				F02CDFE8238416C8007E0E07 /* Manager */,
-				F02CDFE6238416C8007E0E07 /* Repository */,
 				F0F22656237D30A1003C1AD2 /* Enum */,
 				F0F22639237D3080003C1AD2 /* RestorauntMealTypesScreen */,
 				F0F22615237D2FEA003C1AD2 /* MealsScreen.h */,
@@ -220,8 +194,6 @@
 				F02CDF3E237D5F1C007E0E07 /* JSONtests.json */,
 				F0F22622237D2FEA003C1AD2 /* Info.plist */,
 				F0F22620237D2FEA003C1AD2 /* MealsScreenTests.swift */,
-				F02CDF42237D7B7C007E0E07 /* RestorauntMealTypesModelTests.swift */,
-				F02CDF542383DAD8007E0E07 /* SortedByMealNameModelTests.swift */,
 			);
 			path = MealsScreenTests;
 			sourceTree = "<group>";
@@ -470,12 +442,10 @@
 				F0F22642237D3080003C1AD2 /* RestorauntMealTypesModel.swift in Sources */,
 				F0F22658237D30A1003C1AD2 /* ExpansionEnum.swift in Sources */,
 				F0F22640237D3080003C1AD2 /* RestorauntMealTypesScreenController.swift in Sources */,
-				F02CDFEB238416C8007E0E07 /* DataManager.swift in Sources */,
 				F02CDF4B2383C0BD007E0E07 /* SortedByMealNameModel.swift in Sources */,
 				F02CDF4F2383C3D2007E0E07 /* SortedByMealNameCoordinator.swift in Sources */,
 				F02CDF4D2383C284007E0E07 /* SortedByMealNameVC.swift in Sources */,
 				F02CDF45237D807E007E0E07 /* MealTypeCell.swift in Sources */,
-				F02CDFEA238416C8007E0E07 /* RestorauntDataRepository.swift in Sources */,
 				F02CDF532383C955007E0E07 /* SortedByNameTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -484,8 +454,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F02CDF552383DAD8007E0E07 /* SortedByMealNameModelTests.swift in Sources */,
-				F02CDF43237D7B7C007E0E07 /* RestorauntMealTypesModelTests.swift in Sources */,
 				F0A3CDD8237D541700498E65 /* GeneratedMocks.swift in Sources */,
 				F0F22621237D2FEA003C1AD2 /* MealsScreenTests.swift in Sources */,
 			);

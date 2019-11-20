@@ -11,37 +11,51 @@ import Shared
 import RxSwift
 
 
-class SortedByMealNameModel {
+public class SortedByMealNameModel {
     //MARK: Struct declaration
-    struct Input
+    public struct Input
     {
-        var getData: ReplaySubject<Bool>
+        public var getData: ReplaySubject<Bool>
+        
+        public init(getData: ReplaySubject<Bool>){
+            self.getData = getData
+        }
     }
     
-    struct Output
+    public struct Output
     {
-        var dataReady: ReplaySubject<Bool>
-        var disposables: [Disposable]
+        public var dataReady: ReplaySubject<Bool>
+        public var disposables: [Disposable]
+        
+        public init(dataReady: ReplaySubject<Bool>, disposables: [Disposable]){
+            self.dataReady = dataReady
+            self.disposables = disposables
+        }
     }
     
-    struct Dependencies
+    public struct Dependencies
     {
-        var meals: [MealsWithRestoraunt]
-        var scheduler: SchedulerType
+        public var meals: [MealsWithRestoraunt]
+        public var scheduler: SchedulerType
+        
+        public init(meals: [MealsWithRestoraunt], scheduler: SchedulerType){
+            self.meals = meals
+            self.scheduler = scheduler
+        }
     }
     
     //MARK: Variables
-    let dependencies: Dependencies
-    var input: Input!
-    var output: Output!
+    public let dependencies: Dependencies
+    public var input: Input!
+    public var output: Output!
     
     //MARK: init
-    init(dependencies: SortedByMealNameModel.Dependencies) {
+    public init(dependencies: SortedByMealNameModel.Dependencies) {
         self.dependencies = dependencies
     }
     
     //MARK: Transform
-    func transform(input: SortedByMealNameModel.Input) -> SortedByMealNameModel.Output {
+    public func transform(input: SortedByMealNameModel.Input) -> SortedByMealNameModel.Output {
         self.input = input
         var disposables = [Disposable]()
         
@@ -51,7 +65,7 @@ class SortedByMealNameModel {
         return output
     }
     //MARK: getData
-    func getData(subject: ReplaySubject<Bool>) -> Disposable {
+    public func getData(subject: ReplaySubject<Bool>) -> Disposable {
         return subject
         .observeOn(MainScheduler.instance)
         .subscribeOn(dependencies.scheduler)

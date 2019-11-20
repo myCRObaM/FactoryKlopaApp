@@ -11,34 +11,48 @@ import Shared
 import RxSwift
 
 
-class RestorauntMealTypesModel  {
+public class RestorauntMealTypesModel  {
     //MARK: Define structs
-    struct Input {
-        var getData: ReplaySubject<Bool>
+    public struct Input {
+        public var getData: ReplaySubject<Bool>
+        
+        public init(getData: ReplaySubject<Bool>){
+            self.getData = getData
+        }
     }
     
-    struct Output {
-        var dataReady: ReplaySubject<Bool>
-        var disposables: [Disposable]
+    public struct Output {
+        public var dataReady: ReplaySubject<Bool>
+        public var disposables: [Disposable]
+        
+        public init(dataReady: ReplaySubject<Bool>, disposables: [Disposable]){
+            self.dataReady = dataReady
+            self.disposables = disposables
+        }
     }
     
-    struct Dependencies {
-        var scheduler: SchedulerType
-        var mealCategory: MealCategory
+    public struct Dependencies {
+        public var scheduler: SchedulerType
+        public var mealCategory: MealCategory
+        
+        public init(scheduler: SchedulerType, mealCategory: MealCategory){
+            self.scheduler = scheduler
+            self.mealCategory = mealCategory
+        }
     }
     
     //MARK: Variables
-    let dependencies: Dependencies
-    var input: Input!
-    var output: Output!
+    public let dependencies: Dependencies
+    public var input: Input!
+    public var output: Output!
     
     
-    init(dependencies: Dependencies) {
+    public init(dependencies: Dependencies) {
         self.dependencies = dependencies
     }
     
     //MARK: Transfrom
-    func transform(input: RestorauntMealTypesModel.Input) -> RestorauntMealTypesModel.Output {
+    public func transform(input: RestorauntMealTypesModel.Input) -> RestorauntMealTypesModel.Output {
         self.input = input
         var disposables = [Disposable]()
         
@@ -48,7 +62,7 @@ class RestorauntMealTypesModel  {
         return output
     }
     
-    func prepareData(subject: ReplaySubject<Bool>) -> Disposable {
+    public func prepareData(subject: ReplaySubject<Bool>) -> Disposable {
         return subject
         .observeOn(MainScheduler.instance)
         .subscribeOn(dependencies.scheduler)
@@ -57,7 +71,7 @@ class RestorauntMealTypesModel  {
         })
     }
     
-    func returnLabelData(meal: MealCategory) -> String {
+    public func returnLabelData(meal: MealCategory) -> String {
         switch meal.type {
         case .desert:
             return "Desert"
@@ -89,12 +103,17 @@ class RestorauntMealTypesModel  {
             return "Tjestenina"
         }
     }
-    func didSelectRow(mealWithName: [MealsWithRestoraunt], name: String) -> [MealsWithRestoraunt]{
+    public func didSelectRow(mealWithName: [MealsWithRestoraunt], name: String) -> [MealsWithRestoraunt]{
         var array = [MealsWithRestoraunt]()
         
         for meal in mealWithName {
             if meal.name == name{
-                array.append(meal)
+                if mealWithName[0].isPizza == true {
+                    array.append(MealsWithRestoraunt(name: meal.name, priceNormal: meal.priceNormal, priceJumbo: meal.priceJumbo, price: meal.price, ingredients: meal.ingredients, restorauntName: meal.restorauntName, mobLabel: meal.mobLabel, telLabel: meal.telLabel, isPizza: true))
+                }
+                else {
+                    array.append(MealsWithRestoraunt(name: meal.name, priceNormal: meal.priceNormal, priceJumbo: meal.priceJumbo, price: meal.price, ingredients: meal.ingredients, restorauntName: meal.restorauntName, mobLabel: meal.mobLabel, telLabel: meal.telLabel))
+                }
             }
         }
         return array

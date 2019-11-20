@@ -79,8 +79,9 @@ public struct MealsWithRestoraunt {
     public var restorauntName: String
     public var mobLabel: String?
     public var telLabel: String?
+    public var isPizza: Bool = false
     
-    public init(name: String, priceNormal: String?, priceJumbo: String?, price: String?, ingredients: [Ingredients]? , restorauntName: String, mobLabel: String?, telLabel: String?) {
+    public init(name: String, priceNormal: String?, priceJumbo: String?, price: String?, ingredients: [Ingredients]? , restorauntName: String, mobLabel: String?, telLabel: String?, isPizza: Bool = false) {
         self.name = name
         self.priceNormal = priceNormal
         self.priceJumbo = priceJumbo
@@ -89,5 +90,6 @@ public struct MealsWithRestoraunt {
         self.restorauntName = restorauntName
         self.mobLabel = mobLabel
         self.telLabel = telLabel
+        self.isPizza = isPizza
     }
 }

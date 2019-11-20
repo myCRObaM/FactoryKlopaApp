@@ -8,7 +8,6 @@
 
 import Foundation
 import RxSwift
-import Shared
 
 public class DataManager  {
    public func getData() -> Observable<[RestorauntsModel]> {

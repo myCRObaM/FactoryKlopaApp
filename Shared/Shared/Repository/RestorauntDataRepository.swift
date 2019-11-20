@@ -8,7 +8,6 @@
 
 import Foundation
 import RxSwift
-import Shared
 
 public class DataRepo {
     public init() {

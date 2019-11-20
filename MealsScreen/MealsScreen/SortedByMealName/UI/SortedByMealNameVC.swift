@@ -153,6 +153,10 @@ class SortedByNameVC: UIViewController {
         let input = SortedByMealNameModel.Input(getData: ReplaySubject<Bool>.create(bufferSize: 1))
         let output = viewModel.transform(input: input)
         
+        if viewModel.dependencies.meals[0].isPizza == true {
+            print("PIZZZZZZA")
+        }
+        
         for disposable in output.disposables{
             disposable.disposed(by: disposeBag)
         }
