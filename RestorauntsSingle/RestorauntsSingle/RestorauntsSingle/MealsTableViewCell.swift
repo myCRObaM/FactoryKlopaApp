@@ -68,9 +68,9 @@ class MealsTableViewCell: UITableViewCell {
         contentView.addSubview(basketButton)
     }
     
-    func setupConstraints(){        
+    func setupConstraints(){
         pricesLabel.snp.makeConstraints { (make) in
-            make.trailing.equalTo(contentView).inset(50)
+            make.trailing.equalTo(contentView).inset(UIScreen.main.bounds.width/8.3)
             make.centerY.equalTo(basketButton)
         }
         

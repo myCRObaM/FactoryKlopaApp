@@ -57,6 +57,13 @@ class SortedByNameTableViewCell: UITableViewCell {
            return view
        }()
     
+    let basketButton: UIButton = {
+        let view = UIButton()
+        view.setImage(UIImage(named: "addBasket"), for: .normal)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -74,6 +81,7 @@ class SortedByNameTableViewCell: UITableViewCell {
         contentView.addSubview(mobLabel)
         contentView.addSubview(ingredientsLabel)
         contentView.addSubview(priceLabel)
+        contentView.addSubview(basketButton)
     }
     
     func setupConstraints(){
@@ -94,11 +102,17 @@ class SortedByNameTableViewCell: UITableViewCell {
             make.leading.equalTo(contentView.snp.centerX).offset(-UIScreen.main.bounds.width/10)
             make.top.equalTo(contentView).offset(5)
             make.bottom.equalTo(contentView).offset(-5)
-            make.trailing.equalTo(contentView.snp.centerX).offset(UIScreen.main.bounds.width/3)
+            make.trailing.equalTo(contentView.snp.centerX).offset(UIScreen.main.bounds.width/4)
         }
         priceLabel.snp.makeConstraints { (make) in
+            make.trailing.equalTo(contentView).inset(UIScreen.main.bounds.width/8.3)
+            make.centerY.equalTo(contentView)
+        }
+        
+        basketButton.snp.makeConstraints { (make) in
             make.trailing.equalTo(contentView).offset(-8)
             make.top.equalTo(contentView).offset(5)
+            make.bottom.equalTo(ingredientsLabel)
         }
         
     }
@@ -126,9 +140,16 @@ class SortedByNameTableViewCell: UITableViewCell {
             self.ingredientsLabel.text = ingredients
         }
         
-        priceLabel.text = name.price
+        if name.priceNormal != "" {
+            priceLabel.text = ((name.priceJumbo ?? "") + "  " + (name.priceNormal ?? ""))
+        }
+        else{
+            priceLabel.text = name.price
+        }
         
        
     }
+    
+   
     
 }

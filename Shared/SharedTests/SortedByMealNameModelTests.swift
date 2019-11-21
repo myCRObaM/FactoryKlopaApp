@@ -48,6 +48,13 @@ class SortedByMealNameModelTests: QuickSpec {
                     expect(dataReadySubject.events[0].value.element).toEventually(equal(true))
                     expect(dataReadySubject.events.count).toEventually(equal(1))
                 }
+                it("check isPizza function"){
+                    testScheduler.start()
+                    
+                    expect(sortedByViewModel.isPizza(meal: MealsWithRestoraunt(name: "test1", priceNormal: "", priceJumbo: "", price: "2", ingredients: [], restorauntName: "test1", mobLabel: "", telLabel: "", isPizza: true))).toEventually(equal(true))
+                    
+                    expect(sortedByViewModel.isPizza(meal: MealsWithRestoraunt(name: "test2", priceNormal: "", priceJumbo: "", price: "2", ingredients: [], restorauntName: "test2", mobLabel: "", telLabel: "", isPizza: false))).toEventually(equal(false))
+                }
             }
         }
     }

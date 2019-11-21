@@ -73,4 +73,13 @@ public class SortedByMealNameModel {
             self.output.dataReady.onNext(true)
         })
     }
+    
+    public func isPizza(meal: MealsWithRestoraunt) -> Bool {
+        if meal.isPizza {
+            return true
+        }
+        else {
+            return false
+        }
+    }
 }

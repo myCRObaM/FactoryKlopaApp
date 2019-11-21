@@ -51,3 +51,12 @@ target 'RestorauntsSingle' do
   end
 end
 
+target 'WishList' do
+  project 'WishList/WishList.project'
+  pods
+  target 'WishListTests' do
+    testing_pods
+  end
+end
+
+

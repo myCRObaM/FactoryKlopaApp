@@ -133,14 +133,22 @@ public class RestorauntsViewModel {
                 for (n, arrayMealType) in array.enumerated() {
                     if mealType.type == arrayMealType.type {
                         if mealType.type == .pizza {
-                            meals[0].isPizza = true
+                            for (n, _) in meals.enumerated() {
+                                meals[n].isPizza = true
+                            }
                         }
                         array[n].meals.append(contentsOf: meals)
                         didAdd = true
                     }
                 }
                 if !didAdd {
+                    if mealType.type == .pizza {
+                        for (n, _) in meals.enumerated() {
+                            meals[n].isPizza = true
+                        }
+                    }
                     array.append(MealCategory(type: mealType.type, meals: meals))
+                   
                 }
                 didAdd = false
                 meals.removeAll()

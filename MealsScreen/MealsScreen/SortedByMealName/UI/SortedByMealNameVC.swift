@@ -153,9 +153,6 @@ class SortedByNameVC: UIViewController {
         let input = SortedByMealNameModel.Input(getData: ReplaySubject<Bool>.create(bufferSize: 1))
         let output = viewModel.transform(input: input)
         
-        if viewModel.dependencies.meals[0].isPizza == true {
-            print("PIZZZZZZA")
-        }
         
         for disposable in output.disposables{
             disposable.disposed(by: disposeBag)
@@ -176,64 +173,120 @@ class SortedByNameVC: UIViewController {
         navigationController?.popViewController(animated: false)
     }
     //MARK: Header
+
     func setupHeader() -> UIView{
-        let header = UIView()
-        let restorauntLabel = UILabel()
-        let contactLabel = UILabel()
-        let ingredientsLabel = UILabel()
+        let bothViews = UIView()
+        let views = setupNormalHeader()
+        var pizzaView = UIView()
+        
+        
+        
+        
+        views.backgroundColor = UIColor(red: 255/255.0, green: 184/255.0, blue: 14/255.0, alpha: 1)
+        
+        
+        
+        bothViews.addSubview(views)
+        
+        views.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        views.snp.makeConstraints { (make) in
+            make.top.leading.trailing.equalTo(bothViews)
+        }
+        switch viewModel.isPizza(meal: viewModel.dependencies.meals[0]) {
+        case true:
+                pizzaView = setupPizzaHeader()
+                bothViews.addSubview(pizzaView)
+                pizzaView.translatesAutoresizingMaskIntoConstraints = false
+                pizzaView.backgroundColor = .white
+                pizzaView.snp.makeConstraints { (make) in
+                    make.leading.trailing.bottom.equalTo(bothViews)
+                    make.top.equalTo(views.snp.bottom)
+                    make.height.equalTo(views)
+                }
+        default:
+            views.snp.makeConstraints { (make) in
+                make.bottom.equalTo(bothViews)
+            }
+            break
+        }
+        
+        return bothViews
+    }
+    
+    func setupNormalHeader() -> UIView {
+        let mealLabel = UILabel()
+        mealLabel.numberOfLines = 2
         let priceLabel = UILabel()
-        
-        let customFont = UIFont(name: "Rubik-Bold", size: 14.0)
-        header.backgroundColor = .white
-        
-        restorauntLabel.translatesAutoresizingMaskIntoConstraints = false
-        contactLabel.translatesAutoresizingMaskIntoConstraints = false
-        ingredientsLabel.translatesAutoresizingMaskIntoConstraints = false
-        priceLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        restorauntLabel.text = "Lokacija"
-        restorauntLabel.font = customFont
-        
-        contactLabel.text = "Kontakt"
-        contactLabel.font = customFont
+        let views = UIView()
         
         
-        ingredientsLabel.text = "Sastojci"
-        ingredientsLabel.font = customFont
+        let customFont = UIFont(name: "Rubik-Black", size: 14)
         
-        priceLabel.text = "Cijena"
+        
+        
+        mealLabel.font = customFont
         priceLabel.font = customFont
         
-        header.addSubview(restorauntLabel)
-        header.addSubview(contactLabel)
-        header.addSubview(ingredientsLabel)
-        header.addSubview(priceLabel)
+        views.addSubview(mealLabel)
+        views.addSubview(priceLabel)
         
+        mealLabel.translatesAutoresizingMaskIntoConstraints = false
+        priceLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        restorauntLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(header).offset(5)
-            make.leading.equalTo(header).offset(8)
-        }
+        mealLabel.textColor = .black
+        priceLabel.textColor = .black
         
-        contactLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(restorauntLabel.snp.bottom).offset(3)
-            make.leading.equalTo(header).offset(8)
-            make.bottom.equalTo(header).offset(-5)
-        }
+        mealLabel.text = "Lokacija \n Kontakt"
+        priceLabel.text = "Cijena"
         
-        ingredientsLabel.snp.makeConstraints { (make) in
-            make.centerX.equalTo(header)
-            make.top.equalTo(header).offset(5)
+        mealLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(views).inset(10)
+            make.top.bottom.equalTo(views)
+            make.height.equalTo(40)
         }
         priceLabel.snp.makeConstraints { (make) in
-            make.trailing.equalTo(header).offset(-5)
-            make.top.equalTo(header).offset(5)
+            make.trailing.equalTo(views).offset(-5)
+            make.top.bottom.equalTo(views)
+            make.height.equalTo(40)
         }
         
-        
-        
-        return header
+        return views
     }
+    
+    func setupPizzaHeader() -> UIView{
+        let jnView = UIView()
+        let jnLabel = UILabel()
+        let descriptionLabel = UILabel()
+        descriptionLabel.numberOfLines = 2
+        
+        let customFont = UIFont(name: "Rubik-Bold", size: 12)
+        
+        jnLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        jnLabel.text = "J      N"
+        jnLabel.font = customFont
+        
+        descriptionLabel.text = "*J - Jumbo pizza \n *N - Normalna pizza"
+        descriptionLabel.font = customFont
+        
+        jnView.addSubview(descriptionLabel)
+        jnView.addSubview(jnLabel)
+        
+        jnLabel.snp.makeConstraints { (make) in
+            make.centerY.equalTo(jnView)
+            make.trailing.equalTo(jnView).offset(-50)
+        }
+        
+        descriptionLabel.snp.makeConstraints { (make) in
+            make.centerY.equalTo(jnView)
+            make.leading.equalTo(jnView).offset(10)
+        }
+        
+        return jnView
+    }
+    
     
 }
 
