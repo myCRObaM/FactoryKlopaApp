@@ -86,8 +86,8 @@ class RestorauntsSingleModelTests: QuickSpec {
                     
                     mealsViewModel.dependencies.meals.meals[0].isCollapsed = false
                     
-                    expect(mealsViewModel.isButtonSelected(section: 0)).toEventually(equal(true))
-                    expect(mealsViewModel.isButtonSelected(section: 1)).toEventually(equal(false))
+                    expect(mealsViewModel.isCollapsed(section: 0)).toEventually(equal(true))
+                    expect(mealsViewModel.isCollapsed(section: 1)).toEventually(equal(false))
                 }
             }
         }

@@ -156,7 +156,7 @@
 				F02CDFC3238411E3007E0E07 /* Coordinator */,
 				F02CDFC5238411E3007E0E07 /* RestorauntsTableViewCell.swift */,
 				F02CDFC6238411E3007E0E07 /* CollectionViewCell.swift */,
-				F02CDFC7238411E3007E0E07 /* Model */,
+				F02CDFC7238411E3007E0E07 /* ViewModel */,
 			);
 			path = RestorauntsScreen;
 			sourceTree = "<group>";
@@ -186,12 +186,12 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
-		F02CDFC7238411E3007E0E07 /* Model */ = {
+		F02CDFC7238411E3007E0E07 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				F02CDFC8238411E3007E0E07 /* RestorauntsViewModel.swift */,
 			);
-			path = Model;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		F0F22588237D2D43003C1AD2 = {

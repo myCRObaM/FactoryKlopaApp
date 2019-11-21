@@ -14,7 +14,6 @@
 		F02CDF4D2383C284007E0E07 /* SortedByMealNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF4C2383C284007E0E07 /* SortedByMealNameVC.swift */; };
 		F02CDF4F2383C3D2007E0E07 /* SortedByMealNameCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF4E2383C3D2007E0E07 /* SortedByMealNameCoordinator.swift */; };
 		F02CDF532383C955007E0E07 /* SortedByNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF522383C955007E0E07 /* SortedByNameTableViewCell.swift */; };
-		F0A3CDD8237D541700498E65 /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A3CDD7237D541700498E65 /* GeneratedMocks.swift */; };
 		F0F22621237D2FEA003C1AD2 /* MealsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F22620237D2FEA003C1AD2 /* MealsScreenTests.swift */; };
 		F0F22623237D2FEA003C1AD2 /* MealsScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F22615237D2FEA003C1AD2 /* MealsScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0F22640237D3080003C1AD2 /* RestorauntMealTypesScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F2263B237D3080003C1AD2 /* RestorauntMealTypesScreenController.swift */; };
@@ -49,7 +48,6 @@
 		F02CDF4C2383C284007E0E07 /* SortedByMealNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedByMealNameVC.swift; sourceTree = "<group>"; };
 		F02CDF4E2383C3D2007E0E07 /* SortedByMealNameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedByMealNameCoordinator.swift; sourceTree = "<group>"; };
 		F02CDF522383C955007E0E07 /* SortedByNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedByNameTableViewCell.swift; sourceTree = "<group>"; };
-		F0A3CDD7237D541700498E65 /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		F0F22612237D2FEA003C1AD2 /* MealsScreen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MealsScreen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F22615237D2FEA003C1AD2 /* MealsScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MealsScreen.h; sourceTree = "<group>"; };
 		F0F22616237D2FEA003C1AD2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,18 +113,18 @@
 			children = (
 				F02CDF492383C09F007E0E07 /* UI */,
 				F02CDF482383C09A007E0E07 /* Coordinator */,
-				F02CDF472383C095007E0E07 /* Model */,
+				F02CDF472383C095007E0E07 /* ViewModel */,
 				F02CDF522383C955007E0E07 /* SortedByNameTableViewCell.swift */,
 			);
 			path = SortedByMealName;
 			sourceTree = "<group>";
 		};
-		F02CDF472383C095007E0E07 /* Model */ = {
+		F02CDF472383C095007E0E07 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				F02CDF4A2383C0BD007E0E07 /* SortedByMealNameModel.swift */,
 			);
-			path = Model;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		F02CDF482383C09A007E0E07 /* Coordinator */ = {
@@ -190,7 +188,6 @@
 		F0F2261F237D2FEA003C1AD2 /* MealsScreenTests */ = {
 			isa = PBXGroup;
 			children = (
-				F0A3CDD7237D541700498E65 /* GeneratedMocks.swift */,
 				F02CDF3E237D5F1C007E0E07 /* JSONtests.json */,
 				F0F22622237D2FEA003C1AD2 /* Info.plist */,
 				F0F22620237D2FEA003C1AD2 /* MealsScreenTests.swift */,
@@ -203,7 +200,7 @@
 			children = (
 				F0F2263A237D3080003C1AD2 /* UI */,
 				F0F2263C237D3080003C1AD2 /* Coordinator */,
-				F0F2263E237D3080003C1AD2 /* Model */,
+				F0F2263E237D3080003C1AD2 /* ViewModel */,
 				F02CDF44237D807D007E0E07 /* MealTypeCell.swift */,
 			);
 			path = RestorauntMealTypesScreen;
@@ -225,12 +222,12 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
-		F0F2263E237D3080003C1AD2 /* Model */ = {
+		F0F2263E237D3080003C1AD2 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				F0F2263F237D3080003C1AD2 /* RestorauntMealTypesModel.swift */,
 			);
-			path = Model;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		F0F22656237D30A1003C1AD2 /* Enum */ = {
@@ -454,7 +451,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0A3CDD8237D541700498E65 /* GeneratedMocks.swift in Sources */,
 				F0F22621237D2FEA003C1AD2 /* MealsScreenTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

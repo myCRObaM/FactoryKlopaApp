@@ -200,7 +200,7 @@ class RestorauntsScreenViewController: UIViewController {
         }
         switch viewModel.isPizza(category: category) {
         case true:
-            switch viewModel.isButtonSelected(section: section) {
+            switch viewModel.isCollapsed(section: section) {
             case true:
                 pizzaView = setupPizzaHeader()
                 bothViews.addSubview(pizzaView)
@@ -238,7 +238,7 @@ class RestorauntsScreenViewController: UIViewController {
         
         expandButton.addTarget(self, action: #selector(expandableButtonPressed), for: .touchUpInside)
         expandButton.tag = section
-        expandButton.isSelected = viewModel.isButtonSelected(section: section)
+        expandButton.isSelected = viewModel.isCollapsed(section: section)
         
         let customFont = UIFont(name: "Rubik-Black", size: 14)
         
@@ -350,16 +350,17 @@ class RestorauntsScreenViewController: UIViewController {
         aboutUs.snp.makeConstraints { (make) in
             make.edges.equalTo(tableView)
         }
-        
-        customView.detailsButton.isSelected = true
-        customView.priceButton.isSelected = false
+        setupButtons(selection: viewModel.detailsButtonSelected(bool: true))
     }
     
     @objc func pricesButtonPressed(){
         aboutUs.removeFromSuperview()
-        
-        customView.detailsButton.isSelected = false
-        customView.priceButton.isSelected = true
+        setupButtons(selection: viewModel.detailsButtonSelected(bool: false))
+    }
+    
+    func setupButtons(selection: (Bool, Bool)){
+        customView.detailsButton.isSelected = selection.0
+        customView.priceButton.isSelected = selection.1
     }
     
 }

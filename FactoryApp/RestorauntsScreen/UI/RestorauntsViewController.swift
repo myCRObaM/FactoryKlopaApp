@@ -180,13 +180,11 @@ class RestorauntsViewController: UIViewController {
             break
         }
         
-        customView.restorauntsButton.isSelected = true
-        customView.mealsButton.isSelected = false
+        setupButtons(selection: viewModel.restorauntsButtonIsSelected(bool: true))
     }
     
     @objc func mealsButtonPressed(){
-        customView.restorauntsButton.isSelected = false
-               customView.mealsButton.isSelected = true
+        setupButtons(selection: viewModel.restorauntsButtonIsSelected(bool: false))
         setupCollectionView()
        
         view.insertSubview(whiteView, aboveSubview: tableView)
@@ -201,6 +199,11 @@ class RestorauntsViewController: UIViewController {
             make.leading.equalTo(tableView).offset(10)
             make.trailing.equalTo(tableView).offset(-10)
         }
+    }
+    
+    func setupButtons(selection: (Bool, Bool)){
+        customView.restorauntsButton.isSelected = selection.0
+        customView.mealsButton.isSelected = selection.1
     }
     
 }

@@ -148,4 +148,15 @@ public class RestorauntsViewModel {
         }
         return array
     }
+    
+    func restorauntsButtonIsSelected(bool: Bool) -> (Bool, Bool){
+        var isSelected: Bool = true
+        if bool{
+            isSelected = true
+        }
+        else {
+            isSelected = false
+        }
+        return (isSelected, !isSelected)
+    }
 }

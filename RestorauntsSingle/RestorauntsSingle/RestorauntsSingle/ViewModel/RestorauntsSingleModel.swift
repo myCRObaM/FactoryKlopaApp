@@ -138,7 +138,20 @@ public class RestorauntsSingleModel {
             self.output.expandableHandler.onNext(.colapse(indexpath))
         }
     }
-    public func isButtonSelected(section: Int) -> Bool {
+    public func isCollapsed(section: Int) -> Bool {
         return !dependencies.meals.meals[section].isCollapsed
     }
+    
+    public func detailsButtonSelected(bool: Bool) -> (Bool, Bool){
+        var detailsButtonIsPressed: Bool = true
+        if bool {
+            detailsButtonIsPressed = true
+        }
+        else {
+            detailsButtonIsPressed = false
+        }
+        return (detailsButtonIsPressed, !detailsButtonIsPressed)
+    }
+    
+    
 }

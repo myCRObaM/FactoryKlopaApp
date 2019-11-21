@@ -21,6 +21,7 @@
 		F096042D23852D7C00F19789 /* RestorauntsSingleModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096042A23852D7C00F19789 /* RestorauntsSingleModelTests.swift */; };
 		F096042E23852D7C00F19789 /* RestorauntMealTypesModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096042B23852D7C00F19789 /* RestorauntMealTypesModelTests.swift */; };
 		F096042F23852D7C00F19789 /* SortedByMealNameModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096042C23852D7C00F19789 /* SortedByMealNameModelTests.swift */; };
+		F0960434238669C500F19789 /* RestorauntsModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0960433238669C500F19789 /* RestorauntsModelTest.swift */; };
 		F0F225E9237D2F57003C1AD2 /* SharedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F225E8237D2F57003C1AD2 /* SharedTests.swift */; };
 		F0F225EB237D2F57003C1AD2 /* Shared.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F225DD237D2F57003C1AD2 /* Shared.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0F225F6237D2F74003C1AD2 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F225F5237D2F74003C1AD2 /* Coordinator.swift */; };
@@ -60,10 +61,10 @@
 		F096042123852C9600F19789 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		F096042323852C9600F19789 /* RestorauntDataRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntDataRepository.swift; sourceTree = "<group>"; };
 		F096042623852CA200F19789 /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
-		F096042823852D2200F19789 /* RestorauntsModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsModelTests.swift; sourceTree = "<group>"; };
 		F096042A23852D7C00F19789 /* RestorauntsSingleModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsSingleModelTests.swift; sourceTree = "<group>"; };
 		F096042B23852D7C00F19789 /* RestorauntMealTypesModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntMealTypesModelTests.swift; sourceTree = "<group>"; };
 		F096042C23852D7C00F19789 /* SortedByMealNameModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortedByMealNameModelTests.swift; sourceTree = "<group>"; };
+		F0960433238669C500F19789 /* RestorauntsModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorauntsModelTest.swift; sourceTree = "<group>"; };
 		F0F225DA237D2F57003C1AD2 /* Shared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Shared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F225DD237D2F57003C1AD2 /* Shared.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
 		F0F225DE237D2F57003C1AD2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -192,7 +193,7 @@
 				F096042B23852D7C00F19789 /* RestorauntMealTypesModelTests.swift */,
 				F096042A23852D7C00F19789 /* RestorauntsSingleModelTests.swift */,
 				F096042C23852D7C00F19789 /* SortedByMealNameModelTests.swift */,
-				F096042823852D2200F19789 /* RestorauntsModelTests.swift */,
+				F0960433238669C500F19789 /* RestorauntsModelTest.swift */,
 				F0960415238529C300F19789 /* JSONtests.json */,
 				F0F225EA237D2F57003C1AD2 /* Info.plist */,
 			);
@@ -464,6 +465,7 @@
 			files = (
 				F096042F23852D7C00F19789 /* SortedByMealNameModelTests.swift in Sources */,
 				F096042D23852D7C00F19789 /* RestorauntsSingleModelTests.swift in Sources */,
+				F0960434238669C500F19789 /* RestorauntsModelTest.swift in Sources */,
 				F096042E23852D7C00F19789 /* RestorauntMealTypesModelTests.swift in Sources */,
 				F0F225E9237D2F57003C1AD2 /* SharedTests.swift in Sources */,
 				F096042723852CA200F19789 /* GeneratedMocks.swift in Sources */,

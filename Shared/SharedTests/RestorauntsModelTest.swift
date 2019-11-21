@@ -1,8 +1,8 @@
 //
-//  RestorauntsModelTests.swift
-//  MealsScreenTests
+//  RestorauntsModelTest.swift
+//  SharedTests
 //
-//  Created by Matej Hetzel on 14/11/2019.
+//  Created by Matej Hetzel on 21/11/2019.
 //  Copyright © 2019 Matej Hetzel. All rights reserved.
 //
 

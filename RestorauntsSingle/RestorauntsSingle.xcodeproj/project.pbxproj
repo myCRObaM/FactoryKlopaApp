@@ -140,7 +140,7 @@
 				F02CE05923841A03007E0E07 /* UI */,
 				F02CE05F23841A03007E0E07 /* Coordinator */,
 				F02CE06D23841B57007E0E07 /* Enum */,
-				F02CE06123841A03007E0E07 /* Model */,
+				F02CE06123841A03007E0E07 /* ViewModel */,
 				F02CE06323841A03007E0E07 /* MealsTableViewCell.swift */,
 			);
 			path = RestorauntsSingle;
@@ -172,12 +172,12 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
-		F02CE06123841A03007E0E07 /* Model */ = {
+		F02CE06123841A03007E0E07 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				F02CE06223841A03007E0E07 /* RestorauntsSingleModel.swift */,
 			);
-			path = Model;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		F02CE06D23841B57007E0E07 /* Enum */ = {
