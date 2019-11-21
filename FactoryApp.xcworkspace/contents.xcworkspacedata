@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../../FactoryApp/WishList/WishList.xcodeproj">
+      location = "group:WishList/WishList.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:RestorauntsSingle/RestorauntsSingle.xcodeproj">
