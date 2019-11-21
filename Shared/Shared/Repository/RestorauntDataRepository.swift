@@ -8,13 +8,14 @@
 
 import Foundation
 import RxSwift
+import Shared
 
-public class DataRepo {
+open class DataRepo {
     public init() {
         
     }
-    public func getData() -> Observable<[RestorauntsModel]> {
+    open func getData() -> Observable<[RestorauntsModel]> {
         let dataManager = DataManager()
-        return dataManager.getData()
+        return dataManager.readFromJSON()
     }
 }

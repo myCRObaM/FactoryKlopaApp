@@ -8,9 +8,10 @@
 
 import Foundation
 import RxSwift
+import Shared
 
-public class DataManager  {
-   public func getData() -> Observable<[RestorauntsModel]> {
+open class DataManager  {
+   open func readFromJSON() -> Observable<[RestorauntsModel]> {
         
         return Observable.create{   observable -> Disposable in
             
