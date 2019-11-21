@@ -12,33 +12,25 @@ import RxSwift
 public class WishListViewModel{
     //MARK: Defining structs
     public struct Input {
-        
-        public init(){
-            
-        }
+        var getData: ReplaySubject<Bool>
     }
     
     public struct Output {
-        
-        public init(){
-            
-        }
+        var dataReady: ReplaySubject<Bool>
+        var disposables: [Disposable]
     }
     
     public struct Dependencies {
-        
-        public init(){
-            
-        }
+        var scheduler: SchedulerType
     }
     //MARK: Variables
     let dependencies: Dependencies
-    var input: Input
-    var output: Output
+    var input: Input!
+    var output: Output!
     
      //MARK: init
     public init(dependencies: WishListViewModel.Dependencies){
-        self.dependencies = depencencies
+        self.dependencies = dependencies
     }
     
     //MARK: Transform
@@ -46,5 +38,18 @@ public class WishListViewModel{
         self.input = input
         var disposables = [Disposable]()
         
+        disposables.append(getData(subject: input.getData))
+        
+        self.output = WishListViewModel.Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), disposables: disposables)
+        return output
+    }
+    
+    func getData(subject: ReplaySubject<Bool>) -> Disposable{
+        return subject
+        .observeOn(MainScheduler.instance)
+        .subscribeOn(dependencies.scheduler)
+        .subscribe(onNext: { [unowned self] bool in
+                self.output.dataReady.onNext(true)
+            })
     }
 }

@@ -14,3 +14,7 @@ public protocol NewOrderScreenDelegate: class {
 public protocol HistoryOrderScreenDelegate: class {
     func openHistoryOrder()
 }
+
+public protocol CartButtonPressed: class{
+    func openCart()
+}

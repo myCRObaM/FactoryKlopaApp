@@ -69,7 +69,7 @@ class RestorauntsScreenViewController: UIViewController {
     //MARK: Variables
     let viewModel: RestorauntsSingleModel
     let disposeBag = DisposeBag()
-    
+    weak var basketButtonPress: CartButtonPressed?
     
     //MARK: ViewDidLoad
     override func viewDidLoad() {
@@ -385,6 +385,7 @@ extension RestorauntsScreenViewController: UITableViewDelegate, UITableViewDataS
             fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
         }
         cell.setupCell(meal: viewModel.dependencies.meals.meals[indexPath.section].meals[indexPath.row])
+        cell.basketButton.addTarget(self, action: #selector(basketButtonPressed), for: .touchUpInside)
         cell.backgroundColor = .white
         return cell
     }
@@ -405,6 +406,10 @@ extension RestorauntsScreenViewController: UITableViewDelegate, UITableViewDataS
         }
         
         return footerView
+    }
+    
+    @objc func basketButtonPressed(){
+        basketButtonPress?.openCart()
     }
     
     

@@ -10,6 +10,7 @@ import Foundation
 import Shared
 import RxSwift
 import UIKit
+import WishList
 
 
 public class RestorauntsSingleCoordinator: Coordinator {
@@ -24,11 +25,22 @@ public class RestorauntsSingleCoordinator: Coordinator {
         self.screenData = screenData
         let viewModel = RestorauntsSingleModel(dependencies: RestorauntsSingleModel.Dependencies(scheduler: ConcurrentDispatchQueueScheduler(qos: .background), meals: screenData))
         self.viewController = RestorauntsScreenViewController(viewModel: viewModel)
+        viewController.basketButtonPress = self
     }
     
     public func start() {
         presenter.setNavigationBarHidden(true, animated: true)
         presenter.pushViewController(viewController, animated: false)
+    }
+    
+    
+}
+
+extension RestorauntsSingleCoordinator: CartButtonPressed{
+    public func openCart() {
+        let wishListCoordinator = WishListCoordinator(presenter: presenter)
+        self.store(coordinator: wishListCoordinator)
+        wishListCoordinator.start()
     }
     
     

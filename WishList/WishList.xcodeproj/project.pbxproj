@@ -3,12 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		407A6C6DC31266FCDE0B2DFF /* Pods_WishList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DEDD2A5E77ED978DFEEBEB7 /* Pods_WishList.framework */; };
 		BE62B82ABA3AF4CC66C23698 /* Pods_WishList_WishListTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 186C1464F8BE99C933AF496E /* Pods_WishList_WishListTests.framework */; };
+		F013A3C6238695A800754549 /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F013A3C5238695A800754549 /* WishListViewController.swift */; };
+		F013A3CC23869A4300754549 /* WishListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F013A3CB23869A4300754549 /* WishListCoordinator.swift */; };
 		F0143326238692AD006FFEAF /* WishList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F014331C238692AC006FFEAF /* WishList.framework */; };
 		F014332B238692AD006FFEAF /* WishListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F014332A238692AD006FFEAF /* WishListTests.swift */; };
 		F014332D238692AD006FFEAF /* WishList.h in Headers */ = {isa = PBXBuildFile; fileRef = F014331F238692AC006FFEAF /* WishList.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -32,6 +34,8 @@
 		87D74854F994425CFB15C2C5 /* Pods-WishList-WishListTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WishList-WishListTests.release.xcconfig"; path = "Target Support Files/Pods-WishList-WishListTests/Pods-WishList-WishListTests.release.xcconfig"; sourceTree = "<group>"; };
 		991856F0DBAD9AD54A78EA42 /* Pods-WishList-WishListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WishList-WishListTests.debug.xcconfig"; path = "Target Support Files/Pods-WishList-WishListTests/Pods-WishList-WishListTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E110929B45F86C8B1F17CE1D /* Pods-WishList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WishList.debug.xcconfig"; path = "Target Support Files/Pods-WishList/Pods-WishList.debug.xcconfig"; sourceTree = "<group>"; };
+		F013A3C5238695A800754549 /* WishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
+		F013A3CB23869A4300754549 /* WishListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListCoordinator.swift; sourceTree = "<group>"; };
 		F014331C238692AC006FFEAF /* WishList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WishList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F014331F238692AC006FFEAF /* WishList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WishList.h; sourceTree = "<group>"; };
 		F0143320238692AC006FFEAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -83,6 +87,22 @@
 			path = ../Pods;
 			sourceTree = "<group>";
 		};
+		F013A3C42386959900754549 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F013A3C5238695A800754549 /* WishListViewController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		F013A3CA238698BF00754549 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				F013A3CB23869A4300754549 /* WishListCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		F0143312238692AC006FFEAF = {
 			isa = PBXGroup;
 			children = (
@@ -125,9 +145,9 @@
 		F0143336238692BD006FFEAF /* WishListScreen */ = {
 			isa = PBXGroup;
 			children = (
+				F013A3CA238698BF00754549 /* Coordinator */,
+				F013A3C42386959900754549 /* UI */,
 				F0143337238692BD006FFEAF /* ViewModel */,
-				F0143339238692BD006FFEAF /* UI */,
-				F014333A238692BD006FFEAF /* Coordinator */,
 			);
 			path = WishListScreen;
 			sourceTree = "<group>";
@@ -138,20 +158,6 @@
 				F0143338238692BD006FFEAF /* WishListViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		F0143339238692BD006FFEAF /* UI */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UI;
-			sourceTree = "<group>";
-		};
-		F014333A238692BD006FFEAF /* Coordinator */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -330,7 +336,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F013A3CC23869A4300754549 /* WishListCoordinator.swift in Sources */,
 				F014333B238692BD006FFEAF /* WishListViewModel.swift in Sources */,
+				F013A3C6238695A800754549 /* WishListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

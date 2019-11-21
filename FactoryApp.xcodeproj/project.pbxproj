@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5CB14337B39D65F158C74ADD /* Pods_FactoryApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1345FD006401F85AC91EADC5 /* Pods_FactoryApp.framework */; };
 		6C16A3873586EC177465D901 /* Pods_FactoryAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3470C75761E10BABC5104859 /* Pods_FactoryAppTests.framework */; };
+		F013A3BE238693BE00754549 /* WishList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F013A3BD238693BE00754549 /* WishList.framework */; };
+		F013A3BF238693BE00754549 /* WishList.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F013A3BD238693BE00754549 /* WishList.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F02CDFC9238411E3007E0E07 /* RestorauntsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFC0238411E3007E0E07 /* RestorauntsViewController.swift */; };
 		F02CDFCA238411E3007E0E07 /* RestorauntView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFC2238411E3007E0E07 /* RestorauntView.swift */; };
 		F02CDFCB238411E3007E0E07 /* RestorauntsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFC4238411E3007E0E07 /* RestorauntsCoordinator.swift */; };
@@ -59,6 +61,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F02CE08323842355007E0E07 /* RestorauntsSingle.framework in Embed Frameworks */,
+				F013A3BF238693BE00754549 /* WishList.framework in Embed Frameworks */,
 				F0F22677237D3757003C1AD2 /* MealsScreen.framework in Embed Frameworks */,
 				F0F22679237D3757003C1AD2 /* Shared.framework in Embed Frameworks */,
 			);
@@ -74,6 +77,7 @@
 		99478E0950F0AD02B2541868 /* Pods-FactoryApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FactoryApp.debug.xcconfig"; path = "Target Support Files/Pods-FactoryApp/Pods-FactoryApp.debug.xcconfig"; sourceTree = "<group>"; };
 		9D760E9D47DF27A363CF7327 /* Pods-FactoryAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FactoryAppTests.debug.xcconfig"; path = "Target Support Files/Pods-FactoryAppTests/Pods-FactoryAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AC822EAB22C9C3E17EF9FB52 /* Pods-FactoryApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FactoryApp.release.xcconfig"; path = "Target Support Files/Pods-FactoryApp/Pods-FactoryApp.release.xcconfig"; sourceTree = "<group>"; };
+		F013A3BD238693BE00754549 /* WishList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WishList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F02CDFC0238411E3007E0E07 /* RestorauntsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsViewController.swift; sourceTree = "<group>"; };
 		F02CDFC2238411E3007E0E07 /* RestorauntView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntView.swift; sourceTree = "<group>"; };
 		F02CDFC4238411E3007E0E07 /* RestorauntsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsCoordinator.swift; sourceTree = "<group>"; };
@@ -116,6 +120,7 @@
 				F02CE08223842347007E0E07 /* RestorauntsSingle.framework in Frameworks */,
 				F0F22678237D3757003C1AD2 /* Shared.framework in Frameworks */,
 				F0F22676237D3757003C1AD2 /* MealsScreen.framework in Frameworks */,
+				F013A3BE238693BE00754549 /* WishList.framework in Frameworks */,
 				5CB14337B39D65F158C74ADD /* Pods_FactoryApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,6 +150,7 @@
 		624392411F2AFF108EBF345D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F013A3BD238693BE00754549 /* WishList.framework */,
 				F096043B238670F200F19789 /* Pods_Shared.framework */,
 				F0960439238670D500F19789 /* Shared.framework */,
 				F02CE08123842347007E0E07 /* RestorauntsSingle.framework */,
