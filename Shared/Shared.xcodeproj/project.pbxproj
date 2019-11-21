@@ -10,9 +10,13 @@
 		A57DE6AC3E7A4F6D229013AD /* Pods_Shared_SharedTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89AB1941BA0252F983A19A17 /* Pods_Shared_SharedTests.framework */; };
 		A99D377AC66B437B6CCC7E30 /* Pods_Shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB3DA8980F1A3DE74FF0827D /* Pods_Shared.framework */; };
 		F013A3C92386977400754549 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F013A3C82386977400754549 /* BackgroundView.swift */; };
+		F013A3D023869E0900754549 /* RealmRestorauntsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F013A3CF23869E0900754549 /* RealmRestorauntsDataModel.swift */; };
 		F02CDFA023840DAD007E0E07 /* ExpandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF9F23840DAD007E0E07 /* ExpandButton.swift */; };
 		F02CDFA223840DD7007E0E07 /* RestorauntsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFA123840DD7007E0E07 /* RestorauntsDelegate.swift */; };
 		F02CDFA423840E11007E0E07 /* MealNameDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDFA323840E11007E0E07 /* MealNameDelegate.swift */; };
+		F0566F832386AA0000984D03 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0566F822386AA0000984D03 /* RealmManager.swift */; };
+		F0566F862386AE5300984D03 /* MealsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0566F852386AE5300984D03 /* MealsTableViewCell.swift */; };
+		F0566F882386B63300984D03 /* SortedByNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0566F872386B63300984D03 /* SortedByNameTableViewCell.swift */; };
 		F096040E2384284800F19789 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096040D2384284800F19789 /* GradientView.swift */; };
 		F0960416238529C300F19789 /* JSONtests.json in Resources */ = {isa = PBXBuildFile; fileRef = F0960415238529C300F19789 /* JSONtests.json */; };
 		F0960418238529FB00F19789 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = F0960417238529FB00F19789 /* data.json */; };
@@ -53,9 +57,13 @@
 		E1822E2CD9AE1E53A2A5C6B8 /* Pods-SharedTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SharedTests.release.xcconfig"; path = "Target Support Files/Pods-SharedTests/Pods-SharedTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED7C7B315F934EB01EC36610 /* Pods-Shared.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared.debug.xcconfig"; path = "Target Support Files/Pods-Shared/Pods-Shared.debug.xcconfig"; sourceTree = "<group>"; };
 		F013A3C82386977400754549 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
+		F013A3CF23869E0900754549 /* RealmRestorauntsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRestorauntsDataModel.swift; sourceTree = "<group>"; };
 		F02CDF9F23840DAD007E0E07 /* ExpandButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandButton.swift; sourceTree = "<group>"; };
 		F02CDFA123840DD7007E0E07 /* RestorauntsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsDelegate.swift; sourceTree = "<group>"; };
 		F02CDFA323840E11007E0E07 /* MealNameDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealNameDelegate.swift; sourceTree = "<group>"; };
+		F0566F822386AA0000984D03 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		F0566F852386AE5300984D03 /* MealsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealsTableViewCell.swift; sourceTree = "<group>"; };
+		F0566F872386B63300984D03 /* SortedByNameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortedByNameTableViewCell.swift; sourceTree = "<group>"; };
 		F096040D2384284800F19789 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		F0960415238529C300F19789 /* JSONtests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = JSONtests.json; sourceTree = "<group>"; };
 		F0960417238529FB00F19789 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
@@ -131,6 +139,40 @@
 			path = BackgroundView;
 			sourceTree = "<group>";
 		};
+		F013A3CD23869DEC00754549 /* LocalDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				F0566F812386A9E900984D03 /* DatabaseManager */,
+				F013A3CE23869DF700754549 /* DataModel */,
+			);
+			path = LocalDatabase;
+			sourceTree = "<group>";
+		};
+		F013A3CE23869DF700754549 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				F013A3CF23869E0900754549 /* RealmRestorauntsDataModel.swift */,
+			);
+			path = DataModel;
+			sourceTree = "<group>";
+		};
+		F0566F812386A9E900984D03 /* DatabaseManager */ = {
+			isa = PBXGroup;
+			children = (
+				F0566F822386AA0000984D03 /* RealmManager.swift */,
+			);
+			path = DatabaseManager;
+			sourceTree = "<group>";
+		};
+		F0566F842386AE3400984D03 /* MealsTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				F0566F872386B63300984D03 /* SortedByNameTableViewCell.swift */,
+				F0566F852386AE5300984D03 /* MealsTableViewCell.swift */,
+			);
+			path = MealsTableViewCell;
+			sourceTree = "<group>";
+		};
 		F096040C2384282400F19789 /* GradientView */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,6 +220,8 @@
 		F0F225DC237D2F57003C1AD2 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				F0566F842386AE3400984D03 /* MealsTableViewCell */,
+				F013A3CD23869DEC00754549 /* LocalDatabase */,
 				F013A3C72386976000754549 /* BackgroundView */,
 				F096042023852C9600F19789 /* Manager */,
 				F096042223852C9600F19789 /* Repository */,
@@ -451,13 +495,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0566F862386AE5300984D03 /* MealsTableViewCell.swift in Sources */,
+				F0566F832386AA0000984D03 /* RealmManager.swift in Sources */,
 				F0F22604237D2F90003C1AD2 /* DataModel.swift in Sources */,
 				F096042423852C9600F19789 /* DataManager.swift in Sources */,
+				F0566F882386B63300984D03 /* SortedByNameTableViewCell.swift in Sources */,
 				F0F225F9237D2F7A003C1AD2 /* DataStruct.swift in Sources */,
 				F096040E2384284800F19789 /* GradientView.swift in Sources */,
 				F0F22673237D3183003C1AD2 /* ConvertToStruct.swift in Sources */,
 				F02CDFA023840DAD007E0E07 /* ExpandButton.swift in Sources */,
 				F02CDFA223840DD7007E0E07 /* RestorauntsDelegate.swift in Sources */,
+				F013A3D023869E0900754549 /* RealmRestorauntsDataModel.swift in Sources */,
 				F0F225F6237D2F74003C1AD2 /* Coordinator.swift in Sources */,
 				F0F22607237D2F9D003C1AD2 /* MealTypeEnum.swift in Sources */,
 				F0960441238674C400F19789 /* RestorauntDataRepository.swift in Sources */,

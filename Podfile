@@ -7,6 +7,7 @@ def pods
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'SnapKit'
+  pod 'RealmSwift'
   pod 'Hue'
 end
 

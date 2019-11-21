@@ -15,7 +15,6 @@
 		F02CE06723841A03007E0E07 /* AboutUsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE05E23841A03007E0E07 /* AboutUsScreen.swift */; };
 		F02CE06823841A03007E0E07 /* RestorauntsSingleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE06023841A03007E0E07 /* RestorauntsSingleCoordinator.swift */; };
 		F02CE06923841A03007E0E07 /* RestorauntsSingleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE06223841A03007E0E07 /* RestorauntsSingleModel.swift */; };
-		F02CE06A23841A03007E0E07 /* MealsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE06323841A03007E0E07 /* MealsTableViewCell.swift */; };
 		F02CE06C23841A0A007E0E07 /* RestorauntsSingleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE06B23841A0A007E0E07 /* RestorauntsSingleTests.swift */; };
 		F02CE06F23841B57007E0E07 /* ExpansionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE06E23841B57007E0E07 /* ExpansionEnum.swift */; };
 		F8DEE7085AD5C479CB884B64 /* Pods_RestorauntsSingle_RestorauntsSingleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5B65B2CF6990024BBFAB35 /* Pods_RestorauntsSingle_RestorauntsSingleTests.framework */; };
@@ -47,7 +46,6 @@
 		F02CE05E23841A03007E0E07 /* AboutUsScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutUsScreen.swift; sourceTree = "<group>"; };
 		F02CE06023841A03007E0E07 /* RestorauntsSingleCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsSingleCoordinator.swift; sourceTree = "<group>"; };
 		F02CE06223841A03007E0E07 /* RestorauntsSingleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsSingleModel.swift; sourceTree = "<group>"; };
-		F02CE06323841A03007E0E07 /* MealsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealsTableViewCell.swift; sourceTree = "<group>"; };
 		F02CE06B23841A0A007E0E07 /* RestorauntsSingleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsSingleTests.swift; sourceTree = "<group>"; };
 		F02CE06E23841B57007E0E07 /* ExpansionEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpansionEnum.swift; sourceTree = "<group>"; };
 		FD7367A65611C3A944913F2A /* Pods-RestorauntsSingle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RestorauntsSingle.release.xcconfig"; path = "Target Support Files/Pods-RestorauntsSingle/Pods-RestorauntsSingle.release.xcconfig"; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 				F02CE05F23841A03007E0E07 /* Coordinator */,
 				F02CE06D23841B57007E0E07 /* Enum */,
 				F02CE06123841A03007E0E07 /* ViewModel */,
-				F02CE06323841A03007E0E07 /* MealsTableViewCell.swift */,
 			);
 			path = RestorauntsSingle;
 			sourceTree = "<group>";
@@ -370,7 +367,6 @@
 				F02CE06423841A03007E0E07 /* RestorauntsScreenViewController.swift in Sources */,
 				F02CE06823841A03007E0E07 /* RestorauntsSingleCoordinator.swift in Sources */,
 				F02CE06923841A03007E0E07 /* RestorauntsSingleModel.swift in Sources */,
-				F02CE06A23841A03007E0E07 /* MealsTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

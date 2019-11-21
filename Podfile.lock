@@ -8,6 +8,11 @@ PODS:
   - Kingfisher/Core (5.9.0)
   - Nimble (8.0.4)
   - Quick (2.2.0)
+  - Realm (4.1.1):
+    - Realm/Headers (= 4.1.1)
+  - Realm/Headers (4.1.1)
+  - RealmSwift (4.1.1):
+    - Realm (= 4.1.1)
   - RxCocoa (5.0.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -24,6 +29,7 @@ DEPENDENCIES:
   - Kingfisher
   - Nimble
   - Quick
+  - RealmSwift
   - RxCocoa
   - RxSwift
   - RxTest
@@ -36,6 +42,8 @@ SPEC REPOS:
     - Kingfisher
     - Nimble
     - Quick
+    - Realm
+    - RealmSwift
     - RxCocoa
     - RxRelay
     - RxSwift
@@ -48,12 +56,14 @@ SPEC CHECKSUMS:
   Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
   Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
+  Realm: 25f0a8244cbb1c2271c922963ea8666fc2d8104d
+  RealmSwift: 9e2657b33764f80e4a4dffd6d440e24715782052
   RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
   RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   RxTest: 0132f952a61da82d5233abedaa559df91e5330e5
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: 98de37d289011d28600c23b8b602ff4fb8bc4664
+PODFILE CHECKSUM: b2577c22b0fa882f2fe3209a1da45761ab467d6b
 
 COCOAPODS: 1.8.4

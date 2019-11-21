@@ -19,7 +19,7 @@ public class WishListCoordinator: Coordinator {
     
     public init(presenter: UINavigationController){
         self.presenter = presenter
-        let viewModel = WishListViewModel(dependencies: WishListViewModel.Dependencies(scheduler: ConcurrentDispatchQueueScheduler(qos: .background)))
+        let viewModel = WishListViewModel(dependencies: WishListViewModel.Dependencies(scheduler: ConcurrentDispatchQueueScheduler(qos: .background), realmRepo: RealmManager()))
         self.viewController = WishListViewController(viewModel: viewModel)
     }
     

@@ -8,10 +8,9 @@
 
 import Foundation
 import UIKit
-import Shared
 
 
-class MealsTableViewCell: UITableViewCell {
+public class MealsTableViewCell: UITableViewCell {
     //MARK: Views
     let pricesLabel: UILabel = {
         let view = UILabel()
@@ -43,7 +42,7 @@ class MealsTableViewCell: UITableViewCell {
         return view
     }()
     
-    let basketButton: UIButton = {
+    public let basketButton: UIButton = {
         let view = UIButton()
         view.setImage(UIImage(named: "addBasket"), for: .normal)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -51,7 +50,7 @@ class MealsTableViewCell: UITableViewCell {
     }()
     
     //MARK: init
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
         setupConstraints()
@@ -96,7 +95,7 @@ class MealsTableViewCell: UITableViewCell {
     }
     
     //MARK: Cell setup
-    func setupCell(meal: Meals){
+    public func setupCell(meal: Meals){
         var ingredients: String = ""
         mealName.text = meal.name.uppercased()
         pricesLabel.text = meal.price

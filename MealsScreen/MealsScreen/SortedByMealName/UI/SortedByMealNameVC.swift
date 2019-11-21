@@ -84,6 +84,8 @@ class SortedByNameVC: UIViewController {
     //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupView()
+        self.setupConstrints()
         setupViewModel()
     }
     
@@ -161,9 +163,8 @@ class SortedByNameVC: UIViewController {
         output.dataReady
             .observeOn(MainScheduler.instance)
             .subscribeOn(viewModel.dependencies.scheduler)
-            .subscribe(onNext: { [unowned self] bool in
-                self.setupView()
-                self.setupConstrints()
+            .subscribe(onNext: { bool in
+               
             }).disposed(by: disposeBag)
         
         viewModel.input.getData.onNext(true)

@@ -15,8 +15,10 @@ public class RestorauntsSingleModel {
     //MARK: Defining structs
     public struct Input {
         public var loadScreenData: ReplaySubject<Bool>
-        public init(loadScreenData: ReplaySubject<Bool>){
+        public var saveMeal: PublishSubject<IndexPath>
+        public init(loadScreenData: ReplaySubject<Bool>, saveMeal: PublishSubject<IndexPath>){
             self.loadScreenData = loadScreenData
+            self.saveMeal = saveMeal
         }
     }
     
@@ -35,10 +37,12 @@ public class RestorauntsSingleModel {
     public struct Dependencies {
         public var scheduler: SchedulerType
         public var meals: Restoraunts
+        public var realmManager: RealmManager
         
-        public init(scheduler: SchedulerType, meals: Restoraunts){
+        public init(scheduler: SchedulerType, meals: Restoraunts, realmManager: RealmManager){
             self.scheduler = scheduler
             self.meals = meals
+            self.realmManager = realmManager
         }
     }
     
@@ -58,6 +62,7 @@ public class RestorauntsSingleModel {
         var disposables = [Disposable]()
         
         disposables.append(setupData(subject: input.loadScreenData))
+        disposables.append(addMealToWishList(subject: input.saveMeal))
         
         self.output = Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), disposables: disposables, expandableHandler: PublishSubject())
         return output
@@ -153,5 +158,21 @@ public class RestorauntsSingleModel {
         return (detailsButtonIsPressed, !detailsButtonIsPressed)
     }
     
-    
+    func addMealToWishList(subject: PublishSubject<IndexPath>) -> Disposable {
+         return subject
+            .flatMap({[unowned self] (bool) -> Observable<String> in
+                
+                let object = MealsWithRestoraunt(name: self.dependencies.meals.meals[bool.section].meals[bool.row].name, priceNormal: self.dependencies.meals.meals[bool.section].meals[bool.row].priceNormal, priceJumbo: self.dependencies.meals.meals[bool.section].meals[bool.row].priceJumbo, price: self.dependencies.meals.meals[bool.section].meals[bool.row].price, ingredients: self.dependencies.meals.meals[bool.section].meals[bool.row].ingredients, restorauntName: self.dependencies.meals.name, mobLabel: self.dependencies.meals.mob, telLabel: self.dependencies.meals.tel)
+                
+                
+                let meals = self.dependencies.realmManager.saveMeal(meal: object)
+                       return meals
+                   })
+                       .subscribeOn(dependencies.scheduler)
+                       .observeOn(MainScheduler.instance)
+                       .subscribe(onNext: { (locations) in
+                           print("saved")
+                })
+        }
 }
+    

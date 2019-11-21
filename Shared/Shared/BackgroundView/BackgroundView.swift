@@ -26,7 +26,7 @@ public class BackgroundView: UIView {
         return view
     }()
     
-    let customView: UIView = {
+    public let customView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white

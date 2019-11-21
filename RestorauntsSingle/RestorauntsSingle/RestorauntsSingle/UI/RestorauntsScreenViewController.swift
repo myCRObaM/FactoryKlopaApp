@@ -74,6 +74,8 @@ class RestorauntsScreenViewController: UIViewController {
     //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupView()
+        self.setupConstraints()
         prepareViewModel()
     }
     
@@ -89,7 +91,7 @@ class RestorauntsScreenViewController: UIViewController {
     }
     //MARK: ViewModel Setup
     func prepareViewModel(){
-        let input = RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1))
+        let input = RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1), saveMeal: PublishSubject<IndexPath>())
         
         let output = viewModel.transform(input: input)
         
@@ -101,8 +103,7 @@ class RestorauntsScreenViewController: UIViewController {
             .observeOn(MainScheduler.instance)
             .subscribeOn(viewModel.dependencies.scheduler)
             .subscribe(onNext: { [unowned self] bool in
-                self.setupView()
-                self.setupConstraints()
+
             }).disposed(by: disposeBag)
         
         expensionHandler(subject: output.expandableHandler).disposed(by: disposeBag)
@@ -406,6 +407,10 @@ extension RestorauntsScreenViewController: UITableViewDelegate, UITableViewDataS
         }
         
         return footerView
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.input.saveMeal.onNext(indexPath)
     }
     
     @objc func basketButtonPressed(){

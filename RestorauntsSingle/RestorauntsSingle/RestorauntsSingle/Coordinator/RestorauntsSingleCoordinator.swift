@@ -23,7 +23,7 @@ public class RestorauntsSingleCoordinator: Coordinator {
     public init(presenter: UINavigationController, screenData: Restoraunts) {
         self.presenter = presenter
         self.screenData = screenData
-        let viewModel = RestorauntsSingleModel(dependencies: RestorauntsSingleModel.Dependencies(scheduler: ConcurrentDispatchQueueScheduler(qos: .background), meals: screenData))
+        let viewModel = RestorauntsSingleModel(dependencies: RestorauntsSingleModel.Dependencies(scheduler: ConcurrentDispatchQueueScheduler(qos: .background), meals: screenData, realmManager: RealmManager()))
         self.viewController = RestorauntsScreenViewController(viewModel: viewModel)
         viewController.basketButtonPress = self
     }

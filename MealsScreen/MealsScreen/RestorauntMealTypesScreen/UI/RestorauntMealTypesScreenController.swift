@@ -84,7 +84,10 @@ class RestorauntMealTypesScreenController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupView()
+        self.setupConstraints()
         setupViewModel()
+        self.setupData()
     }
     
     func setupViewModel(){
@@ -98,10 +101,8 @@ class RestorauntMealTypesScreenController: UIViewController {
         output.dataReady
             .observeOn(MainScheduler.instance)
             .subscribeOn(viewModel.dependencies.scheduler)
-            .subscribe(onNext: { [unowned self] bool in
-                self.setupView()
-                self.setupConstraints()
-                self.setupData()
+            .subscribe(onNext: {  bool in
+          
             }).disposed(by: disposeBag)
         
         viewModel.input.getData.onNext(true)
