@@ -26,10 +26,12 @@ public class SortedByMealNameModel {
     {
         public var dataReady: ReplaySubject<Bool>
         public var disposables: [Disposable]
+        public var errorSubject: PublishSubject<Bool>
         
-        public init(dataReady: ReplaySubject<Bool>, disposables: [Disposable]){
+        public init(dataReady: ReplaySubject<Bool>, disposables: [Disposable], errorSubject: PublishSubject<Bool>){
             self.dataReady = dataReady
             self.disposables = disposables
+            self.errorSubject = errorSubject
         }
     }
     
@@ -61,7 +63,7 @@ public class SortedByMealNameModel {
         
         disposables.append(getData(subject: input.getData))
         
-        output = Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), disposables: disposables)
+        output = Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), disposables: disposables, errorSubject: PublishSubject<Bool>())
         return output
     }
     //MARK: getData
@@ -71,6 +73,9 @@ public class SortedByMealNameModel {
         .subscribeOn(dependencies.scheduler)
         .subscribe(onNext: { [unowned self] bool in
             self.output.dataReady.onNext(true)
+        },  onError: {[unowned self] (error) in
+                self.output.errorSubject.onNext(true)
+                print(error)
         })
     }
     

@@ -28,34 +28,12 @@ class RestorauntsViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+
     
     let whiteView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
-        return view
-    }()
-           
-    
-    let backgroundImage: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "background")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentMode = .scaleAspectFill
-        return view
-    }()
-    
-    let logoView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "Logo")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentMode = .scaleToFill
-        return view
-    }()
-    
-    let gradientBackground: GradientView = {
-        let view = GradientView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -77,6 +55,7 @@ class RestorauntsViewController: UIViewController {
     weak var didSelectCategory: SelectedCategoryDelegate?
     var collectionView: UICollectionView!
     var reuseIndetifier = "CVC"
+    let backgroundView = BackgroundView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,18 +80,25 @@ class RestorauntsViewController: UIViewController {
         .subscribe(onNext: { [unowned self] bool in
             self.tableView.reloadData()
             }).disposed(by: disposeBag)
+        
+        output.errorSubject
+        .observeOn(MainScheduler.instance)
+        .subscribeOn(viewModel.dependencies.scheduler)
+        .subscribe(onNext: { [unowned self] bool in
+            self.showPopUp()
+            }).disposed(by: disposeBag)
     }
     //MARK: Setup view
     func setupView(){
         tableView.register(RestorauntsTableViewCell.self, forCellReuseIdentifier: "Cell")
         
         
-        view.addSubview(backgroundImage)
-        view.insertSubview(customView, aboveSubview: backgroundImage)
+        view.addSubview(backgroundView)
+        view.insertSubview(customView, aboveSubview: backgroundView)
         view.insertSubview(tableView, aboveSubview: customView)
-        view.insertSubview(logoView, aboveSubview: backgroundImage)
         view.backgroundColor = .white
-        view.insertSubview(gradientBackground, belowSubview: backgroundImage)
+        
+        backgroundView.backButton.removeFromSuperview()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -136,23 +122,8 @@ class RestorauntsViewController: UIViewController {
             make.bottom.leading.trailing.equalTo(view)
             make.top.equalTo(customView.restorauntsButton.snp.bottom).offset(27)
         }
-        
-        gradientBackground.snp.makeConstraints { (make) in
-            make.top.equalTo(backgroundImage.snp.bottom)
-            make.bottom.equalTo(customView.restorauntsButton).offset(20)
-            make.leading.trailing.equalTo(view)
-        }
-        
-        backgroundImage.snp.makeConstraints { (make) in
-                   make.top.leading.trailing.equalTo(view)
-                   make.height.equalTo(UIScreen.main.bounds.height/4.8)
-               }
-        
-        logoView.snp.makeConstraints { (make) in
-            make.leading.equalTo(customView.restorauntsButton)
-            make.bottom.equalTo(customView.snp.top).offset(-30)
-            make.width.equalTo(175)
-            make.height.equalTo(48)
+        backgroundView.snp.makeConstraints { (make) in
+            make.edges.equalTo(view)
         }
     }
     
@@ -206,6 +177,17 @@ class RestorauntsViewController: UIViewController {
         customView.mealsButton.isSelected = selection.1
     }
     
+    func showPopUp(){
+         let alert = UIAlertController(title: "Error", message: "Something went wrong.", preferredStyle: .alert)
+         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
+             alert.dismiss(animated: true, completion: nil)
+         }))
+         self.present(alert, animated: true)
+     }
+    
+    deinit {
+        print("vc deinited: ", self)
+    }
 }
 //MARK: table view extensions
 extension RestorauntsViewController: UITableViewDelegate, UITableViewDataSource {

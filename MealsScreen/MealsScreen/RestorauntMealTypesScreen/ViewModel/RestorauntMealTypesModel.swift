@@ -23,10 +23,12 @@ public class RestorauntMealTypesModel  {
     
     public struct Output {
         public var dataReady: ReplaySubject<Bool>
+        public var errorSubject: PublishSubject<Bool>
         public var disposables: [Disposable]
         
-        public init(dataReady: ReplaySubject<Bool>, disposables: [Disposable]){
+        public init(dataReady: ReplaySubject<Bool>, errorSubject: PublishSubject<Bool>, disposables: [Disposable]){
             self.dataReady = dataReady
+            self.errorSubject = errorSubject
             self.disposables = disposables
         }
     }
@@ -58,7 +60,7 @@ public class RestorauntMealTypesModel  {
         
         disposables.append(prepareData(subject: input.getData))
         
-        self.output = Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), disposables: disposables)
+        self.output = Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), errorSubject: PublishSubject<Bool>(), disposables: disposables)
         return output
     }
     
@@ -68,6 +70,9 @@ public class RestorauntMealTypesModel  {
         .subscribeOn(dependencies.scheduler)
         .subscribe(onNext: { [unowned self] bool in
             self.output.dataReady.onNext(true)
+        },  onError: {[unowned self] (error) in
+                self.output.errorSubject.onNext(true)
+                print(error)
         })
     }
     

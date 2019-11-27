@@ -37,6 +37,7 @@ class RestorauntsSingleModelTests: QuickSpec {
             context("initialize viewModel"){
                 var dataReadySubject: TestableObserver<Bool>!
                 var expandableHandler: TestableObserver<ExpansionEnum>!
+                var saveMealSubject: TestableObserver<IndexPath>!
                 beforeEach {
                     testScheduler = TestScheduler(initialClock: 0)
                     
@@ -51,7 +52,9 @@ class RestorauntsSingleModelTests: QuickSpec {
                     dataReadySubject = testScheduler.createObserver(Bool.self)
                                    mealsViewModel.output.dataReady.subscribe(dataReadySubject).disposed(by: disposeBag)
                     expandableHandler = testScheduler.createObserver(ExpansionEnum.self)
-                                                      mealsViewModel.output.expandableHandler.subscribe(expandableHandler).disposed(by: disposeBag)
+                                    mealsViewModel.output.expandableHandler.subscribe(expandableHandler).disposed(by: disposeBag)
+                    expandableHandler = testScheduler.createObserver(IndexPath.self)
+                                    mealsViewModel.input.saveMeal.subscribe(saveMealSubject).disposed(by: disposeBag)
                 }
                 it("check if data is loaded correctly"){
                     testScheduler.start()

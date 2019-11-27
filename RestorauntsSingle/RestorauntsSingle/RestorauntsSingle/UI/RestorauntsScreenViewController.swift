@@ -27,35 +27,13 @@ class RestorauntsScreenViewController: UIViewController {
         return view
     }()
     
-    let backButton: UIButton = {
-        let view = UIButton()
-        view.setImage(UIImage(named: "leftArrow"), for: .normal)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    let basketButton: UIButton = {
+           let view = UIButton()
+           view.setImage(UIImage(named: "addBasket"), for: .normal)
+           view.translatesAutoresizingMaskIntoConstraints = false
+           return view
+       }()
     
-    let gradientBackground: GradientView = {
-        let view = GradientView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    let logoView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "Logo")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentMode = .scaleToFill
-        return view
-    }()
-    
-    
-    
-    let backgroundImage: UIImageView = {
-        let view = UIImageView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentMode = .scaleAspectFill
-        return view
-    }()
     
     let customView: RestorauntsView = {
         let view = RestorauntsView()
@@ -69,7 +47,10 @@ class RestorauntsScreenViewController: UIViewController {
     //MARK: Variables
     let viewModel: RestorauntsSingleModel
     let disposeBag = DisposeBag()
+    let backgroundView = BackgroundView()
     weak var basketButtonPress: CartButtonPressed?
+    
+    weak var childHasFinished: CoordinatorDelegate?
     
     //MARK: ViewDidLoad
     override func viewDidLoad() {
@@ -102,9 +83,16 @@ class RestorauntsScreenViewController: UIViewController {
         output.dataReady
             .observeOn(MainScheduler.instance)
             .subscribeOn(viewModel.dependencies.scheduler)
-            .subscribe(onNext: { [unowned self] bool in
+            .subscribe(onNext: {bool in
 
             }).disposed(by: disposeBag)
+        
+        output.errorSubject
+        .observeOn(MainScheduler.instance)
+        .subscribeOn(viewModel.dependencies.scheduler)
+        .subscribe(onNext: {[unowned self] bool in
+            self.showPopUp()
+        }).disposed(by: disposeBag)
         
         expensionHandler(subject: output.expandableHandler).disposed(by: disposeBag)
         
@@ -113,12 +101,10 @@ class RestorauntsScreenViewController: UIViewController {
     //MARK: Setup View
     func setupView(){
         view.backgroundColor = .white
-        view.addSubview(backgroundImage)
-        view.insertSubview(customView, aboveSubview: backgroundImage)
+        view.addSubview(backgroundView)
+        view.insertSubview(customView, aboveSubview: backgroundView)
         view.addSubview(tableView)
-        view.insertSubview(gradientBackground, belowSubview: backgroundImage)
-        view.addSubview(backButton)
-        view.insertSubview(logoView, aboveSubview: backgroundImage)
+        view.addSubview(basketButton)
         
         setupData()
     }
@@ -127,7 +113,6 @@ class RestorauntsScreenViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        backgroundImage.image = UIImage(named: "background")
         
         tableView.register(MealsTableViewCell.self, forCellReuseIdentifier: "asd")
         
@@ -136,11 +121,13 @@ class RestorauntsScreenViewController: UIViewController {
         customView.mobLabel.text = viewModel.dependencies.meals.mob
         customView.wHoursLabel.text = viewModel.dependencies.meals.workingHours
         
-        backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
+        backgroundView.backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
         
         customView.detailsButton.addTarget(self, action: #selector(aboutUsButtonPressed), for: .touchUpInside)
         
         customView.priceButton.addTarget(self, action: #selector(pricesButtonPressed), for: .touchUpInside)
+        
+        basketButton.addTarget(self, action: #selector(openWishlistScreen), for: .touchUpInside)
         
         pricesButtonPressed()
     }
@@ -154,27 +141,14 @@ class RestorauntsScreenViewController: UIViewController {
             make.bottom.leading.trailing.equalTo(view)
             make.top.equalTo(customView.priceButton.snp.bottom).offset(34)
         }
-        backgroundImage.snp.makeConstraints { (make) in
-            make.top.leading.trailing.equalTo(view)
-            make.height.equalTo(UIScreen.main.bounds.height/4.8)
+        backgroundView.snp.makeConstraints { (make) in
+            make.edges.equalTo(view)
         }
         
-        gradientBackground.snp.makeConstraints { (make) in
-            make.top.equalTo(backgroundImage.snp.bottom)
-            make.bottom.equalTo(tableView.snp.top).offset(-UIScreen.main.bounds.height/6)
-            make.leading.trailing.equalTo(view)
-        }
-        
-        backButton.snp.makeConstraints { (make) in
-            make.bottom.equalTo(customView.snp.top).offset(5)
-            make.leading.equalTo(customView).offset(-5)
+        basketButton.snp.makeConstraints { (make) in
+            make.bottom.equalTo(backgroundView.customView.snp.top).offset(5)
+            make.trailing.equalTo(backgroundView.customView).offset(-5)
             make.height.width.equalTo(40)
-        }
-        logoView.snp.makeConstraints { (make) in
-            make.leading.equalTo(customView).offset(30)
-            make.bottom.equalTo(customView.snp.top).offset(-30)
-            make.width.equalTo(175)
-            make.height.equalTo(48)
         }
         
     }
@@ -364,10 +338,30 @@ class RestorauntsScreenViewController: UIViewController {
         customView.priceButton.isSelected = selection.1
     }
     
+    func showPopUp(){
+        let alert = UIAlertController(title: "Error", message: "Something went wrong.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true)
+    }
+
+    deinit {
+        print("Deinit: ", self)
+        childHasFinished?.viewControllerHasFinished()
+    }
+    
+    @objc func openWishlistScreen(){
+        basketButtonPress?.openCart()
+    }
 }
 
 //MARK: TableView delegates
-extension RestorauntsScreenViewController: UITableViewDelegate, UITableViewDataSource {
+extension RestorauntsScreenViewController: UITableViewDelegate, UITableViewDataSource, ShopingCartButtonPress {
+    func didPress(index: IndexPath) {
+        viewModel.input.saveMeal.onNext(index)
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return setupHeader(category: viewModel.returnHeaderName(meal: viewModel.dependencies.meals.meals[section]), section)
     }
@@ -385,8 +379,8 @@ extension RestorauntsScreenViewController: UITableViewDelegate, UITableViewDataS
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "asd", for: indexPath) as? MealsTableViewCell  else {
             fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
         }
-        cell.setupCell(meal: viewModel.dependencies.meals.meals[indexPath.section].meals[indexPath.row])
-        cell.basketButton.addTarget(self, action: #selector(basketButtonPressed), for: .touchUpInside)
+        cell.setupCell(meal: viewModel.dependencies.meals.meals[indexPath.section].meals[indexPath.row], indexPath: indexPath)
+        cell.shoppingCartButton = self
         cell.backgroundColor = .white
         return cell
     }
@@ -408,14 +402,4 @@ extension RestorauntsScreenViewController: UITableViewDelegate, UITableViewDataS
         
         return footerView
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.input.saveMeal.onNext(indexPath)
-    }
-    
-    @objc func basketButtonPressed(){
-        basketButtonPress?.openCart()
-    }
-    
-    
 }

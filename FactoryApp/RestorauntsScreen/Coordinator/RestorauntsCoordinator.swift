@@ -37,12 +37,20 @@ public class RestorauntsCoordinator: Coordinator {
 extension RestorauntsCoordinator: SelectedRestorauntDelegate, SelectedCategoryDelegate {
     public func openMealType(screenData: MealCategory) {
            let categoryScreen = RestorauntMealTypesScreenCoordinator(restoraunts: screenData, presenter: presenter)
+        categoryScreen.coordinatorParent = self
              self.store(coordinator: categoryScreen)
              categoryScreen.start()
     }
     public func openMealCategories(screenData: Restoraunts) {
         let mealList = RestorauntsSingleCoordinator(presenter: presenter, screenData: screenData)
+        mealList.coordinatorParent = self
         self.store(coordinator: mealList)
         mealList.start()
+    }
+}
+
+extension RestorauntsCoordinator: ParentCoordinatorDelegate {
+    public func childHasFinished(coordinator: Coordinator) {
+        self.free(coordinator: coordinator)
     }
 }

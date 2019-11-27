@@ -26,11 +26,13 @@ public class RestorauntsSingleModel {
         public var dataReady: ReplaySubject<Bool>
         public var disposables: [Disposable]
         public var expandableHandler: PublishSubject<ExpansionEnum>
+        public var errorSubject: PublishSubject<Bool>
         
-        public init(dataReady: ReplaySubject<Bool>, disposables: [Disposable], expandableHandler: PublishSubject<ExpansionEnum>){
+        public init(dataReady: ReplaySubject<Bool>, disposables: [Disposable], expandableHandler: PublishSubject<ExpansionEnum>, errorSubject: PublishSubject<Bool>){
             self.dataReady = dataReady
             self.disposables = disposables
             self.expandableHandler = expandableHandler
+            self.errorSubject = errorSubject
         }
     }
     
@@ -64,7 +66,7 @@ public class RestorauntsSingleModel {
         disposables.append(setupData(subject: input.loadScreenData))
         disposables.append(addMealToWishList(subject: input.saveMeal))
         
-        self.output = Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), disposables: disposables, expandableHandler: PublishSubject())
+        self.output = Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), disposables: disposables, expandableHandler: PublishSubject(), errorSubject: PublishSubject<Bool>())
         return output
     }
     
@@ -77,6 +79,9 @@ public class RestorauntsSingleModel {
         })
             .subscribe(onNext: { [unowned self] bool in
                 self.output.dataReady.onNext(true)
+            },  onError: {[unowned self] (error) in
+                    self.output.errorSubject.onNext(true)
+                    print(error)
             })
     }
     
@@ -172,7 +177,12 @@ public class RestorauntsSingleModel {
                        .observeOn(MainScheduler.instance)
                        .subscribe(onNext: { (locations) in
                            print("saved")
+                },  onError: {[unowned self] (error) in
+                        self.output.errorSubject.onNext(true)
+                        print(error)
                 })
         }
 }
+
+
     

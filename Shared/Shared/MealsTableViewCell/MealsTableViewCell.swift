@@ -12,6 +12,9 @@ import UIKit
 
 public class MealsTableViewCell: UITableViewCell {
     //MARK: Views
+    public weak var shoppingCartButton: ShopingCartButtonPress?
+    var index: IndexPath!
+    
     let pricesLabel: UILabel = {
         let view = UILabel()
         let customFont = UIFont(name: "Rubik-Bold", size: 14.0)
@@ -42,7 +45,7 @@ public class MealsTableViewCell: UITableViewCell {
         return view
     }()
     
-    public let basketButton: UIButton = {
+    let basketButton: UIButton = {
         let view = UIButton()
         view.setImage(UIImage(named: "addBasket"), for: .normal)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -95,8 +98,9 @@ public class MealsTableViewCell: UITableViewCell {
     }
     
     //MARK: Cell setup
-    public func setupCell(meal: Meals){
+    public func setupCell(meal: Meals, indexPath: IndexPath){
         var ingredients: String = ""
+        index = indexPath
         mealName.text = meal.name.uppercased()
         pricesLabel.text = meal.price
         if meal.ingredients?.count ?? 0 > 0 {
@@ -118,7 +122,11 @@ public class MealsTableViewCell: UITableViewCell {
         }
         
         contentView.updateConstraints()
+        basketButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         
-        
+    }
+    
+    @objc func buttonPressed(){
+        shoppingCartButton?.didPress(index: index)
     }
 }

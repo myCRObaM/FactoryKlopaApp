@@ -18,35 +18,6 @@ class RestorauntMealTypesScreenController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    let backgroundImage: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "background")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentMode = .scaleAspectFill
-        return view
-    }()
-    
-    let gradientBackground: GradientView = {
-        let view = GradientView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    let customView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 5
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    let backButton: UIButton = {
-        let view = UIButton()
-        view.setImage(UIImage(named: "leftArrow"), for: .normal)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     
     let mealNameLabel: UILabel = {
         let view = UILabel()
@@ -57,15 +28,6 @@ class RestorauntMealTypesScreenController: UIViewController {
         view.numberOfLines = 1
         return view
     }()
-    
-    let logoView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "Logo")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentMode = .scaleToFill
-        return view
-    }()
-    
     
     //MARK: init
     init(viewModel: RestorauntMealTypesModel) {
@@ -80,7 +42,9 @@ class RestorauntMealTypesScreenController: UIViewController {
     //MARK: Variables
     let viewModel: RestorauntMealTypesModel
     let disposeBag = DisposeBag()
+    let backgroundView = BackgroundView()
     weak var didSelectMealName: didSelectMealName?
+    weak var childHasFinished: CoordinatorDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,63 +69,41 @@ class RestorauntMealTypesScreenController: UIViewController {
           
             }).disposed(by: disposeBag)
         
+        output.errorSubject
+        .observeOn(MainScheduler.instance)
+                   .subscribeOn(viewModel.dependencies.scheduler)
+                   .subscribe(onNext: { [unowned self] bool in
+                    self.showPopUp()
+                   }).disposed(by: disposeBag)
+        
         viewModel.input.getData.onNext(true)
     }
     
     func setupView(){        
-        view.addSubview(backgroundImage)
-        view.insertSubview(customView, aboveSubview: backgroundImage)
-        view.insertSubview(tableView, aboveSubview: customView)
+        view.addSubview(backgroundView)
+        view.insertSubview(tableView, aboveSubview: backgroundView)
         view.backgroundColor = .white
-        view.insertSubview(gradientBackground, belowSubview: backgroundImage)
-        view.addSubview(backButton)
-        view.insertSubview(mealNameLabel, aboveSubview: customView)
-        view.insertSubview(logoView, aboveSubview: backgroundImage)
-        
+        view.insertSubview(mealNameLabel, aboveSubview: backgroundView)
         tableView.register(MealTypeCell.self, forCellReuseIdentifier: "MTC")
         tableView.delegate = self
         tableView.dataSource = self
-        backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
+        backgroundView.backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
     }
     
     func setupConstraints(){
-        customView.snp.makeConstraints { (make) in
-            make.leading.trailing.bottom.equalTo(view).inset(10)
-            make.top.equalTo(view).inset(UIScreen.main.bounds.height/6)
-        }
         
         tableView.snp.makeConstraints { (make) in
             make.bottom.leading.trailing.equalTo(view)
             make.top.equalTo(mealNameLabel.snp.bottom).offset(50)
         }
         
-        gradientBackground.snp.makeConstraints { (make) in
-            make.top.equalTo(backgroundImage.snp.bottom)
-            make.bottom.equalTo(backgroundImage.snp.bottom).offset(40)
-            make.leading.trailing.equalTo(view)
-        }
-        
-        backgroundImage.snp.makeConstraints { (make) in
-            make.top.leading.trailing.equalTo(view)
-            make.height.equalTo(UIScreen.main.bounds.height/4.8)
-        }
-        
-        backButton.snp.makeConstraints { (make) in
-            make.bottom.equalTo(customView.snp.top).offset(5)
-            make.leading.equalTo(customView).offset(-5)
-            make.height.width.equalTo(40)
-        }
-        
         mealNameLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(customView).offset(17)
-            make.leading.equalTo(customView).offset(29)
+            make.top.equalTo(backgroundView.customView).offset(17)
+            make.leading.equalTo(backgroundView.customView).offset(29)
         }
         
-        logoView.snp.makeConstraints { (make) in
-            make.leading.equalTo(customView).offset(30)
-            make.bottom.equalTo(customView.snp.top).offset(-30)
-            make.width.equalTo(175)
-            make.height.equalTo(48)
+        backgroundView.snp.makeConstraints { (make) in
+            make.edges.equalTo(view)
         }
     }
     
@@ -196,6 +138,18 @@ class RestorauntMealTypesScreenController: UIViewController {
     @objc func backButtonPressed(){
         navigationController?.popViewController(animated: false)
     }
+    func showPopUp(){
+         let alert = UIAlertController(title: "Error", message: "Something went wrong.", preferredStyle: .alert)
+         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
+             alert.dismiss(animated: true, completion: nil)
+         }))
+         self.present(alert, animated: true)
+     }
+    
+    deinit {
+         print("vc deinited: ", self)
+        childHasFinished?.viewControllerHasFinished()
+     }
 }
 
 extension RestorauntMealTypesScreenController: UITableViewDelegate, UITableViewDataSource {

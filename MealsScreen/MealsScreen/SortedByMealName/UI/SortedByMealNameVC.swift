@@ -19,36 +19,6 @@ class SortedByNameVC: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    let backgroundImage: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "background")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentMode = .scaleAspectFill
-        return view
-    }()
-    
-    let gradientBackground: GradientView = {
-        let view = GradientView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    let customView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 5
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    let backButton: UIButton = {
-        let view = UIButton()
-        view.setImage(UIImage(named: "leftArrow"), for: .normal)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     let mealNameLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -59,17 +29,19 @@ class SortedByNameVC: UIViewController {
         return view
     }()
     
-    let logoView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "Logo")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentMode = .scaleToFill
-        return view
-    }()
+    let basketButton: UIButton = {
+           let view = UIButton()
+           view.setImage(UIImage(named: "addBasket"), for: .normal)
+           view.translatesAutoresizingMaskIntoConstraints = false
+           return view
+       }()
     
     //MARK: Variables
     let viewModel: SortedByMealNameModel
     let disposeBag = DisposeBag()
+    let backgroundView = BackgroundView()
+    weak var childHasFinished: CoordinatorDelegate?
+    weak var basketButtonPress: CartButtonPressed?
     
     //MARK: Init
     init(viewModel: SortedByMealNameModel) {
@@ -91,14 +63,11 @@ class SortedByNameVC: UIViewController {
     
     //MARK: setupView
     func setupView(){
-        view.addSubview(backgroundImage)
-        view.insertSubview(customView, aboveSubview: backgroundImage)
-        view.insertSubview(tableView, aboveSubview: customView)
+        view.addSubview(backgroundView)
+        view.insertSubview(tableView, aboveSubview: backgroundView)
+        view.insertSubview(mealNameLabel, aboveSubview: backgroundView)
+        view.addSubview(basketButton)
         view.backgroundColor = .white
-        view.insertSubview(gradientBackground, belowSubview: backgroundImage)
-        view.addSubview(backButton)
-        view.insertSubview(mealNameLabel, aboveSubview: customView)
-        view.insertSubview(logoView, aboveSubview: backgroundImage)
         
         tableView.register(SortedByNameTableViewCell.self, forCellReuseIdentifier: "MTC")
         tableView.delegate = self
@@ -106,49 +75,32 @@ class SortedByNameVC: UIViewController {
         tableView.tableFooterView = UIView()
         
         mealNameLabel.text = viewModel.dependencies.meals[0].name.uppercased()
-        backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
+        backgroundView.backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
+        basketButton.addTarget(self, action: #selector(openWishlistScreen), for: .touchUpInside)
     }
     
     func setupConstrints(){
-        customView.snp.makeConstraints { (make) in
-            make.leading.trailing.bottom.equalTo(view).inset(10)
-            make.top.equalTo(view).inset(UIScreen.main.bounds.height/6)
-        }
         
         tableView.snp.makeConstraints { (make) in
             make.bottom.leading.trailing.equalTo(view)
             make.top.equalTo(mealNameLabel.snp.bottom).offset(50)
         }
         
-        gradientBackground.snp.makeConstraints { (make) in
-            make.top.equalTo(backgroundImage.snp.bottom)
-            make.bottom.equalTo(backgroundImage.snp.bottom).offset(40)
-            make.leading.trailing.equalTo(view)
-        }
-        
-        backgroundImage.snp.makeConstraints { (make) in
-            make.top.leading.trailing.equalTo(view)
-            make.height.equalTo(UIScreen.main.bounds.height/4.8)
-        }
-        
-        backButton.snp.makeConstraints { (make) in
-            make.bottom.equalTo(customView.snp.top).offset(5)
-            make.leading.equalTo(customView).offset(-5)
-            make.height.width.equalTo(40)
-        }
-        
         mealNameLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(customView).offset(17)
-            make.leading.equalTo(customView).offset(29)
-            make.trailing.equalTo(customView).offset(-29)
+            make.top.equalTo(backgroundView.customView).offset(17)
+            make.leading.equalTo(backgroundView.customView).offset(29)
+            make.trailing.equalTo(backgroundView.customView).offset(-29)
         }
         
-        logoView.snp.makeConstraints { (make) in
-            make.leading.equalTo(customView).offset(30)
-            make.bottom.equalTo(customView.snp.top).offset(-30)
-            make.width.equalTo(175)
-            make.height.equalTo(48)
+        backgroundView.snp.makeConstraints { (make) in
+            make.edges.equalTo(view)
         }
+        
+        basketButton.snp.makeConstraints { (make) in
+              make.bottom.equalTo(backgroundView.customView.snp.top).offset(5)
+              make.trailing.equalTo(backgroundView.customView).offset(-5)
+              make.height.width.equalTo(40)
+          }
     }
     //MARK: Setup ViewModel
     func setupViewModel(){
@@ -166,6 +118,13 @@ class SortedByNameVC: UIViewController {
             .subscribe(onNext: { bool in
                
             }).disposed(by: disposeBag)
+        
+        output.errorSubject
+        .observeOn(MainScheduler.instance)
+        .subscribeOn(viewModel.dependencies.scheduler)
+        .subscribe(onNext: {[unowned self] bool in
+            self.showPopUp()
+        }).disposed(by: disposeBag)
         
         viewModel.input.getData.onNext(true)
     }
@@ -288,6 +247,21 @@ class SortedByNameVC: UIViewController {
         return jnView
     }
     
+    func showPopUp(){
+         let alert = UIAlertController(title: "Error", message: "Something went wrong.", preferredStyle: .alert)
+         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
+             alert.dismiss(animated: true, completion: nil)
+         }))
+         self.present(alert, animated: true)
+     }
+    
+    deinit {
+        print("Deinit: ", self)
+        childHasFinished?.viewControllerHasFinished()
+    }
+    @objc func openWishlistScreen(){
+        basketButtonPress?.openCart()
+    }
     
 }
 

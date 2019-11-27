@@ -15,6 +15,7 @@
 		F014332B238692AD006FFEAF /* WishListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F014332A238692AD006FFEAF /* WishListTests.swift */; };
 		F014332D238692AD006FFEAF /* WishList.h in Headers */ = {isa = PBXBuildFile; fileRef = F014331F238692AC006FFEAF /* WishList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F014333B238692BD006FFEAF /* WishListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0143338238692BD006FFEAF /* WishListViewModel.swift */; };
+		F050033C238E6EBD00D6C750 /* WishListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F050033B238E6EBD00D6C750 /* WishListCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 		F014332A238692AD006FFEAF /* WishListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListTests.swift; sourceTree = "<group>"; };
 		F014332C238692AD006FFEAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0143338238692BD006FFEAF /* WishListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListViewModel.swift; sourceTree = "<group>"; };
+		F050033B238E6EBD00D6C750 /* WishListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 				F013A3CA238698BF00754549 /* Coordinator */,
 				F013A3C42386959900754549 /* UI */,
 				F0143337238692BD006FFEAF /* ViewModel */,
+				F050033B238E6EBD00D6C750 /* WishListCell.swift */,
 			);
 			path = WishListScreen;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F050033C238E6EBD00D6C750 /* WishListCell.swift in Sources */,
 				F013A3CC23869A4300754549 /* WishListCoordinator.swift in Sources */,
 				F014333B238692BD006FFEAF /* WishListViewModel.swift in Sources */,
 				F013A3C6238695A800754549 /* WishListViewController.swift in Sources */,
