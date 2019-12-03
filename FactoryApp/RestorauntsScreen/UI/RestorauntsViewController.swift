@@ -15,7 +15,7 @@ import SnapKit
 class RestorauntsViewController: UIViewController {
     //MARK: View
     let customView: RestorauntView = {
-       let view = RestorauntView()
+        let view = RestorauntView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         view.layer.cornerRadius = 5
@@ -28,9 +28,9 @@ class RestorauntsViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
     
-    let whiteView: UIView = {
+    
+    let coverView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -75,17 +75,17 @@ class RestorauntsViewController: UIViewController {
         input.getDataSubject.onNext(true)
         
         output.dataIsDoneSubject
-        .observeOn(MainScheduler.instance)
-        .subscribeOn(viewModel.dependencies.scheduler)
-        .subscribe(onNext: { [unowned self] bool in
-            self.tableView.reloadData()
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(viewModel.dependencies.scheduler)
+            .subscribe(onNext: { [unowned self] bool in
+                self.tableView.reloadData()
             }).disposed(by: disposeBag)
         
         output.errorSubject
-        .observeOn(MainScheduler.instance)
-        .subscribeOn(viewModel.dependencies.scheduler)
-        .subscribe(onNext: { [unowned self] bool in
-            self.showPopUp()
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(viewModel.dependencies.scheduler)
+            .subscribe(onNext: { [unowned self] bool in
+                self.showPopUp()
             }).disposed(by: disposeBag)
     }
     //MARK: Setup view
@@ -110,10 +110,10 @@ class RestorauntsViewController: UIViewController {
         restorauntsButtonPressed()
         
     }
-
+    
     
     func setupConstraints(){
-       customView.snp.makeConstraints { (make) in
+        customView.snp.makeConstraints { (make) in
             make.leading.trailing.bottom.equalTo(view).inset(10)
             make.top.equalTo(view).inset(UIScreen.main.bounds.height/6)
         }
@@ -146,22 +146,22 @@ class RestorauntsViewController: UIViewController {
         switch customView.mealsButton.isSelected {
         case true:
             collectionView.removeFromSuperview()
-            whiteView.removeFromSuperview()
+            coverView.removeFromSuperview()
         case false:
             break
         }
         
-        setupButtons(selection: viewModel.restorauntsButtonIsSelected(bool: true))
+        setupButtons(selection: true)
     }
     
     @objc func mealsButtonPressed(){
-        setupButtons(selection: viewModel.restorauntsButtonIsSelected(bool: false))
+        setupButtons(selection: false)
         setupCollectionView()
-       
-        view.insertSubview(whiteView, aboveSubview: tableView)
-        view.insertSubview(collectionView, aboveSubview: whiteView)
         
-        whiteView.snp.makeConstraints { (make) in
+        view.insertSubview(coverView, aboveSubview: tableView)
+        view.insertSubview(collectionView, aboveSubview: coverView)
+        
+        coverView.snp.makeConstraints { (make) in
             make.edges.equalTo(tableView)
         }
         
@@ -172,21 +172,21 @@ class RestorauntsViewController: UIViewController {
         }
     }
     
-    func setupButtons(selection: (Bool, Bool)){
-        customView.restorauntsButton.isSelected = selection.0
-        customView.mealsButton.isSelected = selection.1
+    func setupButtons(selection: Bool){
+        customView.restorauntsButton.isSelected = selection
+        customView.mealsButton.isSelected = !selection
     }
     
     func showPopUp(){
-         let alert = UIAlertController(title: "Error", message: "Something went wrong.", preferredStyle: .alert)
-         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
-             alert.dismiss(animated: true, completion: nil)
-         }))
-         self.present(alert, animated: true)
-     }
+        let alert = UIAlertController(title: NSLocalizedString("popUpErrorTitle", comment: ""), message: NSLocalizedString("popUpErrorDesc", comment: ""), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true)
+    }
     
     deinit {
-        print("vc deinited: ", self)
+        print("Deinit: ", self)
     }
 }
 //MARK: table view extensions
@@ -197,24 +197,23 @@ extension RestorauntsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? RestorauntsTableViewCell  else {
-                   fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
-               }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? RestorauntsTableViewCell  else {
+            fatalError(NSLocalizedString("cell_error", comment: ""))
+        }
         cell.separatorInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         let data = viewModel.output.viewData[indexPath.row]
         cell.setupCell(name: data.title, tel: data.tel ?? "", mob: data.mob ?? "")
         cell.selectionStyle = .none
-               return cell
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         didSelectRestoraunt?.openMealCategories(screenData: viewModel.restoraunts[viewModel.output.viewData[indexPath.row].id])
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
-    
     
 }
 

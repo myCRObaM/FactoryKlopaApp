@@ -28,11 +28,11 @@ class RestorauntsScreenViewController: UIViewController {
     }()
     
     let basketButton: UIButton = {
-           let view = UIButton()
-           view.setImage(UIImage(named: "addBasket"), for: .normal)
-           view.translatesAutoresizingMaskIntoConstraints = false
-           return view
-       }()
+        let view = UIButton()
+        view.setImage(UIImage(named: "addBasket"), for: .normal)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     
     let customView: RestorauntsView = {
@@ -85,14 +85,15 @@ class RestorauntsScreenViewController: UIViewController {
             .subscribeOn(viewModel.dependencies.scheduler)
             .subscribe(onNext: {[unowned self] bool in
                 self.setupData()
+                self.pricesButtonPressed()
             }).disposed(by: disposeBag)
         
         output.errorSubject
-        .observeOn(MainScheduler.instance)
-        .subscribeOn(viewModel.dependencies.scheduler)
-        .subscribe(onNext: {[unowned self] bool in
-            self.showPopUp()
-        }).disposed(by: disposeBag)
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(viewModel.dependencies.scheduler)
+            .subscribe(onNext: {[unowned self] bool in
+                self.showPopUp()
+            }).disposed(by: disposeBag)
         
         expensionHandler(subject: output.expandableHandler).disposed(by: disposeBag)
         savedAlertHandler(subject: output.popupSubject).disposed(by: disposeBag)
@@ -114,11 +115,13 @@ class RestorauntsScreenViewController: UIViewController {
         
         
         tableView.register(MealsTableViewCell.self, forCellReuseIdentifier: "asd")
-        
-        customView.nameLabel.text = viewModel.output?.screenData.title ?? ""
-        customView.telLabel.text = viewModel.output?.screenData.tel ?? ""
-        customView.mobLabel.text = viewModel.output?.screenData.mob ?? ""
-        customView.wHoursLabel.text = viewModel.output?.screenData.workingHours ?? ""
+        guard let data = viewModel.output?.screenData else {
+            return
+        }
+        customView.nameLabel.text = data.title
+        customView.telLabel.text = data.tel
+        customView.mobLabel.text = data.mob
+        customView.wHoursLabel.text = data.workingHours
         
         backgroundView.backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
         
@@ -127,8 +130,6 @@ class RestorauntsScreenViewController: UIViewController {
         customView.priceButton.addTarget(self, action: #selector(pricesButtonPressed), for: .touchUpInside)
         
         basketButton.addTarget(self, action: #selector(openWishlistScreen), for: .touchUpInside)
-        
-        pricesButtonPressed()
     }
     //MARK: Constraints setup
     func setupConstraints(){
@@ -138,7 +139,7 @@ class RestorauntsScreenViewController: UIViewController {
         }
         tableView.snp.makeConstraints { (make) in
             make.bottom.leading.trailing.equalTo(view)
-            make.top.equalTo(customView.priceButton.snp.bottom).offset(-34)
+            make.top.equalTo(customView.priceButton.snp.bottom).offset(30)
         }
         backgroundView.snp.makeConstraints { (make) in
             make.edges.equalTo(view)
@@ -157,24 +158,17 @@ class RestorauntsScreenViewController: UIViewController {
         let views = setupNormalHeader(category: category, section)
         var pizzaView = UIView()
         
-        
-        
-        
-        views.backgroundColor = UIColor(red: 255/255.0, green: 184/255.0, blue: 14/255.0, alpha: 1)
-        
-        
-        
+        views.backgroundColor = UIColor.init(named: "headerBackground")
         bothViews.addSubview(views)
         
         views.translatesAutoresizingMaskIntoConstraints = false
-        
         
         views.snp.makeConstraints { (make) in
             make.top.leading.trailing.equalTo(bothViews)
         }
         switch viewModel.isPizza(category: category) {
         case true:
-            switch viewModel.isCollapsed(section: viewModel.output.screenData.section[section]) {
+            switch !viewModel.isCollapsed(section: viewModel.output.screenData.section[section]) {
             case true:
                 pizzaView = setupPizzaHeader()
                 bothViews.addSubview(pizzaView)
@@ -196,7 +190,6 @@ class RestorauntsScreenViewController: UIViewController {
             }
             break
         }
-        
         return bothViews
     }
     
@@ -212,11 +205,9 @@ class RestorauntsScreenViewController: UIViewController {
         
         expandButton.addTarget(self, action: #selector(expandableButtonPressed), for: .touchUpInside)
         expandButton.tag = section
-        expandButton.isSelected = viewModel.isCollapsed(section: viewModel.output.screenData.section[section])
+        expandButton.isSelected = !viewModel.isCollapsed(section: viewModel.output.screenData.section[section])
         
         let customFont = UIFont(name: "Rubik-Black", size: 14)
-        
-        
         
         mealLabel.font = customFont
         priceLabel.font = customFont
@@ -233,7 +224,7 @@ class RestorauntsScreenViewController: UIViewController {
         priceLabel.textColor = .black
         
         mealLabel.text = category.uppercased()
-        priceLabel.text = "Cijena"
+        priceLabel.text = NSLocalizedString("price", comment: "")
         
         mealLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(views).inset(10)
@@ -267,7 +258,7 @@ class RestorauntsScreenViewController: UIViewController {
         jnLabel.text = "J      N"
         jnLabel.font = customFont
         
-        descriptionLabel.text = "*J - Jumbo pizza \n *N - Normalna pizza"
+        descriptionLabel.text = NSLocalizedString("jmboNormal", comment: "")
         descriptionLabel.font = customFont
         
         jnView.addSubview(descriptionLabel)
@@ -288,23 +279,12 @@ class RestorauntsScreenViewController: UIViewController {
     
     //MARK: Expension handler
     func expensionHandler(subject: PublishSubject<ExpansionEnum>) -> Disposable {
-        subject
+        return subject
             .observeOn(MainScheduler.instance)
             .subscribeOn(viewModel.dependencies.scheduler)
             .subscribe(onNext: { [unowned self] bool in
-                switch bool {
-                case .expand(let indexpath):
-                    self.tableView.insertRows(at: indexpath, with: .automatic)
-                    self.tableView.reloadSections(IndexSet(arrayLiteral: indexpath[0].section), with: .none)
-                    
-                case .colapse(let indexpath):
-                    self.tableView.deleteRows(at: indexpath, with: .automatic)
-                    self.tableView.reloadSections(IndexSet(arrayLiteral: indexpath[0].section), with: .none)
-                    
-                }
-                self.view.updateConstraints()
+                self.tableView.reloadData()
             })
-        
     }
     
     @objc func backButtonPressed(){
@@ -312,10 +292,9 @@ class RestorauntsScreenViewController: UIViewController {
     }
     
     @objc func expandableButtonPressed(button: UIButton){
-        viewModel.expandableHandler(section: button.tag)
+        viewModel.expandableHandler(section: button.tag, data: viewModel.dependencies.meals.meals[button.tag].meals)
         button.isSelected = !button.isSelected
         view.updateConstraints()
-        
     }
     
     @objc func aboutUsButtonPressed(){
@@ -324,30 +303,33 @@ class RestorauntsScreenViewController: UIViewController {
         aboutUs.snp.makeConstraints { (make) in
             make.edges.equalTo(tableView)
         }
-        setupButtons(selection: viewModel.detailsButtonSelected(bool: true))
+        setupButtons(selection: true)
     }
     
     @objc func pricesButtonPressed(){
         aboutUs.removeFromSuperview()
-        setupButtons(selection: viewModel.detailsButtonSelected(bool: false))
+        setupButtons(selection: false)
     }
     
-    func setupButtons(selection: (Bool, Bool)){
-        customView.detailsButton.isSelected = selection.0
-        customView.priceButton.isSelected = selection.1
+    func setupButtons(selection: Bool){
+        customView.detailsButton.isSelected = selection
+        customView.priceButton.isSelected = !selection
     }
-    
+    //MARK: popUp function
     func showPopUp(){
-        let alert = UIAlertController(title: "Error", message: "Something went wrong.", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("popUpErrorTitle", comment: ""), message: NSLocalizedString("popUpErrorDesc", comment: ""), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
             alert.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true)
     }
-
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        childHasFinished?.viewControllerHasFinished()
+    }
+    
     deinit {
         print("Deinit: ", self)
-        childHasFinished?.viewControllerHasFinished()
     }
     
     @objc func openWishlistScreen(){
@@ -356,7 +338,7 @@ class RestorauntsScreenViewController: UIViewController {
     
     func savedAlertHandler(subject: PublishSubject<Bool>) -> Disposable{
         return subject
-        .subscribeOn(viewModel.dependencies.scheduler)
+            .subscribeOn(viewModel.dependencies.scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (locations) in
                 let viewForAlert = UIView()
@@ -364,21 +346,22 @@ class RestorauntsScreenViewController: UIViewController {
                 
                 labelText.translatesAutoresizingMaskIntoConstraints = false
                 viewForAlert.translatesAutoresizingMaskIntoConstraints = false
-                labelText.text = "Dodano u WishList"
-                let customFont = UIFont(name: "Rubik-Bold", size: 14)
+                labelText.text = NSLocalizedString("wishListAdd", comment: "")
+                let customFont = UIFont(name: "Rubik-Bold", size: 16)
                 labelText.font = customFont
                 
                 viewForAlert.addSubview(labelText)
+                viewForAlert.backgroundColor = .white
                 self.view.addSubview(viewForAlert)
                 
                 labelText.snp.makeConstraints { (make) in
                     make.centerX.equalTo(viewForAlert)
                     make.centerY.equalTo(viewForAlert)
-                    make.bottom.equalTo(viewForAlert).offset(-5)
+                    make.top.equalTo(viewForAlert).offset(5)
                 }
                 viewForAlert.snp.makeConstraints { (make) in
                     make.bottom.leading.trailing.equalTo(self.view)
-                    make.height.equalTo(50)
+                    make.height.equalTo(100)
                 }
                 
                 
@@ -386,9 +369,6 @@ class RestorauntsScreenViewController: UIViewController {
                     viewForAlert.removeFromSuperview()
                 }
             })
-        
-        
-        
     }
 }
 
@@ -398,11 +378,11 @@ extension RestorauntsScreenViewController: UITableViewDelegate, UITableViewDataS
         
         switch viewModel.hasJumboPrice(price: viewModel.dependencies.meals.meals[index.section].meals[index.row].priceJumbo ?? "") {
         case true:
-            let alert = UIAlertController(title: "Zelite li Jumbo ili Normalnu", message: nil, preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction(title: "Normalna", style: .default, handler: {[unowned self] action in
+            let alert = UIAlertController(title: NSLocalizedString("pizzaSelectionTitle", comment: ""), message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("normalPizzaSelection", comment: ""), style: .default, handler: {[unowned self] action in
                 self.viewModel.input.saveMeal.onNext(.normal(index))
             }))
-            alert.addAction(UIAlertAction(title: "Jumbo", style: .default, handler: {[unowned self] action in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("jumboPizzaSelection", comment: ""), style: .default, handler: {[unowned self] action in
                 self.viewModel.input.saveMeal.onNext(.jumbo(index))
             }))
             self.present(alert, animated: true)
@@ -421,18 +401,20 @@ extension RestorauntsScreenViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRows(section: viewModel.output.screenData.section[section])
+        let data = viewModel.output?.screenData?.section[section]
+        return data?.data.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "asd", for: indexPath) as? MealsTableViewCell  else {
-            fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
+            fatalError(NSLocalizedString("cell_Error", comment: ""))
         }
         let data = viewModel.output.screenData!.section[indexPath.section].data[indexPath.row]
         cell.setupCell(data: viewModel.setupCellData(data: data), indexPath: indexPath)
         cell.shoppingCartButton = self
         cell.backgroundColor = .white
+        cell.selectionStyle = .none
         return cell
     }
     

@@ -1,0 +1,39 @@
+/* 
+  Localizable.strings
+  FactoryApp
+
+  Created by Matej Hetzel on 03/12/2019.
+  Copyright © 2019 Matej Hetzel. All rights reserved.
+*/
+
+"cell_Error" = "The dequeued cell is not an instance of RestorauntsTableViewCell.";
+"popUpErrorTitle" = "Error";
+"popUpErrorDesc" = "Something went wrong.";
+"wishListAdd" = "Item added to wishlist";
+"pizzaSelectionTitle" = "Would you like a jumbo or a normal pizza";
+"normalPizzaSelection" = "Normal";
+"jumboPizzaSelection" = "Jumbo";
+"locationAndContact" = "Location \n Contact";
+"price" = "Price";
+"jmboNormal" = "*J - Jumbo pizza \n *N - Normal pizza";
+"mealName" = "Meal name: ";
+"restorauntsLabel" = "Restoraunts";
+"mealsLabel" = "Meals";
+"aboutUsLabel" = "About us";
+"priceLabel" = "Price List";
+"wishListEmpty" = "WishList is empty! \n Please add some meals";
+
+"mealType_Desert" = "Desert";
+"mealType_Dodatci" = "Additions";
+"mealType_Hamburger" = "Hamburger";
+"mealType_MBO" = "Meals By Order";
+"mealType_GM" = "Grill Meals";
+"mealType_Kebab" = "Kebab";
+"mealType_Ostalo" = "Other";
+"mealType_Pizza" = "Pizza";
+"mealType_Prilozi" = "Side Dish";
+"mealType_Fish" = "Fish Meal";
+"mealType_Rice" = "Rice";
+"mealType_Salad" = "Salad";
+"mealType_Sendvich" = "Sendvich";
+"mealType_Pasta" = "Pasta";

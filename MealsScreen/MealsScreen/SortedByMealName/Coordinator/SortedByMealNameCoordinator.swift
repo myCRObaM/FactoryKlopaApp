@@ -31,20 +31,15 @@ class SortedByMealNameCoordinator: Coordinator{
     func start() {
         presenter.pushViewController(viewController, animated: false)
     }
-    
-    
 }
 
 extension SortedByMealNameCoordinator: CoordinatorDelegate, ParentCoordinatorDelegate {
     func childHasFinished(coordinator: Coordinator) {
         self.free(coordinator: coordinator)
     }
-    
     func viewControllerHasFinished() {
         parentCoordinator?.childHasFinished(coordinator: self)
     }
-    
-    
 }
 extension SortedByMealNameCoordinator: CartButtonPressed{
     public func openCart() {
@@ -53,6 +48,4 @@ extension SortedByMealNameCoordinator: CartButtonPressed{
         self.store(coordinator: wishListCoordinator)
         wishListCoordinator.start()
     }
-    
-    
 }

@@ -1,0 +1,39 @@
+/* 
+  Localizable.strings
+  FactoryApp
+
+  Created by Matej Hetzel on 03/12/2019.
+  Copyright © 2019 Matej Hetzel. All rights reserved.
+*/
+
+"cell_Error" = "The dequeued cell is not an instance of RestorauntsTableViewCell.";
+"popUpErrorTitle" = "Greska";
+"popUpErrorDesc" = "Nesto je poslo po zlu.";
+"wishListAdd" = "Dodano u wishlist";
+"pizzaSelectionTitle" = "Zelite li jumbo ili normalnu velicinu pizze";
+"normalPizzaSelection" = "Normalna";
+"jumboPizzaSelection" = "Jumbo";
+"locationAndContact" = "Lokacija \n Kontakt";
+"price" = "Cijena";
+"jmboNormal" = "*J - Jumbo pizza \n *N - Normalna pizza";
+"mealName" = "Meal name: ";
+"restorauntsLabel" = "Restorani";
+"mealsLabel" = "Jela";
+"aboutUsLabel" = "O nama";
+"priceLabel" = "Cjenik";
+"wishListEmpty" = "WishList je prazan! \n Dodajte jela";
+
+"mealType_Desert" = "Desert";
+"mealType_Dodatci" = "Dodatci";
+"mealType_Hamburger" = "Hamburger";
+"mealType_MBO" = "Jela Po Narudzbi";
+"mealType_GM" = "Jela s rostilja";
+"mealType_Kebab" = "Kebab";
+"mealType_Ostalo" = "Ostalo";
+"mealType_Pizza" = "Pizza";
+"mealType_Prilozi" = "Prilozi";
+"mealType_Fish" = "Riblja jela";
+"mealType_Rice" = "Rizoto";
+"mealType_Salad" = "Salata";
+"mealType_Sendvich" = "Sendvic";
+"mealType_Pasta" = "Tjestenina";

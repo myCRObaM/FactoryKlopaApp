@@ -54,12 +54,12 @@ class SortedByNameTableViewCell: UITableViewCell {
     }()
     
     let priceLabel: UILabel = {
-           let view = UILabel()
-           let customFont = UIFont(name: "Rubik-Regular", size: 14.0)
-           view.font = customFont
-           view.translatesAutoresizingMaskIntoConstraints = false
-           return view
-       }()
+        let view = UILabel()
+        let customFont = UIFont(name: "Rubik-Regular", size: 14.0)
+        view.font = customFont
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     let basketButton: UIButton = {
         let view = UIButton()
@@ -138,8 +138,8 @@ class SortedByNameTableViewCell: UITableViewCell {
         
     }
     @objc func buttonPressed(){
-         shoppingCartButton?.didPress(index: index)
-     }
-   
+        shoppingCartButton?.didPress(index: index)
+    }
+    
     
 }

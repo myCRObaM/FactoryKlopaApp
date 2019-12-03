@@ -11,21 +11,21 @@ import RxSwift
 import Shared
 
 open class DataManager  {
-   open func readFromJSON() -> Observable<[RestorauntsModel]> {
+    open func readFromJSON() -> Observable<[RestorauntsModel]> {
         
         return Observable.create{   observable -> Disposable in
             
-        let bundle = Bundle(for: DataManager.self)
-        let path = bundle.url(forResource: "data", withExtension: "json")
-        do {
-            let data = try Data(contentsOf: path!)
-            let restoraunts = try! JSONDecoder().decode([RestorauntsModel].self, from: data)
-            observable.onNext(restoraunts)
-        } catch let jsonErr {
-            print(jsonErr)
+            let bundle = Bundle(for: DataManager.self)
+            let path = bundle.url(forResource: "data", withExtension: "json")
+            do {
+                let data = try Data(contentsOf: path!)
+                let restoraunts = try! JSONDecoder().decode([RestorauntsModel].self, from: data)
+                observable.onNext(restoraunts)
+            } catch let jsonErr {
+                print(jsonErr)
+            }
+            return Disposables.create()
         }
-        return Disposables.create()
-    }
     }
     public init() {
     }

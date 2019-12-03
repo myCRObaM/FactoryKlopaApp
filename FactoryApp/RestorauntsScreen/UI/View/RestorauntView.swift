@@ -14,9 +14,9 @@ class RestorauntView: UIView {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
         let customFont = UIFont(name: "Rubik-Regular", size: 17)
-        view.setAttributedTitle(NSAttributedString(string: "Restorani", attributes:
-        [.underlineStyle: NSUnderlineStyle.thick.rawValue, .underlineColor: UIColor(red: 255/255.0, green: 184/255.0, blue: 14/255.0, alpha: 1)]), for: .selected)
-        view.setAttributedTitle(NSAttributedString(string: "Restorani"), for: .normal)
+        view.setAttributedTitle(NSAttributedString(string: NSLocalizedString("restorauntsLabel", comment: ""), attributes:
+        [.underlineStyle: NSUnderlineStyle.thick.rawValue, .underlineColor: UIColor.init(named: "headerBackground")!]), for: .selected)
+        view.setAttributedTitle(NSAttributedString(string: NSLocalizedString("restorauntsLabel", comment: "")), for: .normal)
         view.setTitleColor(.black, for: .normal)
         view.titleLabel?.font = customFont
         return view
@@ -26,10 +26,10 @@ class RestorauntView: UIView {
            let view = UIButton()
            view.translatesAutoresizingMaskIntoConstraints = false
            let customFont = UIFont(name: "Rubik-Regular", size: 17)
-           view.setAttributedTitle(NSAttributedString(string: "Jela"), for: .normal)
+           view.setAttributedTitle(NSAttributedString(string: NSLocalizedString("mealsLabel", comment: "")), for: .normal)
         
-        view.setAttributedTitle(NSAttributedString(string: "Jela", attributes:
-            [.underlineStyle: NSUnderlineStyle.thick.rawValue, .underlineColor: UIColor(red: 255/255.0, green: 184/255.0, blue: 14/255.0, alpha: 1)]), for: .selected)
+        view.setAttributedTitle(NSAttributedString(string: NSLocalizedString("mealsLabel", comment: ""), attributes:
+            [.underlineStyle: NSUnderlineStyle.thick.rawValue, .underlineColor: UIColor.init(named: "headerBackground")!]), for: .selected)
            view.setTitleColor(.black, for: .normal)
            view.titleLabel?.font = customFont
            return view

@@ -30,29 +30,23 @@ public class RestorauntMealTypesScreenCoordinator: Coordinator {
     public func start() {
         presenter.pushViewController(viewController, animated: false)
     }
-    
-    
 }
 extension RestorauntMealTypesScreenCoordinator: didSelectMealName {
-    
     public func openNewCoordinator(meals: [MealsWithRestoraunt]) {
         let sortedByCoord = SortedByMealNameCoordinator(presenter: presenter, meals: meals)
         sortedByCoord.parentCoordinator = self
         self.store(coordinator: sortedByCoord)
         sortedByCoord.start()
     }
-    
 }
 extension RestorauntMealTypesScreenCoordinator: CoordinatorDelegate, ParentCoordinatorDelegate{
     public func childHasFinished(coordinator: Coordinator) {
         self.free(coordinator: coordinator)
     }
-    
+
     public func viewControllerHasFinished() {
         coordinatorParent?.childHasFinished(coordinator: self)
     }
-    
-    
 }
 
 

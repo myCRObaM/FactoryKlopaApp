@@ -23,6 +23,7 @@
 		F02CE08323842355007E0E07 /* RestorauntsSingle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F02CE08123842347007E0E07 /* RestorauntsSingle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F02CE08523842398007E0E07 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE08423842398007E0E07 /* GradientView.swift */; };
 		F065A214238FB5750023D74A /* MainViewDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F065A213238FB5750023D74A /* MainViewDataModel.swift */; };
+		F065A23C239669D80023D74A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F065A23E239669D80023D74A /* Localizable.strings */; };
 		F096043723866B0E00F19789 /* RestorauntsModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096043623866B0E00F19789 /* RestorauntsModelTest.swift */; };
 		F096043D2386740E00F19789 /* Shared.framework in Sources */ = {isa = PBXBuildFile; fileRef = F0F22675237D3757003C1AD2 /* Shared.framework */; };
 		F0F22595237D2D43003C1AD2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F22594237D2D43003C1AD2 /* AppDelegate.swift */; };
@@ -90,6 +91,9 @@
 		F02CE08123842347007E0E07 /* RestorauntsSingle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RestorauntsSingle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F02CE08423842398007E0E07 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		F065A213238FB5750023D74A /* MainViewDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewDataModel.swift; sourceTree = "<group>"; };
+		F065A238239665FA0023D74A /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		F065A23D239669D80023D74A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F065A23F239669D90023D74A /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F096043623866B0E00F19789 /* RestorauntsModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsModelTest.swift; sourceTree = "<group>"; };
 		F0960439238670D500F19789 /* Shared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Shared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F096043B238670F200F19789 /* Pods_Shared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Shared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -300,6 +304,7 @@
 				F0F225C7237D2EDD003C1AD2 /* Rubik-Italic.ttf */,
 				F0F225C8237D2EDD003C1AD2 /* Rubik-BlackItalic.ttf */,
 				F0F225C9237D2EDD003C1AD2 /* Rubik-Regular.ttf */,
+				F065A23E239669D80023D74A /* Localizable.strings */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -374,6 +379,7 @@
 			knownRegions = (
 				en,
 				Base,
+				hr,
 			);
 			mainGroup = F0F22588237D2D43003C1AD2;
 			productRefGroup = F0F22592237D2D43003C1AD2 /* Products */;
@@ -395,6 +401,7 @@
 				F0F225CF237D2EDD003C1AD2 /* Rubik-Regular.ttf in Resources */,
 				F0F225CA237D2EDD003C1AD2 /* Rubik-Bold.ttf in Resources */,
 				F0F225CD237D2EDD003C1AD2 /* Rubik-Italic.ttf in Resources */,
+				F065A23C239669D80023D74A /* Localizable.strings in Resources */,
 				F0F2259E237D2D44003C1AD2 /* Assets.xcassets in Resources */,
 				F0F225CE237D2EDD003C1AD2 /* Rubik-BlackItalic.ttf in Resources */,
 				F0F225CC237D2EDD003C1AD2 /* Rubik-Black.ttf in Resources */,
@@ -553,10 +560,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		F065A23E239669D80023D74A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F065A23D239669D80023D74A /* en */,
+				F065A23F239669D90023D74A /* hr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		F0F2259F237D2D44003C1AD2 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				F0F225A0237D2D44003C1AD2 /* Base */,
+				F065A238239665FA0023D74A /* hr */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -569,6 +586,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -630,6 +648,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

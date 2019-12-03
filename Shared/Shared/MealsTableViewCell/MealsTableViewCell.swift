@@ -107,7 +107,6 @@ public class MealsTableViewCell: UITableViewCell {
         
         contentView.updateConstraints()
         basketButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        
     }
     
     @objc func buttonPressed(){

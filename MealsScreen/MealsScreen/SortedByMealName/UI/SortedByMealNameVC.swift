@@ -140,18 +140,12 @@ class SortedByNameVC: UIViewController {
         let bothViews = UIView()
         let views = setupNormalHeader()
         var pizzaView = UIView()
-        
-        
-        
-        
-        views.backgroundColor = UIColor(red: 255/255.0, green: 184/255.0, blue: 14/255.0, alpha: 1)
-        
-        
+
+        views.backgroundColor = UIColor.init(named: "headerBackground")
         
         bothViews.addSubview(views)
         
         views.translatesAutoresizingMaskIntoConstraints = false
-        
         
         views.snp.makeConstraints { (make) in
             make.top.leading.trailing.equalTo(bothViews)
@@ -183,10 +177,7 @@ class SortedByNameVC: UIViewController {
         let priceLabel = UILabel()
         let views = UIView()
         
-        
         let customFont = UIFont(name: "Rubik-Black", size: 14)
-        
-        
         
         mealLabel.font = customFont
         priceLabel.font = customFont
@@ -200,8 +191,8 @@ class SortedByNameVC: UIViewController {
         mealLabel.textColor = .black
         priceLabel.textColor = .black
         
-        mealLabel.text = "Lokacija \n Kontakt"
-        priceLabel.text = "Cijena"
+        mealLabel.text = NSLocalizedString("locationAndContact", comment: "")
+        priceLabel.text = NSLocalizedString("price", comment: "")
         
         mealLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(views).inset(10)
@@ -230,7 +221,7 @@ class SortedByNameVC: UIViewController {
         jnLabel.text = "J      N"
         jnLabel.font = customFont
         
-        descriptionLabel.text = "*J - Jumbo pizza \n *N - Normalna pizza"
+        descriptionLabel.text = NSLocalizedString("jmboNormal", comment: "")
         descriptionLabel.font = customFont
         
         jnView.addSubview(descriptionLabel)
@@ -250,16 +241,19 @@ class SortedByNameVC: UIViewController {
     }
     
     func showPopUp(){
-        let alert = UIAlertController(title: "Error", message: "Something went wrong.", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("popUpErrorTitle", comment: ""), message: NSLocalizedString("popUpErrorDesc", comment: ""), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
             alert.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        childHasFinished?.viewControllerHasFinished()
+    }
+    
     deinit {
         print("Deinit: ", self)
-        childHasFinished?.viewControllerHasFinished()
     }
     @objc func openWishlistScreen(){
         basketButtonPress?.openCart()
@@ -276,21 +270,22 @@ class SortedByNameVC: UIViewController {
                 
                 labelText.translatesAutoresizingMaskIntoConstraints = false
                 viewForAlert.translatesAutoresizingMaskIntoConstraints = false
-                labelText.text = "Dodano u WishList"
-                let customFont = UIFont(name: "Rubik-Bold", size: 14)
+                labelText.text = NSLocalizedString("wishListAdd", comment: "")
+                let customFont = UIFont(name: "Rubik-Bold", size: 16)
                 labelText.font = customFont
                 
                 viewForAlert.addSubview(labelText)
+                viewForAlert.backgroundColor = .white
                 self.view.addSubview(viewForAlert)
                 
                 labelText.snp.makeConstraints { (make) in
                     make.centerX.equalTo(viewForAlert)
                     make.centerY.equalTo(viewForAlert)
-                    make.bottom.equalTo(viewForAlert).offset(-5)
+                    make.top.equalTo(viewForAlert).offset(5)
                 }
                 viewForAlert.snp.makeConstraints { (make) in
                     make.bottom.leading.trailing.equalTo(self.view)
-                    make.height.equalTo(50)
+                    make.height.equalTo(100)
                 }
                 
                 
@@ -298,9 +293,6 @@ class SortedByNameVC: UIViewController {
                     viewForAlert.removeFromSuperview()
                 }
             })
-        
-        
-        
     }
     
 }
@@ -310,11 +302,11 @@ extension SortedByNameVC: UITableViewDelegate, UITableViewDataSource, ShopingCar
     func didPress(index: IndexPath) {
         switch viewModel.hasJumboPrice(price: viewModel.output.screenData!.data[index.row].priceJumbo ?? "") {
         case true:
-            let alert = UIAlertController(title: "Zelite li Jumbo ili Normalnu", message: nil, preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction(title: "Normalna", style: .default, handler: {[unowned self] action in
+            let alert = UIAlertController(title: NSLocalizedString("pizzaSelectionTitle", comment: ""), message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("normalPizzaSelection", comment: ""), style: .default, handler: {[unowned self] action in
                 self.viewModel.input.saveMeal.onNext(.normal(index))
             }))
-            alert.addAction(UIAlertAction(title: "Jumbo", style: .default, handler: {[unowned self] action in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("jumboPizzaSelection", comment: ""), style: .default, handler: {[unowned self] action in
                 self.viewModel.input.saveMeal.onNext(.jumbo(index))
             }))
             self.present(alert, animated: true)
@@ -330,12 +322,13 @@ extension SortedByNameVC: UITableViewDelegate, UITableViewDataSource, ShopingCar
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MTC", for: indexPath) as? SortedByNameTableViewCell  else {
-            fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
+            fatalError(NSLocalizedString("cell_Error", comment: ""))
         }
         let data = viewModel.output?.screenData?.data[indexPath.row]
         cell.setupCell(data: data!, index: indexPath)
         cell.shoppingCartButton = self
         cell.separatorInset = .zero
+        cell.selectionStyle = .none
         return cell
     }    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

@@ -10,32 +10,32 @@ import Foundation
 import RealmSwift
 
 public class RealmRestorauntsDataModel: Object {
-        @objc dynamic var name: String = ""
-        @objc dynamic var restoraunt: String = ""
-        @objc dynamic var price: String? = ""
-        @objc dynamic var mob: String? = ""
-        @objc dynamic var tel: String? = ""
-        @objc dynamic var ingredients: String? = ""
-        
-        func createRestoraunt(meal: MealsWithRestoraunt){
-            self.name = meal.name
-            self.restoraunt = meal.restorauntName
-            self.price = meal.price
-            self.mob = meal.mobLabel
-            self.tel = meal.telLabel
-            var ingredintsLocal = "("
-            for ingredient in meal.ingredients ?? []{
-                if ingredintsLocal == "("{
-                    ingredintsLocal = ingredintsLocal + ingredient.name!
-                }
-                else {
-                    ingredintsLocal = ingredintsLocal + ", " + ingredient.name!
-                }
+    @objc dynamic var name: String = ""
+    @objc dynamic var restoraunt: String = ""
+    @objc dynamic var price: String? = ""
+    @objc dynamic var mob: String? = ""
+    @objc dynamic var tel: String? = ""
+    @objc dynamic var ingredients: String? = ""
+    
+    func createRestoraunt(meal: MealsWithRestoraunt){
+        self.name = meal.name
+        self.restoraunt = meal.restorauntName
+        self.price = meal.price
+        self.mob = meal.mobLabel
+        self.tel = meal.telLabel
+        var ingredintsLocal = "("
+        for ingredient in meal.ingredients ?? []{
+            if ingredintsLocal == "("{
+                ingredintsLocal = ingredintsLocal + ingredient.name!
             }
-            self.ingredients = ingredintsLocal + ")"
+            else {
+                ingredintsLocal = ingredintsLocal + ", " + ingredient.name!
+            }
         }
-        
-    override public class func primaryKey() -> String?{
-            return "name"
-        }
+        self.ingredients = ingredintsLocal + ")"
     }
+    
+    override public class func primaryKey() -> String?{
+        return "name"
+    }
+}

@@ -9,14 +9,14 @@
 import Foundation
 public class ConvertToStruct {
     public func convertToStruct(restoraunts: [RestorauntsModel]) -> [Restoraunts] {
-           var restorauntsClass = [Restoraunts]()
-           for restoraint in restoraunts {
-               restorauntsClass.append(Restoraunts(name: restoraint.name, tel: restoraint.tel, mob: restoraint.mob, workingHours: restoraint.workingHours, meals: convertToMealsStruct(meals: restoraint.meals)))
-           }
-           return restorauntsClass
-       }
+        var restorauntsClass = [Restoraunts]()
+        for restoraint in restoraunts {
+            restorauntsClass.append(Restoraunts(name: restoraint.name, tel: restoraint.tel, mob: restoraint.mob, workingHours: restoraint.workingHours, meals: convertToMealsStruct(meals: restoraint.meals)))
+        }
+        return restorauntsClass
+    }
     
-   public func convertToMealsStruct(meals: MealTypesModel) -> [MealTypes] {
+    public func convertToMealsStruct(meals: MealTypesModel) -> [MealTypes] {
         var mealsArray = [Meals]()
         var localMealTypesArray = [MealTypes]()
         
@@ -36,25 +36,25 @@ public class ConvertToStruct {
         }
         if meals.dodaci != nil && meals.dodaci?.count ?? 0 > 0{
             mealsArray.removeAll()
-                   for meal in meals.dodaci! {
-                       mealsArray.append(Meals(name: meal.name, priceNormal: meal.priceNormal, priceJumbo: meal.priceJumbo, price: meal.price, ingredients: returnIngredients(ingredients: meal.ingredients)))
-                   }
+            for meal in meals.dodaci! {
+                mealsArray.append(Meals(name: meal.name, priceNormal: meal.priceNormal, priceJumbo: meal.priceJumbo, price: meal.price, ingredients: returnIngredients(ingredients: meal.ingredients)))
+            }
             localMealTypesArray.append(MealTypes(type: .additions, meals: mealsArray))
-               }
+        }
         if meals.hamburgeri != nil && meals.hamburgeri?.count ?? 0 > 0{
             mealsArray.removeAll()
-                   for meal in meals.hamburgeri! {
-                       mealsArray.append(Meals(name: meal.name, priceNormal: meal.priceNormal, priceJumbo: meal.priceJumbo, price: meal.price, ingredients: returnIngredients(ingredients: meal.ingredients)))
-                   }
+            for meal in meals.hamburgeri! {
+                mealsArray.append(Meals(name: meal.name, priceNormal: meal.priceNormal, priceJumbo: meal.priceJumbo, price: meal.price, ingredients: returnIngredients(ingredients: meal.ingredients)))
+            }
             localMealTypesArray.append(MealTypes(type: .hamburgers, meals: mealsArray))
-               }
+        }
         if meals.jelaPoNarudzbi != nil && meals.jelaPoNarudzbi?.count ?? 0 > 0{
             mealsArray.removeAll()
-                   for meal in meals.jelaPoNarudzbi! {
-                       mealsArray.append(Meals(name: meal.name, priceNormal: meal.priceNormal, priceJumbo: meal.priceJumbo, price: meal.price, ingredients: returnIngredients(ingredients: meal.ingredients)))
-                   }
+            for meal in meals.jelaPoNarudzbi! {
+                mealsArray.append(Meals(name: meal.name, priceNormal: meal.priceNormal, priceJumbo: meal.priceJumbo, price: meal.price, ingredients: returnIngredients(ingredients: meal.ingredients)))
+            }
             localMealTypesArray.append(MealTypes(type: .mealsByOrder, meals: mealsArray))
-               }
+        }
         if meals.jelaSRostilja != nil && meals.jelaSRostilja?.count ?? 0 > 0{
             mealsArray.removeAll()
             for meal in meals.jelaSRostilja! {

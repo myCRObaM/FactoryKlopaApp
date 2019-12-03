@@ -66,15 +66,15 @@ class RestorauntMealTypesScreenController: UIViewController {
             .observeOn(MainScheduler.instance)
             .subscribeOn(viewModel.dependencies.scheduler)
             .subscribe(onNext: {  bool in
-          
+                
             }).disposed(by: disposeBag)
         
         output.errorSubject
-        .observeOn(MainScheduler.instance)
-                   .subscribeOn(viewModel.dependencies.scheduler)
-                   .subscribe(onNext: { [unowned self] bool in
-                    self.showPopUp()
-                   }).disposed(by: disposeBag)
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(viewModel.dependencies.scheduler)
+            .subscribe(onNext: { [unowned self] bool in
+                self.showPopUp()
+            }).disposed(by: disposeBag)
         
         viewModel.input.getData.onNext(true)
     }
@@ -119,7 +119,7 @@ class RestorauntMealTypesScreenController: UIViewController {
         
         headerView.addSubview(priceAndNumberLabel)
         
-        priceAndNumberLabel.text = "Naziv jela:"
+        priceAndNumberLabel.text = NSLocalizedString("mealName", comment: "")
         
         priceAndNumberLabel.snp.makeConstraints { (make) in
             make.top.equalTo(headerView)
@@ -139,17 +139,19 @@ class RestorauntMealTypesScreenController: UIViewController {
         navigationController?.popViewController(animated: false)
     }
     func showPopUp(){
-         let alert = UIAlertController(title: "Error", message: "Something went wrong.", preferredStyle: .alert)
-         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
-             alert.dismiss(animated: true, completion: nil)
-         }))
-         self.present(alert, animated: true)
-     }
+        let alert = UIAlertController(title: NSLocalizedString("popUpErrorTitle", comment: ""), message: NSLocalizedString("popUpErrorDesc", comment: ""), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true)
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        childHasFinished?.viewControllerHasFinished()
+    }
     
     deinit {
-         print("vc deinited: ", self)
-        childHasFinished?.viewControllerHasFinished()
-     }
+        print("Deinit: ", self)
+    }
 }
 
 extension RestorauntMealTypesScreenController: UITableViewDelegate, UITableViewDataSource {
@@ -159,9 +161,10 @@ extension RestorauntMealTypesScreenController: UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MTC", for: indexPath) as? MealTypeCell  else {
-            fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
+            fatalError(NSLocalizedString("cell_error", comment: ""))
         }
         cell.setupCell(meal: viewModel.dependencies.mealCategory.meals[indexPath.row].name)
+        cell.selectionStyle = .none
         return cell
     }
     

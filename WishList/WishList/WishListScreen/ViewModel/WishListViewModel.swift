@@ -24,6 +24,7 @@ public class WishListViewModel{
         var deleteCell: PublishSubject<IndexPath>
         var screenData: [Section]?
         var disposables: [Disposable]
+        var emptySubject: PublishSubject<Bool>
     }
     
     public struct Dependencies {
@@ -50,7 +51,7 @@ public class WishListViewModel{
         disposables.append(getData(subject: input.getData))
         disposables.append(deleteLocation(subject: input.deleteMeal))
         
-        self.output = WishListViewModel.Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), errorSubject: PublishSubject<Bool>(), deleteCell: PublishSubject<IndexPath>(), disposables: disposables)
+        self.output = WishListViewModel.Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), errorSubject: PublishSubject<Bool>(), deleteCell: PublishSubject<IndexPath>(), disposables: disposables, emptySubject: PublishSubject<Bool>())
         return output
     }
     
@@ -64,9 +65,14 @@ public class WishListViewModel{
             .subscribeOn(dependencies.scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] (bool) in
-                self.meals = bool
-                //self.restoraunts = self.returnRestoraunts(current: bool)
-                self.output.screenData = self.setupScreenData(data: bool)
+                if bool.count == 0 {
+                    self.output.emptySubject.onNext(true)
+                }
+                else {
+                    self.meals = bool
+                    self.output.screenData = self.setupScreenData(data: bool)
+                    
+                }
                 self.output.dataReady.onNext(true)
                 },  onError: {[unowned self] (error) in
                     self.output.errorSubject.onNext(true)
@@ -80,6 +86,9 @@ public class WishListViewModel{
                 let meals = self.dependencies.realmRepo.deleteMeal(name: self.output!.screenData![bool.section].data[bool.row].mealName)
                 self.output!.screenData![bool.section].data.remove(at: bool.row)
                 
+                if self.output!.screenData![bool.section].data.count == 0 {
+                    self.output!.screenData!.remove(at: bool.section)
+                }
                 self.output.deleteCell.onNext(bool)
                 return meals
             })
@@ -104,7 +113,7 @@ public class WishListViewModel{
             tel = "Tel: " + data.tel
         }
         
-        price = "Cijena"
+        price = NSLocalizedString("price", comment: "")
         
         return (rName: data.restorauntName, mText: mob, tText: tel, price: price)
     }

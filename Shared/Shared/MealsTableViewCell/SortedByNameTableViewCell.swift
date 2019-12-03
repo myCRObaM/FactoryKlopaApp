@@ -49,12 +49,12 @@ public class SortedByNameTableViewCell: UITableViewCell {
     }()
     
     let priceLabel: UILabel = {
-           let view = UILabel()
-           let customFont = UIFont(name: "Rubik-Regular", size: 14.0)
-           view.font = customFont
-           view.translatesAutoresizingMaskIntoConstraints = false
-           return view
-       }()
+        let view = UILabel()
+        let customFont = UIFont(name: "Rubik-Regular", size: 14.0)
+        view.font = customFont
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     let basketButton: UIButton = {
         let view = UIButton()
@@ -138,11 +138,6 @@ public class SortedByNameTableViewCell: UITableViewCell {
             ingredients = "(" + ingredients + ")"
             self.ingredientsLabel.text = ingredients
         }
-            priceLabel.text = name.price
-    
-       
+        priceLabel.text = name.price
     }
-    
-   
-    
 }

@@ -13,7 +13,7 @@ import MapKit
 class AboutUsScreen: UIView {
     
     let mapView: MKMapView = {
-       let view = MKMapView()
+        let view = MKMapView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -43,7 +43,7 @@ class AboutUsScreen: UIView {
     
     func setupConstraints(){
         mapView.snp.makeConstraints { (make) in
-
+            
             make.height.equalTo(UIScreen.main.bounds.width*(2/3))
             make.leading.equalTo(self)
             make.trailing.equalTo(self)

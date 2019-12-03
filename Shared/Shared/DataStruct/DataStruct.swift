@@ -46,50 +46,6 @@ public struct Ingredients {
     }
 }
 
-public struct MealTypes {
-    public var type: MealTypeEnum
-    public var meals: [Meals]
-    public var isCollapsed: Bool
-    
-    public init(type: MealTypeEnum, meals: [Meals], isCollapsed: Bool? = true){
-        self.type = type
-        self.meals = meals
-        self.isCollapsed = isCollapsed ?? true
-    }
-}
 
-public struct MealCategory {
-    public var type: MealTypeEnum
-    public var meals: [MealsWithRestoraunt]
 
-    
-    public init(type: MealTypeEnum, meals: [MealsWithRestoraunt]){
-        self.type = type
-        self.meals = meals
 
-    }
-}
-
-public struct MealsWithRestoraunt {
-    public var name: String
-    public var priceNormal: String?
-    public var priceJumbo: String?
-    public var price: String?
-    public var ingredients: [Ingredients]?
-    public var restorauntName: String
-    public var mobLabel: String?
-    public var telLabel: String?
-    public var isPizza: Bool = false
-    
-    public init(name: String, priceNormal: String?, priceJumbo: String?, price: String?, ingredients: [Ingredients]? , restorauntName: String, mobLabel: String?, telLabel: String?, isPizza: Bool = false) {
-        self.name = name
-        self.priceNormal = priceNormal
-        self.priceJumbo = priceJumbo
-        self.price = price
-        self.ingredients = ingredients
-        self.restorauntName = restorauntName
-        self.mobLabel = mobLabel
-        self.telLabel = telLabel
-        self.isPizza = isPizza
-    }
-}

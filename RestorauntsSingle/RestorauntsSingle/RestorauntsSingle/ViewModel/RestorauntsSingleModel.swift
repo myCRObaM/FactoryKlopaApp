@@ -57,14 +57,14 @@ class RestorauntsSingleModel {
     
     func setupData(subject: ReplaySubject<Bool>) -> Disposable {
         return subject
-        .observeOn(MainScheduler.instance)
-        .subscribeOn(dependencies.scheduler)
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(dependencies.scheduler)
             .map({[unowned self] bool in
                 self.output.screenData = self.setupScreenData(data: self.dependencies.meals)
-           })
+            })
             .subscribe(onNext: { [unowned self] bool in
                 self.output.dataReady.onNext(true)
-            },  onError: {[unowned self] (error) in
+                },  onError: {[unowned self] (error) in
                     self.output.errorSubject.onNext(true)
                     print(error)
             })
@@ -72,11 +72,21 @@ class RestorauntsSingleModel {
     
     func setupScreenData(data: Restoraunts) -> RestorauntsSingleScreenStruct {
         var section = [Section]()
-        for mealType in data.meals {
-            section.append(Section(type: mealType.type, data: mealType.meals))
-        }
-        if section.count != 0 {
-            section[0].isCollapsed = false
+        var meals = [Meals]()
+        for (n, mealType) in data.meals.enumerated() {
+            if n == 0 {
+                for meal in mealType.meals {
+                    meals.append(meal)
+                }
+                section.append(Section(type: mealType.type, data: meals))
+                section[0].isCollapsed = false
+                meals.removeAll()
+            }
+            else {
+                section.append(Section(type: mealType.type, data: meals))
+                meals.removeAll()
+            }
+            
         }
         return RestorauntsSingleScreenStruct(title: data.name, mob: data.mob, tel: data.tel, workingHours: data.workingHours ?? "", section: section)
     }
@@ -123,22 +133,22 @@ class RestorauntsSingleModel {
     }
     
     
-    public func numberOfRows(section: Section) -> Int{
-        if section.isCollapsed {
-            return 0
+    func expandableHandler(section: Int, data: [Meals]) {
+        var indexpath = [IndexPath]()
+        
+        if output.screenData.section[section].isCollapsed {
+            for meal in data{
+                output.screenData.section[section].data.append(meal)
+            }
         }
         else {
-            return section.data.count
+            output.screenData.section[section].data.removeAll()
         }
-    }
-    func expandableHandler(section: Int) {
-        var indexpath = [IndexPath]()
+        
         
         for (n, _) in output.screenData.section[section].data.enumerated(){
             indexpath.append(IndexPath(row: n, section: section))
         }
-        
-        
         
         if output.screenData.section[section].isCollapsed {
             output.screenData.section[section].isCollapsed = false
@@ -153,19 +163,9 @@ class RestorauntsSingleModel {
         return section.isCollapsed
     }
     
-    func detailsButtonSelected(bool: Bool) -> (Bool, Bool){
-        var detailsButtonIsPressed: Bool = true
-        if bool {
-            detailsButtonIsPressed = true
-        }
-        else {
-            detailsButtonIsPressed = false
-        }
-        return (detailsButtonIsPressed, !detailsButtonIsPressed)
-    }
     
     func addMealToWishList(subject: PublishSubject<SaveToListEnum>) -> Disposable {
-         return subject
+        return subject
             .flatMap({[unowned self] enumValue -> Observable<String> in
                 var bool: IndexPath!
                 var price: String = ""
@@ -178,40 +178,37 @@ class RestorauntsSingleModel {
                     bool = index
                 }
                 let object = MealsWithRestoraunt(name: self.dependencies.meals.meals[bool.section].meals[bool.row].name, priceNormal: "", priceJumbo: "", price: price, ingredients: self.dependencies.meals.meals[bool.section].meals[bool.row].ingredients, restorauntName: self.dependencies.meals.name, mobLabel: self.dependencies.meals.mob, telLabel: self.dependencies.meals.tel)
-                
-                
                 let meals = self.dependencies.realmManager.saveMeal(meal: object)
-                       return meals
-                   })
-                       .subscribeOn(dependencies.scheduler)
-                       .observeOn(MainScheduler.instance)
-                       .subscribe(onNext: { (locations) in
-                        self.output.popupSubject.onNext(true)
-                },  onError: {[unowned self] (error) in
-                        self.output.errorSubject.onNext(true)
-                        print(error)
-                })
-        }
+                return meals
+            })
+            .subscribeOn(dependencies.scheduler)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (locations) in
+                self.output.popupSubject.onNext(true)
+            },  onError: {[unowned self] (error) in
+                self.output.errorSubject.onNext(true)
+                print(error)
+            })
+    }
     
     func setupCellData(data: Meals) -> (String, String, String) {
-            var ingredients: String = ""
-            let mealName: String = data.name.uppercased()
-            var price: String = data.price ?? ""
-            if Int(data.priceJumbo ?? "0") ?? 0 > 0 {
-                       price = (data.priceNormal ?? "") + "  " + (data.priceJumbo ?? "")
-                   }
-            if data.ingredients?.count ?? 0 > 0 {
-                for ingredient in data.ingredients! {
-                    if ingredients != "" {
-                        ingredients = ingredients + ", " + ingredient.name!
-                    }
-                    else {
-                        ingredients = ingredient.name!
-                    }
-                    
+        var ingredients: String = ""
+        let mealName: String = data.name.uppercased()
+        var price: String = data.price ?? ""
+        if Int(data.priceJumbo ?? "0") ?? 0 > 0 {
+            price = (data.priceNormal ?? "") + "  " + (data.priceJumbo ?? "")
+        }
+        if data.ingredients?.count ?? 0 > 0 {
+            for ingredient in data.ingredients! {
+                if ingredients != "" {
+                    ingredients = ingredients + ", " + ingredient.name!
                 }
-                ingredients = "(" + ingredients + ")"
+                else {
+                    ingredients = ingredient.name!
+                }
             }
+            ingredients = "(" + ingredients + ")"
+        }
         return (mealName, price, ingredients)
     }
     
@@ -219,4 +216,4 @@ class RestorauntsSingleModel {
 }
 
 
-    
+

@@ -51,48 +51,49 @@ class RestorauntMealTypesModel  {
     
     func prepareData(subject: ReplaySubject<Bool>) -> Disposable {
         return subject
-        .observeOn(MainScheduler.instance)
-        .subscribeOn(dependencies.scheduler)
-        .subscribe(onNext: { [unowned self] bool in
-            self.output.dataReady.onNext(true)
-        },  onError: {[unowned self] (error) in
-                self.output.errorSubject.onNext(true)
-                print(error)
-        })
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(dependencies.scheduler)
+            .subscribe(onNext: { [unowned self] bool in
+                self.output.dataReady.onNext(true)
+                },  onError: {[unowned self] (error) in
+                    self.output.errorSubject.onNext(true)
+                    print(error)
+            })
     }
     
     func returnLabelData(meal: MealCategory) -> String {
         switch meal.type {
         case .desert:
-            return "Desert"
+            return NSLocalizedString("mealType_Desert", comment: "")
         case .additions:
-            return "Dodatci"
+            return NSLocalizedString("mealType_Dodatci", comment: "")
         case .hamburgers:
-            return "Hamburger"
+            return NSLocalizedString("mealType_Hamburger", comment: "")
         case .mealsByOrder:
-            return "Jela po narudzbi"
+            return NSLocalizedString("mealType_MBO", comment: "")
         case .grillMeals:
-            return "Jela s rostilja"
+            return NSLocalizedString("mealType_GM", comment: "")
         case .kebab:
-            return "Kebab"
+            return NSLocalizedString("mealType_Kebab", comment: "")
         case .other:
-            return "Ostalo"
+            return NSLocalizedString("mealType_Ostalo", comment: "")
         case .pizza:
-            return "Pizza"
+            return NSLocalizedString("mealType_Pizza", comment: "")
         case .side:
-            return "Prilozi"
+            return NSLocalizedString("mealType_Prilozi", comment: "")
         case .fishMeals:
-            return "Riblja jela"
+            return NSLocalizedString("mealType_Fish", comment: "")
         case .riceMeals:
-            return "Rizoto"
+            return NSLocalizedString("mealType_Rice", comment: "")
         case .salad:
-            return "Salata"
+            return NSLocalizedString("mealType_Salad", comment: "")
         case .sendwich:
-            return "Sendvic"
+            return NSLocalizedString("mealType_Sendvich", comment: "")
         case .pasta:
-            return "Tjestenina"
+            return NSLocalizedString("mealType_Pasta", comment: "")
         }
     }
+    
     func didSelectRow(mealWithName: [MealsWithRestoraunt], name: String) -> [MealsWithRestoraunt]{
         var array = [MealsWithRestoraunt]()
         
@@ -107,7 +108,6 @@ class RestorauntMealTypesModel  {
             }
         }
         return array
-        
     }
 }
 
