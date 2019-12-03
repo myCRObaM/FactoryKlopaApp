@@ -16,6 +16,7 @@ class RestorauntsSingleModel {
     struct Input {
         var loadScreenData: ReplaySubject<Bool>
         var saveMeal: PublishSubject<SaveToListEnum>
+        var screenSelectionButtonSubject: PublishSubject<Bool>
     }
     
     struct Output {
@@ -25,6 +26,7 @@ class RestorauntsSingleModel {
         var expandableHandler: PublishSubject<ExpansionEnum>
         var errorSubject: PublishSubject<Bool>
         var popupSubject: PublishSubject<Bool>
+        var buttonStateSubject: PublishSubject<Bool>
     }
     
     struct Dependencies {
@@ -50,11 +52,12 @@ class RestorauntsSingleModel {
         
         disposables.append(setupData(subject: input.loadScreenData))
         disposables.append(addMealToWishList(subject: input.saveMeal))
+        disposables.append(setupButtonState(subject: input.screenSelectionButtonSubject))
         
-        self.output = Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), disposables: disposables, screenData: nil, expandableHandler: PublishSubject(), errorSubject: PublishSubject<Bool>(), popupSubject: PublishSubject<Bool>())
+        self.output = Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), disposables: disposables, screenData: nil, expandableHandler: PublishSubject(), errorSubject: PublishSubject<Bool>(), popupSubject: PublishSubject<Bool>(), buttonStateSubject: PublishSubject<Bool>())
         return output
     }
-    
+    //MARK: Setup data
     func setupData(subject: ReplaySubject<Bool>) -> Disposable {
         return subject
             .observeOn(MainScheduler.instance)
@@ -90,7 +93,7 @@ class RestorauntsSingleModel {
         }
         return RestorauntsSingleScreenStruct(title: data.name, mob: data.mob, tel: data.tel, workingHours: data.workingHours ?? "", section: section)
     }
-    
+    //MARK: Header Name
     func returnHeaderName(meal: MealTypes) -> String {
         switch meal.type {
         case .desert:
@@ -123,7 +126,7 @@ class RestorauntsSingleModel {
             return "Tjestenina"
         }
     }
-    
+    //MARK: Pizza check functions
     func isPizza(category: String) -> Bool {
         return category == "Pizza"
     }
@@ -132,7 +135,7 @@ class RestorauntsSingleModel {
         return !(price == "")
     }
     
-    
+    //MARK: Expandable hander
     func expandableHandler(section: Int, data: [Meals]) {
         var indexpath = [IndexPath]()
         
@@ -163,7 +166,7 @@ class RestorauntsSingleModel {
         return section.isCollapsed
     }
     
-    
+    //MARK: Add meal to wish list
     func addMealToWishList(subject: PublishSubject<SaveToListEnum>) -> Disposable {
         return subject
             .flatMap({[unowned self] enumValue -> Observable<String> in
@@ -190,7 +193,7 @@ class RestorauntsSingleModel {
                 print(error)
             })
     }
-    
+    //MARK: Cell data
     func setupCellData(data: Meals) -> (String, String, String) {
         var ingredients: String = ""
         let mealName: String = data.name.uppercased()
@@ -211,7 +214,15 @@ class RestorauntsSingleModel {
         }
         return (mealName, price, ingredients)
     }
-    
+    //MARK: Setup button state
+    func setupButtonState(subject: PublishSubject<Bool>) -> Disposable {
+        return subject
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(dependencies.scheduler)
+            .subscribe(onNext: { [unowned self] bool in
+                self.output.buttonStateSubject.onNext(bool)
+            })
+    }
     
 }
 

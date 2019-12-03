@@ -48,12 +48,13 @@ class RestorauntMealTypesScreenController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupView()
-        self.setupConstraints()
+        setupView()
+        setupConstraints()
+        setupData()
         setupViewModel()
-        self.setupData()
+        
     }
-    
+    //MARK: Setup View Model
     func setupViewModel(){
         let input = RestorauntMealTypesModel.Input(getData: ReplaySubject<Bool>.create(bufferSize: 1))
         let output = viewModel.transform(input: input)
@@ -78,16 +79,12 @@ class RestorauntMealTypesScreenController: UIViewController {
         
         viewModel.input.getData.onNext(true)
     }
-    
+    //MARK: Setup View
     func setupView(){        
         view.addSubview(backgroundView)
         view.insertSubview(tableView, aboveSubview: backgroundView)
         view.backgroundColor = .white
         view.insertSubview(mealNameLabel, aboveSubview: backgroundView)
-        tableView.register(MealTypeCell.self, forCellReuseIdentifier: "MTC")
-        tableView.delegate = self
-        tableView.dataSource = self
-        backgroundView.backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
     }
     
     func setupConstraints(){
@@ -106,7 +103,7 @@ class RestorauntMealTypesScreenController: UIViewController {
             make.edges.equalTo(view)
         }
     }
-    
+    //MARK: Setup Header
     func setupHeader() -> UIView{
         let headerView = UIView()
         let priceAndNumberLabel = UILabel()
@@ -130,14 +127,20 @@ class RestorauntMealTypesScreenController: UIViewController {
         headerView.backgroundColor = .white
         return headerView
     }
-    
+    //MARK: Setup Data
     func setupData(){
         mealNameLabel.text = viewModel.returnLabelData(meal: viewModel.dependencies.mealCategory)
+        tableView.register(MealTypeCell.self, forCellReuseIdentifier: "MTC")
+        tableView.delegate = self
+        tableView.dataSource = self
+        backgroundView.backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
     }
-    
+    //MARK: Button action
     @objc func backButtonPressed(){
         navigationController?.popViewController(animated: false)
     }
+    
+    //MARK: Error PopUp
     func showPopUp(){
         let alert = UIAlertController(title: NSLocalizedString("popUpErrorTitle", comment: ""), message: NSLocalizedString("popUpErrorDesc", comment: ""), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
@@ -145,15 +148,12 @@ class RestorauntMealTypesScreenController: UIViewController {
         }))
         self.present(alert, animated: true)
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        childHasFinished?.viewControllerHasFinished()
-    }
     
     deinit {
         print("Deinit: ", self)
     }
 }
-
+//MARK: TableView extension
 extension RestorauntMealTypesScreenController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.dependencies.mealCategory.meals.count

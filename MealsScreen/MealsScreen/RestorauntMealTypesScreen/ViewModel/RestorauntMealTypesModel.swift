@@ -49,6 +49,8 @@ class RestorauntMealTypesModel  {
         return output
     }
     
+    //MARK: Prepare data
+    
     func prepareData(subject: ReplaySubject<Bool>) -> Disposable {
         return subject
             .observeOn(MainScheduler.instance)
@@ -61,6 +63,7 @@ class RestorauntMealTypesModel  {
             })
     }
     
+    //MARK: Label Data
     func returnLabelData(meal: MealCategory) -> String {
         switch meal.type {
         case .desert:
@@ -93,7 +96,7 @@ class RestorauntMealTypesModel  {
             return NSLocalizedString("mealType_Pasta", comment: "")
         }
     }
-    
+    //MARK: DidSelectRow
     func didSelectRow(mealWithName: [MealsWithRestoraunt], name: String) -> [MealsWithRestoraunt]{
         var array = [MealsWithRestoraunt]()
         

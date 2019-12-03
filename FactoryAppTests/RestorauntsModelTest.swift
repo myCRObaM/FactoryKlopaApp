@@ -42,7 +42,7 @@ class RestorauntsModelTests: QuickSpec {
                     
                     restorauntsViewModel = RestorauntsViewModel(dependencies: RestorauntsViewModel.Dependencies(scheduler: testScheduler, repo: DataRepo()))
                     
-                    let output = restorauntsViewModel.transform(input: RestorauntsViewModel.Input(getDataSubject: ReplaySubject<Bool>.create(bufferSize: 1)))
+                    let output = restorauntsViewModel.transform(input: RestorauntsViewModel.Input(getDataSubject: ReplaySubject<Bool>.create(bufferSize: 1), screenSelectionSubject: PublishSubject<Bool>()))
                     
                     for disposable in output.disposables {
                         disposable.disposed(by: disposeBag)
@@ -78,7 +78,6 @@ class RestorauntsModelTests: QuickSpec {
                     expect(sorted[5].meals.count).toEventually(equal(22))
                     expect(sorted[6].meals.count).toEventually(equal(10))
                     expect(sorted[7].meals.count).toEventually(equal(19))
-                    
                 }
             }
         }

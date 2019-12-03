@@ -72,7 +72,7 @@ class SortedByMealNameModel {
                     print(error)
             })
     }
-    
+    //MARK: Setup Screen data
     func setupScreenData(data: [MealsWithRestoraunt]) -> Section {
         let ingRepo = IngredientsOperator()
         var name: String = ""
@@ -85,7 +85,7 @@ class SortedByMealNameModel {
         }
         return (Section(mealName: name, data: meals))
     }
-    
+    //MARK: isPizza
     func isPizza(meal: MealsWithRestoraunt) -> Bool {
         if meal.isPizza {
             return true
@@ -94,11 +94,11 @@ class SortedByMealNameModel {
             return false
         }
     }
-    
+    //MARK: Has jumbo price
     func hasJumboPrice(price: String) -> Bool {
         return !(price == "")
     }
-    
+    //MARK: Add to Wish List
     func addMealToWishList(subject: PublishSubject<SaveToListEnum>) -> Disposable {
         return subject
             .flatMap({[unowned self] enumValue -> Observable<String> in

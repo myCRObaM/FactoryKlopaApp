@@ -38,14 +38,16 @@ class WishListViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    //MARK: View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
+        self.setupTableView()
+        self.setupButton()
         self.setupConstraints()
         setupViewModel()
     }
-    
+    //MARK: Setup View Model
     func setupViewModel(){
         let output = viewModel.transform(input: WishListViewModel.Input(getData: ReplaySubject<Bool>.create(bufferSize: 1), deleteMeal: PublishSubject<IndexPath>()))
         
@@ -78,20 +80,13 @@ class WishListViewController: UIViewController {
         self.deleteCells(subject: output.deleteCell).disposed(by: disposeBag)
         viewModel.input.getData.onNext(true)
     }
-    
+    //MARK: Setup View
     func setupView(){
         view.addSubview(backgroundView)
         view.addSubview(tableView)
         
         //print(Realm.Configuration.defaultConfiguration.fileURL!)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(WishListCell.self, forCellReuseIdentifier: "MTC")
-        tableView.register(WishListTotal.self, forCellReuseIdentifier: "WLT")
         
-        tableView.tableFooterView = UIView()
-        
-        backgroundView.backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
     }
     
     func setupConstraints(){
@@ -103,10 +98,26 @@ class WishListViewController: UIViewController {
             make.bottom.leading.trailing.equalTo(view)
         }
     }
+    
+    //MARK: SetupTable View
+    func setupTableView(){
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(WishListCell.self, forCellReuseIdentifier: "MTC")
+        tableView.register(WishListTotal.self, forCellReuseIdentifier: "WLT")
+        
+        tableView.tableFooterView = UIView()
+    }
+    
+    
+    //MARK: Button setup
+    func setupButton(){
+        backgroundView.backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
+    }
     @objc func backButtonPressed(){
         navigationController?.popViewController(animated: false)
     }
-    
+    //MARK: PopUp
     func showPopUp(){
         let alert = UIAlertController(title: NSLocalizedString("popUpErrorTitle", comment: ""), message: NSLocalizedString("popUpErrorDesc", comment: ""), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
@@ -123,7 +134,7 @@ class WishListViewController: UIViewController {
         print("Deinit: ", self)
     }
     
-    
+    //MARK: Delete cells
     func deleteCells(subject: PublishSubject<IndexPath>) -> Disposable {
         subject
             .observeOn(MainScheduler.instance)
@@ -133,7 +144,7 @@ class WishListViewController: UIViewController {
             })
         
     }
-    
+    //MARK: Empty state
     func setupEmptyState(){
         let coverView = UIView()
         let emptyLabel = UILabel()
@@ -163,50 +174,8 @@ class WishListViewController: UIViewController {
         }
         
     }
-}
-
-extension WishListViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.returnNumberOfCells(section: section)
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch viewModel.returnACorrectCell(index: indexPath){
-        case true:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "WLT", for: indexPath) as? WishListTotal  else {
-                fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
-            }
-            let data = viewModel.output!.screenData![indexPath.section].data
-            cell.setupCell(ammount: viewModel.returnTotalAmount(data: data))
-            cell.separatorInset = .zero
-            return cell
-        case false:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "MTC", for: indexPath) as? WishListCell  else {
-                fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
-            }
-            let data = viewModel.output!.screenData![indexPath.section].data[indexPath.row]
-            cell.setupCell(data: viewModel.returnDataForCell(data: data))
-            cell.separatorInset = .zero
-            cell.selectionStyle = .none
-            return cell
-        }
-        
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return viewModel.canPress(index: indexPath)
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.output?.screenData?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            viewModel.input.deleteMeal.onNext(indexPath)
-        }
-    }
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    //MARK: Setup header
+    func setupHeader(section: Int) -> UIView{
         let header = UIView()
         let headerLabel = UILabel()
         let mobLabel = UILabel()
@@ -262,6 +231,52 @@ extension WishListViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         return header
+    }
+}
+//MARK: TableView Extensions
+extension WishListViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.returnNumberOfCells(section: section)
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch viewModel.returnACorrectCell(index: indexPath){
+        case true:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "WLT", for: indexPath) as? WishListTotal  else {
+                fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
+            }
+            let data = viewModel.output!.screenData![indexPath.section].data
+            cell.setupCell(ammount: viewModel.returnTotalAmount(data: data))
+            cell.separatorInset = .zero
+            return cell
+        case false:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "MTC", for: indexPath) as? WishListCell  else {
+                fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
+            }
+            let data = viewModel.output!.screenData![indexPath.section].data[indexPath.row]
+            cell.setupCell(data: viewModel.returnDataForCell(data: data))
+            cell.separatorInset = .zero
+            cell.selectionStyle = .none
+            return cell
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return viewModel.canPress(index: indexPath)
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.output?.screenData?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            viewModel.input.deleteMeal.onNext(indexPath)
+        }
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return setupHeader(section: section)
     }
     
 }

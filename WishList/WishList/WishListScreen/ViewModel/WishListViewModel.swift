@@ -49,12 +49,12 @@ public class WishListViewModel{
         var disposables = [Disposable]()
         
         disposables.append(getData(subject: input.getData))
-        disposables.append(deleteLocation(subject: input.deleteMeal))
+        disposables.append(deleteMeal(subject: input.deleteMeal))
         
         self.output = WishListViewModel.Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), errorSubject: PublishSubject<Bool>(), deleteCell: PublishSubject<IndexPath>(), disposables: disposables, emptySubject: PublishSubject<Bool>())
         return output
     }
-    
+    //MARK: GetData
     func getData(subject: ReplaySubject<Bool>) -> Disposable{
         return subject
             .flatMap({[unowned self] (bool) -> Observable<[MealsWithRestoraunt]> in
@@ -79,8 +79,8 @@ public class WishListViewModel{
                     print(error)
             })
     }
-    
-    func deleteLocation(subject: PublishSubject<IndexPath>) -> Disposable {
+    //MARK: Remove meal from list
+    func deleteMeal(subject: PublishSubject<IndexPath>) -> Disposable {
         return subject
             .flatMap({[unowned self] (bool) -> Observable<String> in
                 let meals = self.dependencies.realmRepo.deleteMeal(name: self.output!.screenData![bool.section].data[bool.row].mealName)
@@ -100,7 +100,7 @@ public class WishListViewModel{
                 print(error)
             })
     }
-    
+    //MARK: Header data
     func dataForHeader(data: Section) -> (rName: String, mText: String, tText: String, price: String){
         var mob = ""
         var tel = ""
@@ -117,7 +117,7 @@ public class WishListViewModel{
         
         return (rName: data.restorauntName, mText: mob, tText: tel, price: price)
     }
-    
+    //MARK: Return correct cell type
     func returnACorrectCell(index: IndexPath) -> Bool {
         if (index.row == output!.screenData![index.section].data.count){
             return true
@@ -127,7 +127,7 @@ public class WishListViewModel{
             return false
         }
     }
-    
+    //MARK: Data for cell
     func returnDataForCell(data: Row) -> (String, String, String){
         var ingredients = data.ingredients ?? ""
         if ingredients == "()" {
@@ -135,7 +135,7 @@ public class WishListViewModel{
         }
         return (data.mealName, ingredients, data.price ?? "")
     }
-    
+    //MARK: AllowsPress
     func canPress(index: IndexPath) -> Bool {
         if index.row == output!.screenData![index.section].data.count {
             return false
@@ -146,7 +146,7 @@ public class WishListViewModel{
         }
         
     }
-    
+    //MARK: Total amount
     func returnTotalAmount(data: [Row]) -> Int {
         var total: Int = 0
         for meal in data{
@@ -154,7 +154,7 @@ public class WishListViewModel{
         }
         return total
     }
-    
+    //MARK: Number of cells
     func returnNumberOfCells(section: Int) -> Int {
         if (output?.screenData?[section].data.count) ?? 0 == 0 {
             return 0
@@ -163,7 +163,7 @@ public class WishListViewModel{
             return output!.screenData![section].data.count + 1
         }
     }
-    
+    //MARK: Setup Screen data
     func setupScreenData(data: [MealsWithRestoraunt]) -> [Section]{
         var restoraunts = [Section]()
         for restoraunt in data {
@@ -193,7 +193,7 @@ public class WishListViewModel{
         
         return restoraunts
     }
-    
+    //MARK: Ingredients
     func returnIngredients(data: MealsWithRestoraunt) -> String{
         var ingredients: String = ""
         if data.ingredients?.count ?? 0 > 0 {

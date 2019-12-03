@@ -72,7 +72,7 @@ class RestorauntsScreenViewController: UIViewController {
     }
     //MARK: ViewModel Setup
     func prepareViewModel(){
-        let input = RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1), saveMeal: PublishSubject<SaveToListEnum>())
+        let input = RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1), saveMeal: PublishSubject<SaveToListEnum>(), screenSelectionButtonSubject: PublishSubject<Bool>())
         
         let output = viewModel.transform(input: input)
         
@@ -97,6 +97,7 @@ class RestorauntsScreenViewController: UIViewController {
         
         expensionHandler(subject: output.expandableHandler).disposed(by: disposeBag)
         savedAlertHandler(subject: output.popupSubject).disposed(by: disposeBag)
+        setupButtons(subject: output.buttonStateSubject).disposed(by: disposeBag)
         
         viewModel.input.loadScreenData.onNext(true)
     }
@@ -286,7 +287,7 @@ class RestorauntsScreenViewController: UIViewController {
                 self.tableView.reloadData()
             })
     }
-    
+    //MARK: Button action
     @objc func backButtonPressed(){
         navigationController?.popViewController(animated: false)
     }
@@ -303,17 +304,28 @@ class RestorauntsScreenViewController: UIViewController {
         aboutUs.snp.makeConstraints { (make) in
             make.edges.equalTo(tableView)
         }
-        setupButtons(selection: true)
+        viewModel.input.screenSelectionButtonSubject.onNext(true)
     }
     
     @objc func pricesButtonPressed(){
         aboutUs.removeFromSuperview()
-        setupButtons(selection: false)
+        viewModel.input.screenSelectionButtonSubject.onNext(false)
     }
     
-    func setupButtons(selection: Bool){
-        customView.detailsButton.isSelected = selection
-        customView.priceButton.isSelected = !selection
+    @objc func openWishlistScreen(){
+        basketButtonPress?.openCart()
+    }
+    
+    //MARK Button setup
+    func setupButtons(subject: PublishSubject<Bool>) -> Disposable{
+        return subject
+        .observeOn(MainScheduler.instance)
+        .subscribeOn(viewModel.dependencies.scheduler)
+        .subscribe(onNext: {[unowned self] bool in
+            self.customView.detailsButton.isSelected = bool
+            self.customView.priceButton.isSelected = !bool
+        })
+        
     }
     //MARK: popUp function
     func showPopUp(){
@@ -332,10 +344,8 @@ class RestorauntsScreenViewController: UIViewController {
         print("Deinit: ", self)
     }
     
-    @objc func openWishlistScreen(){
-        basketButtonPress?.openCart()
-    }
     
+    //MARK: Save alert
     func savedAlertHandler(subject: PublishSubject<Bool>) -> Disposable{
         return subject
             .subscribeOn(viewModel.dependencies.scheduler)

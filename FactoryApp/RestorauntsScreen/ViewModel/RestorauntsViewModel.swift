@@ -14,6 +14,7 @@ public class RestorauntsViewModel {
     //MARK: Define structs
     struct Input {
         var getDataSubject: ReplaySubject<Bool>
+        var screenSelectionSubject: PublishSubject<Bool>
     }
     
     struct Output {
@@ -21,6 +22,7 @@ public class RestorauntsViewModel {
         var errorSubject: PublishSubject<Bool>
         var disposables: [Disposable]
         var viewData = [MainViewDataModel]()
+        var buttonStateSubject: PublishSubject<Bool>
     }
     
     struct Dependencies {
@@ -44,12 +46,13 @@ public class RestorauntsViewModel {
         var disposables = [Disposable]()
         
         disposables.append(getData(subject: input.getDataSubject))
+        disposables.append(setupButtonState(subject: input.screenSelectionSubject))
         
-        self.output = Output(dataIsDoneSubject: ReplaySubject<Bool>.create(bufferSize: 1), errorSubject: PublishSubject(), disposables: disposables, viewData: [MainViewDataModel]())
+        self.output = Output(dataIsDoneSubject: ReplaySubject<Bool>.create(bufferSize: 1), errorSubject: PublishSubject(), disposables: disposables, viewData: [MainViewDataModel](), buttonStateSubject: PublishSubject<Bool>())
         return output
     }
     
-    
+    //MARK: Get data
     func getData(subject: ReplaySubject<Bool>) -> Disposable {
         return subject
             .flatMap({ [unowned self] bool -> Observable<[RestorauntsModel]> in
@@ -67,7 +70,7 @@ public class RestorauntsViewModel {
             })
     }
     
-    
+    //MARK: viewData function
     func setupViewData(data: [Restoraunts]) -> [MainViewDataModel]{
         var viewDataModel = [MainViewDataModel]()
         for (n, restoraunt) in data.enumerated() {
@@ -81,7 +84,7 @@ public class RestorauntsViewModel {
         return convertClass.convertToStruct(restoraunts: restoraunts)
     }
     
-    //MARK: return Cell data
+    //MARK: Return Collection View Cell data
     func returnCellData(type: MealCategory) -> (String, URL) {
         switch type.type {
         case .additions:
@@ -114,7 +117,7 @@ public class RestorauntsViewModel {
             return ("Tjestenina", URL(string: "http://klopa.factory.hr/wp-content/uploads/2019/02/tjestenine.jpg")!)
         }
     }
-    
+    //MARK: MealCategory view
     func arrayOfCategorySortedMeals(restorants: [Restoraunts]) -> [MealCategory] {
         var array = [MealCategory]()
         var meals = [MealsWithRestoraunt]()
@@ -150,14 +153,13 @@ public class RestorauntsViewModel {
         return array
     }
     
-    func restorauntsButtonIsSelected(bool: Bool) -> (Bool, Bool){
-        var isSelected: Bool = true
-        if bool{
-            isSelected = true
-        }
-        else {
-            isSelected = false
-        }
-        return (isSelected, !isSelected)
+    //MARK: Button state
+    func setupButtonState(subject: PublishSubject<Bool>) -> Disposable {
+        return subject
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(dependencies.scheduler)
+            .subscribe(onNext: { [unowned self] bool in
+                self.output.buttonStateSubject.onNext(bool)
+            })
     }
 }

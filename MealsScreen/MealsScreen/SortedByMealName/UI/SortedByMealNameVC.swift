@@ -130,12 +130,12 @@ class SortedByNameVC: UIViewController {
         
         viewModel.input.getData.onNext(true)
     }
-    
+    //MARK: Button action
     @objc func backButtonPressed(){
         navigationController?.popViewController(animated: false)
     }
-    //MARK: Header
     
+    //MARK: Header
     func setupHeader() -> UIView{
         let bothViews = UIView()
         let views = setupNormalHeader()
@@ -165,7 +165,6 @@ class SortedByNameVC: UIViewController {
             views.snp.makeConstraints { (make) in
                 make.bottom.equalTo(bothViews)
             }
-            break
         }
         
         return bothViews
@@ -239,7 +238,7 @@ class SortedByNameVC: UIViewController {
         
         return jnView
     }
-    
+    //MARK: Error PopUp
     func showPopUp(){
         let alert = UIAlertController(title: NSLocalizedString("popUpErrorTitle", comment: ""), message: NSLocalizedString("popUpErrorDesc", comment: ""), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
@@ -248,9 +247,7 @@ class SortedByNameVC: UIViewController {
         self.present(alert, animated: true)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        childHasFinished?.viewControllerHasFinished()
-    }
+    
     
     deinit {
         print("Deinit: ", self)
@@ -259,7 +256,7 @@ class SortedByNameVC: UIViewController {
         basketButtonPress?.openCart()
     }
     
-    
+    //MARK: Save alert
     func savedAlertHandler(subject: PublishSubject<Bool>) -> Disposable{
         return subject
             .subscribeOn(viewModel.dependencies.scheduler)

@@ -61,11 +61,12 @@ class RestorauntsViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupConstraints()
+        setupData()
         setupViewModel()
     }
     //MARK: SetupViewModel
     func setupViewModel(){
-        let input = RestorauntsViewModel.Input(getDataSubject: ReplaySubject<Bool>.create(bufferSize: 1))
+        let input = RestorauntsViewModel.Input(getDataSubject: ReplaySubject<Bool>.create(bufferSize: 1), screenSelectionSubject: PublishSubject<Bool>())
         
         let output = viewModel.transform(input: input)
         
@@ -74,10 +75,13 @@ class RestorauntsViewController: UIViewController {
         }
         input.getDataSubject.onNext(true)
         
+        setupButtons(subject: output.buttonStateSubject).disposed(by: disposeBag)
+        
         output.dataIsDoneSubject
             .observeOn(MainScheduler.instance)
             .subscribeOn(viewModel.dependencies.scheduler)
             .subscribe(onNext: { [unowned self] bool in
+                self.restorauntsButtonPressed()
                 self.tableView.reloadData()
             }).disposed(by: disposeBag)
         
@@ -92,25 +96,13 @@ class RestorauntsViewController: UIViewController {
     func setupView(){
         tableView.register(RestorauntsTableViewCell.self, forCellReuseIdentifier: "Cell")
         
-        
         view.addSubview(backgroundView)
         view.insertSubview(customView, aboveSubview: backgroundView)
         view.insertSubview(tableView, aboveSubview: customView)
         view.backgroundColor = .white
         
         backgroundView.backButton.removeFromSuperview()
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.tableFooterView = UIView()
-        
-        customView.restorauntsButton.addTarget(self, action: #selector(restorauntsButtonPressed), for: .touchUpInside)
-        customView.mealsButton.addTarget(self, action: #selector(mealsButtonPressed), for: .touchUpInside)
-        
-        restorauntsButtonPressed()
-        
     }
-    
     
     func setupConstraints(){
         customView.snp.makeConstraints { (make) in
@@ -125,6 +117,15 @@ class RestorauntsViewController: UIViewController {
         backgroundView.snp.makeConstraints { (make) in
             make.edges.equalTo(view)
         }
+    }
+    //MARK: Setup Data
+    func setupData() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.tableFooterView = UIView()
+        
+        customView.restorauntsButton.addTarget(self, action: #selector(restorauntsButtonPressed), for: .touchUpInside)
+        customView.mealsButton.addTarget(self, action: #selector(mealsButtonPressed), for: .touchUpInside)
     }
     
     //MARK: CollectionViewSetup
@@ -141,7 +142,7 @@ class RestorauntsViewController: UIViewController {
         collectionView.backgroundColor = .white
         
     }
-    
+    //MARK: Button press handles
     @objc func restorauntsButtonPressed(){
         switch customView.mealsButton.isSelected {
         case true:
@@ -151,11 +152,11 @@ class RestorauntsViewController: UIViewController {
             break
         }
         
-        setupButtons(selection: true)
+        viewModel.input.screenSelectionSubject.onNext(true)
     }
     
     @objc func mealsButtonPressed(){
-        setupButtons(selection: false)
+        viewModel.input.screenSelectionSubject.onNext(false)
         setupCollectionView()
         
         view.insertSubview(coverView, aboveSubview: tableView)
@@ -172,11 +173,16 @@ class RestorauntsViewController: UIViewController {
         }
     }
     
-    func setupButtons(selection: Bool){
-        customView.restorauntsButton.isSelected = selection
-        customView.mealsButton.isSelected = !selection
+    func setupButtons(subject: PublishSubject<Bool>) -> Disposable{
+        return subject
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(viewModel.dependencies.scheduler)
+            .subscribe(onNext: { [unowned self] bool in
+                self.customView.restorauntsButton.isSelected = bool
+                self.customView.mealsButton.isSelected = !bool
+            })
     }
-    
+    //MARK: PopUp function
     func showPopUp(){
         let alert = UIAlertController(title: NSLocalizedString("popUpErrorTitle", comment: ""), message: NSLocalizedString("popUpErrorDesc", comment: ""), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
@@ -216,7 +222,7 @@ extension RestorauntsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
 }
-
+//MARK: Collection view extensions
 extension RestorauntsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
