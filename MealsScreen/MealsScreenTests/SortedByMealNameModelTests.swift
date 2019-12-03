@@ -30,9 +30,9 @@ class SortedByMealNameModelTests: QuickSpec {
                 var dataReadySubject: TestableObserver<Bool>!
                 beforeEach {
                     testScheduler = TestScheduler(initialClock: 0)
-                    sortedByViewModel = SortedByMealNameModel(dependencies: SortedByMealNameModel.Dependencies(meals: sortByMeals, scheduler: testScheduler))
+                    sortedByViewModel = SortedByMealNameModel(dependencies: SortedByMealNameModel.Dependencies(meals: sortByMeals, scheduler: testScheduler, realmManager: RealmManager()))
                     
-                    let output = sortedByViewModel.transform(input: SortedByMealNameModel.Input(getData: ReplaySubject<Bool>.create(bufferSize: 1)))
+                    let output = sortedByViewModel.transform(input: SortedByMealNameModel.Input(getData: ReplaySubject<Bool>.create(bufferSize: 1), saveMeal: PublishSubject<SaveToListEnum>()))
                     
                     for disposable in output.disposables {
                         disposable.disposed(by: disposeBag)

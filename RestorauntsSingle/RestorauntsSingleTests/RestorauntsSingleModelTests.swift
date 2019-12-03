@@ -44,7 +44,7 @@ class RestorauntsSingleModelTests: QuickSpec {
                     
                     mealsViewModel = RestorauntsSingleModel(dependencies: RestorauntsSingleModel.Dependencies(scheduler: testScheduler, meals: restorauntsData[0], realmManager: RealmManager()))
                     
-                    let output = mealsViewModel.transform(input: RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1), saveMeal: PublishSubject<SaveToListEnum>()))
+                    let output = mealsViewModel.transform(input: RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1), saveMeal: PublishSubject<SaveToListEnum>(), screenSelectionButtonSubject: PublishSubject<Bool>()))
                     
                     for disposable in output.disposables{
                         disposable.disposed(by: disposeBag)
@@ -71,15 +71,6 @@ class RestorauntsSingleModelTests: QuickSpec {
                     expect(mealsViewModel.returnHeaderName(meal: restorauntsData[1].meals[0])).toEventually(equal("Desert"))
                     expect(mealsViewModel.returnHeaderName(meal: restorauntsData[1].meals[1])).toEventually(equal("Pizza"))
                     expect(mealsViewModel.returnHeaderName(meal: restorauntsData[1].meals[2])).toEventually(equal("Salata"))
-                }
-                it("check if number of rows function is returning a good value dependent on isCollapsed parameter"){
-                    testScheduler.start()
-                    
-                    mealsViewModel.dependencies.meals.meals[0].isCollapsed = false
-                    mealsViewModel.dependencies.meals.meals[1].isCollapsed = false
-                    
-                    expect(mealsViewModel.numberOfRows(section: screenData.section[0])).toEventually(equal(3))
-                    expect(mealsViewModel.numberOfRows(section: screenData.section[1])).toEventually(equal(0))
                 }
                 it("check is pizza function"){
                     testScheduler.start()

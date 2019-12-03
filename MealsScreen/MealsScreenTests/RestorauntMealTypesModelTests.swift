@@ -65,13 +65,13 @@ class RestorauntMealTypesModelTests: QuickSpec {
                 
                 it("check if function is returning good string value"){
                     testScheduler.start()
-                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[0])).toEventually(equal("Desert"))
-                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[1])).toEventually(equal("Pizza"))
-                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[2])).toEventually(equal("Salata"))
-                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[3])).toEventually(equal("Tjestenina"))
-                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[4])).toEventually(equal("Hamburger"))
-                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[5])).toEventually(equal("Jela s rostilja"))
-                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[6])).toEventually(equal("Ostalo"))
+                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[0])).toEventually(equal("mealType_Desert"))
+                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[1])).toEventually(equal("mealType_Pizza"))
+                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[2])).toEventually(equal("mealType_Salad"))
+                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[3])).toEventually(equal("mealType_Pasta"))
+                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[4])).toEventually(equal("mealType_Hamburger"))
+                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[5])).toEventually(equal("mealType_GM"))
+                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[6])).toEventually(equal("mealType_Ostalo"))
                 }
             }
         }
