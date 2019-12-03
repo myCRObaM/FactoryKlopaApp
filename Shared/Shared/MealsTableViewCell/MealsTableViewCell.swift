@@ -73,6 +73,7 @@ public class MealsTableViewCell: UITableViewCell {
     func setupConstraints(){
         pricesLabel.snp.makeConstraints { (make) in
             make.trailing.equalTo(contentView).inset(UIScreen.main.bounds.width/8.3)
+            make.width.equalTo(44)
             make.centerY.equalTo(basketButton)
         }
         
@@ -98,28 +99,11 @@ public class MealsTableViewCell: UITableViewCell {
     }
     
     //MARK: Cell setup
-    public func setupCell(meal: Meals, indexPath: IndexPath){
-        var ingredients: String = ""
+    public func setupCell(data: (String, String, String), indexPath: IndexPath){
         index = indexPath
-        mealName.text = meal.name.uppercased()
-        pricesLabel.text = meal.price
-        if meal.ingredients?.count ?? 0 > 0 {
-            for ingredient in meal.ingredients! {
-                if ingredients != "" {
-                    ingredients = ingredients + ", " + ingredient.name!
-                }
-                else {
-                    ingredients = ingredient.name!
-                }
-                
-            }
-            ingredients = "(" + ingredients + ")"
-            ingredientsLabel.text = ingredients
-        }
-        
-        if Int(meal.priceJumbo ?? "0") ?? 0 > 0 {
-            pricesLabel.text = (meal.priceNormal ?? "") + "  " + (meal.priceJumbo ?? "")
-        }
+        mealName.text = data.0
+        pricesLabel.text = data.1
+        ingredientsLabel.text = data.2
         
         contentView.updateConstraints()
         basketButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)

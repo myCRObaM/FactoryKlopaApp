@@ -117,37 +117,18 @@ class SortedByNameTableViewCell: UITableViewCell {
         
     }
     
-    func setupCell(name: MealsWithRestoraunt) {
-        nameLabel.text = name.restorauntName
-        
-        if name.telLabel != "" {
-            telLabel.text = name.telLabel!
+    func setupCell(data: Rows) {
+        nameLabel.text = data.restorauntName
+        mobLabel.text = data.mob
+        telLabel.text = data.tel
+        ingredientsLabel.text = data.ingredients
+        if data.priceJumbo != nil {
+            priceLabel.text = ((data.priceJumbo ?? "") + "  " + (data.priceNormal ?? ""))
         }
-        if name.mobLabel != "" {
-            mobLabel.text = name.mobLabel!
-        }
-        if name.ingredients?.count ?? 0 > 0 {
-            var ingredients: String = ""
-            for ingredient in name.ingredients! {
-                if ingredients != "" {
-                    ingredients = ingredients + ", " + ingredient.name!
-                }
-                else {
-                    ingredients = ingredient.name!
-                }
-            }
-            ingredients = "(" + ingredients + ")"
-            self.ingredientsLabel.text = ingredients
+        else {
+            priceLabel.text = data.price ?? ""
         }
         
-        if name.priceNormal != "" {
-            priceLabel.text = ((name.priceJumbo ?? "") + "  " + (name.priceNormal ?? ""))
-        }
-        else{
-            priceLabel.text = name.price
-        }
-        
-       
     }
     
    

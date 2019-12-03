@@ -11,50 +11,35 @@ import Shared
 import RxSwift
 
 
-public class RestorauntMealTypesModel  {
+class RestorauntMealTypesModel  {
     //MARK: Define structs
-    public struct Input {
-        public var getData: ReplaySubject<Bool>
-        
-        public init(getData: ReplaySubject<Bool>){
-            self.getData = getData
-        }
+    struct Input {
+        var getData: ReplaySubject<Bool>
     }
     
-    public struct Output {
-        public var dataReady: ReplaySubject<Bool>
-        public var errorSubject: PublishSubject<Bool>
-        public var disposables: [Disposable]
-        
-        public init(dataReady: ReplaySubject<Bool>, errorSubject: PublishSubject<Bool>, disposables: [Disposable]){
-            self.dataReady = dataReady
-            self.errorSubject = errorSubject
-            self.disposables = disposables
-        }
+    struct Output {
+        var dataReady: ReplaySubject<Bool>
+        var errorSubject: PublishSubject<Bool>
+        var disposables: [Disposable]
     }
     
-    public struct Dependencies {
-        public var scheduler: SchedulerType
-        public var mealCategory: MealCategory
-        
-        public init(scheduler: SchedulerType, mealCategory: MealCategory){
-            self.scheduler = scheduler
-            self.mealCategory = mealCategory
-        }
+    struct Dependencies {
+        var scheduler: SchedulerType
+        var mealCategory: MealCategory
     }
     
     //MARK: Variables
-    public let dependencies: Dependencies
-    public var input: Input!
-    public var output: Output!
+    let dependencies: Dependencies
+    var input: Input!
+    var output: Output!
     
     
-    public init(dependencies: Dependencies) {
+    init(dependencies: Dependencies) {
         self.dependencies = dependencies
     }
     
     //MARK: Transfrom
-    public func transform(input: RestorauntMealTypesModel.Input) -> RestorauntMealTypesModel.Output {
+    func transform(input: RestorauntMealTypesModel.Input) -> RestorauntMealTypesModel.Output {
         self.input = input
         var disposables = [Disposable]()
         
@@ -64,7 +49,7 @@ public class RestorauntMealTypesModel  {
         return output
     }
     
-    public func prepareData(subject: ReplaySubject<Bool>) -> Disposable {
+    func prepareData(subject: ReplaySubject<Bool>) -> Disposable {
         return subject
         .observeOn(MainScheduler.instance)
         .subscribeOn(dependencies.scheduler)
@@ -76,7 +61,7 @@ public class RestorauntMealTypesModel  {
         })
     }
     
-    public func returnLabelData(meal: MealCategory) -> String {
+    func returnLabelData(meal: MealCategory) -> String {
         switch meal.type {
         case .desert:
             return "Desert"
@@ -108,7 +93,7 @@ public class RestorauntMealTypesModel  {
             return "Tjestenina"
         }
     }
-    public func didSelectRow(mealWithName: [MealsWithRestoraunt], name: String) -> [MealsWithRestoraunt]{
+    func didSelectRow(mealWithName: [MealsWithRestoraunt], name: String) -> [MealsWithRestoraunt]{
         var array = [MealsWithRestoraunt]()
         
         for meal in mealWithName {

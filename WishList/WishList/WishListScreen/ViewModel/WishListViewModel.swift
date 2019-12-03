@@ -12,6 +12,7 @@ import Shared
 
 public class WishListViewModel{
     //MARK: Defining structs
+    
     public struct Input {
         var getData: ReplaySubject<Bool>
         var deleteMeal: PublishSubject<IndexPath>
@@ -21,6 +22,7 @@ public class WishListViewModel{
         var dataReady: ReplaySubject<Bool>
         var errorSubject: PublishSubject<Bool>
         var deleteCell: PublishSubject<IndexPath>
+        var screenData: [Section]?
         var disposables: [Disposable]
     }
     
@@ -28,12 +30,12 @@ public class WishListViewModel{
         var scheduler: SchedulerType
         var realmRepo: RealmManager
     }
+    
     //MARK: Variables
     let dependencies: Dependencies
     var input: Input!
     var output: Output!
     var meals = [MealsWithRestoraunt]()
-    var restoraunts = [("", [Int]())]
     
     //MARK: init
     public init(dependencies: WishListViewModel.Dependencies){
@@ -63,7 +65,8 @@ public class WishListViewModel{
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[unowned self] (bool) in
                 self.meals = bool
-                self.restoraunts = self.returnRestoraunts(current: bool)
+                //self.restoraunts = self.returnRestoraunts(current: bool)
+                self.output.screenData = self.setupScreenData(data: bool)
                 self.output.dataReady.onNext(true)
                 },  onError: {[unowned self] (error) in
                     self.output.errorSubject.onNext(true)
@@ -74,11 +77,9 @@ public class WishListViewModel{
     func deleteLocation(subject: PublishSubject<IndexPath>) -> Disposable {
         return subject
             .flatMap({[unowned self] (bool) -> Observable<String> in
-                let location = self.restoraunts[bool.section].1[bool.row]
-                let meals = self.dependencies.realmRepo.deleteMeal(name: self.meals[location].name)
-                self.meals.remove(at: location)
+                let meals = self.dependencies.realmRepo.deleteMeal(name: self.output!.screenData![bool.section].data[bool.row].mealName)
+                self.output!.screenData![bool.section].data.remove(at: bool.row)
                 self.output.deleteCell.onNext(bool)
-                self.restoraunts = self.returnRestoraunts(current: self.meals)
                 if bool.row == 0 {
                     self.output.dataReady.onNext(true)
                 }
@@ -86,58 +87,119 @@ public class WishListViewModel{
             })
             .subscribeOn(dependencies.scheduler)
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: {[unowned self] (bool) in
+            .subscribe(onNext: { (bool) in
                 },  onError: {[unowned self] (error) in
                     self.output.errorSubject.onNext(true)
                     print(error)
             })
     }
     
-    func returnRestoraunts(current: [MealsWithRestoraunt]) ->[(String, [Int])]{
-        var restoraunts = [("", [Int]())]
-        var savedRest = false
-        var savedIndex = false
-        for (n, meal) in current.enumerated() {
-            if restoraunts[0].0 == "" {
-                restoraunts[0].0 = meal.restorauntName
-                restoraunts[0].1.append(n)
-            }
-            else {
-                for saved in restoraunts{
-                    if saved.0 == meal.restorauntName {
-                        savedRest = true
-                    }
-                }
-                
-                if savedRest == false {
-                    restoraunts.append((meal.restorauntName, [n]))
-                }
-                
-                for (c, saved) in restoraunts.enumerated() {
-                    if saved.0 == meal.restorauntName {
-                        for index in saved.1 {
-                            if index == n {
-                                savedIndex = true
-                            }
-                        }
-                        if savedIndex == false {
-                            restoraunts[c].1.append(n)
-                        }
-                    }
-                }
-            }
-            savedIndex = false
-            savedRest = false
+    func dataForHeader(data: Section) -> (rName: String, mText: String, tText: String, price: String){
+        var mob = ""
+        var tel = ""
+        var price = ""
+        
+        if data.mob != "" {
+            mob = "Mob: " + data.mob
         }
-        return restoraunts
+        if data.tel != "" {
+            tel = "Tel: " + data.tel
+        }
+        
+        price = "Cijena"
+        
+        return (rName: data.restorauntName, mText: mob, tText: tel, price: price)
     }
-    func isPizza(data: MealsWithRestoraunt) -> Bool {
-        if data.priceJumbo != nil || data.priceNormal != nil {
+    
+    func returnACorrectCell(index: IndexPath) -> Bool {
+        if (index.row == output!.screenData![index.section].data.count){
             return true
         }
         else
         {
             return false
         }
+    }
+    
+    func returnDataForCell(data: Row) -> (String, String, String){
+        var ingredients = data.ingredients ?? ""
+        if ingredients == "()" {
+            ingredients = ""
+        }
+        return (data.mealName, ingredients, data.price ?? "")
+    }
+    
+    func canPress(index: IndexPath) -> Bool {
+        if index.row == output!.screenData![index.section].data.count {
+            return false
+        }
+        else
+        {
+           return true
+        }
+        
+    }
+    
+    func returnTotalAmount(data: [Row]) -> Int {
+        var total: Int = 0
+        for meal in data{
+            total = total + (Int(meal.price!) ?? 0)
+        }
+        return total
+    }
+    
+    func returnNumberOfCells(section: Int) -> Int {
+        if (output?.screenData?[section].data.count) ?? 0 == 0 {
+            return 0
+        }
+        else {
+            return output!.screenData![section].data.count + 1
+        }
+    }
+    
+    func setupScreenData(data: [MealsWithRestoraunt]) -> [Section]{
+        var restoraunts = [Section]()
+        for restoraunt in data {
+            if restoraunts.count == 0 {
+                restoraunts.append(Section(restorauntName: restoraunt.restorauntName, mob: restoraunt.mobLabel ?? "", tel: restoraunt.telLabel ?? "", data: [Row]()))
+            }
+            else {
+                var savedRestoraunt: Bool = false
+                for saved in restoraunts {
+                    if saved.restorauntName == restoraunt.restorauntName {
+                       savedRestoraunt = true
+                    }
+                }
+                if !savedRestoraunt {
+                     restoraunts.append(Section(restorauntName: restoraunt.restorauntName, mob: restoraunt.mobLabel ?? "", tel: restoraunt.telLabel ?? "", data: [Row]()))
+                }
+            }
+        }
+        
+        for meal in data {
+            for (n, saved) in restoraunts.enumerated() {
+                if meal.restorauntName == saved.restorauntName {
+                    restoraunts[n].data.append(Row(mealName: meal.name, ingredients: returnIngredients(data: meal), price: meal.price ?? ""))
+                }
+            }
+        }
+        
+        return restoraunts
+    }
+    
+    func returnIngredients(data: MealsWithRestoraunt) -> String{
+        var ingredients: String = ""
+        if data.ingredients?.count ?? 0 > 0 {
+            ingredients = ""
+            for ingredient in data.ingredients! {
+                if ingredients != "" {
+                    ingredients = ingredients + ", " + ingredient.name!
+                }
+                else {
+                    ingredients = ingredient.name!
+                }
+            }
+        }
+        return ingredients
     }
 }

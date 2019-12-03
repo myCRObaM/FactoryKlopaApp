@@ -193,7 +193,7 @@ class RestorauntsViewController: UIViewController {
 extension RestorauntsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.restoraunts.count
+        return viewModel.output?.viewData.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -201,13 +201,14 @@ extension RestorauntsViewController: UITableViewDelegate, UITableViewDataSource 
                    fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
                }
         cell.separatorInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-        cell.setupCell(name: viewModel.restoraunts[indexPath.row])
+        let data = viewModel.output.viewData[indexPath.row]
+        cell.setupCell(name: data.title, tel: data.tel ?? "", mob: data.mob ?? "")
         cell.selectionStyle = .none
                return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        didSelectRestoraunt?.openMealCategories(screenData: viewModel.restoraunts[indexPath.row])
+        didSelectRestoraunt?.openMealCategories(screenData: viewModel.restoraunts[viewModel.output.viewData[indexPath.row].id])
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

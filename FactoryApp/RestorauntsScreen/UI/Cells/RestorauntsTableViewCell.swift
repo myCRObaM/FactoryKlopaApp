@@ -68,14 +68,14 @@ class RestorauntsTableViewCell: UITableViewCell {
         }
     }
     
-    func setupCell(name: Restoraunts) {
-        nameLabel.text = name.name
+    func setupCell(name: String, tel: String, mob: String) {
+        nameLabel.text = name
         
-        if name.tel != "" {
-            telLabel.text = name.tel!
+        if tel != "" {
+            telLabel.text = tel
         }
-        if name.mob != "" {
-            mobLabel.text = name.mob!
+        if mob != "" {
+            mobLabel.text = mob
         }
         
     }

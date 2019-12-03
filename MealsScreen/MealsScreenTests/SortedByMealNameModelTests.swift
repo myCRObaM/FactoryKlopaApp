@@ -13,8 +13,8 @@ import RxSwift
 import Nimble
 import Quick
 import Cuckoo
-import MealsScreen
-@testable import Shared
+import Shared
+@testable import MealsScreen
 
 class SortedByMealNameModelTests: QuickSpec {
     override func spec() {
@@ -55,6 +55,15 @@ class SortedByMealNameModelTests: QuickSpec {
                     
                     expect(sortedByViewModel.isPizza(meal: MealsWithRestoraunt(name: "test2", priceNormal: "", priceJumbo: "", price: "2", ingredients: [], restorauntName: "test2", mobLabel: "", telLabel: "", isPizza: false))).toEventually(equal(false))
                 }
+                it("check if function is returning good screen data"){
+                    testScheduler.start()
+                    
+                    let data = sortedByViewModel.setupScreenData(data: sortByMeals)
+                    expect(data.data.count).toEventually(equal(7))
+                    expect(data.mealName).toEventually(equal("Margarita"))
+                    expect(data.data[1].priceJumbo).toEventually(equal("50"))
+                }
+       
             }
         }
     }

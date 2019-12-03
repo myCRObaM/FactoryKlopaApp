@@ -79,6 +79,7 @@ public class WishListViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(WishListCell.self, forCellReuseIdentifier: "MTC")
+        tableView.register(WishListTotal.self, forCellReuseIdentifier: "WLT")
         
         backgroundView.backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
     }
@@ -116,8 +117,9 @@ public class WishListViewController: UIViewController {
             .subscribeOn(viewModel.dependencies.scheduler)
             .subscribe(onNext: { [unowned self] bool in
                 
-                self.viewModel.restoraunts[bool.section].1.remove(at: bool.row)
                 self.tableView.deleteRows(at: [bool], with: .automatic)
+                let indexForTotal = self.viewModel.output!.screenData![bool.section].data.count
+                self.tableView.reloadRows(at: [IndexPath(row: indexForTotal, section: bool.section)], with: .middle)
             })
         
     }
@@ -125,64 +127,100 @@ public class WishListViewController: UIViewController {
 
 extension WishListViewController: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.restoraunts[section].1.count
+        return viewModel.returnNumberOfCells(section: section)
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let index = viewModel.restoraunts[indexPath.section].1[indexPath.row]
-             guard let cell = tableView.dequeueReusableCell(withIdentifier: "MTC", for: indexPath) as? WishListCell  else {
-               fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
-           }
-        cell.setupCell(name: viewModel.meals[index])
-           cell.separatorInset = .zero
-           return cell
+        switch viewModel.returnACorrectCell(index: indexPath){
+        case true:
+                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "WLT", for: indexPath) as? WishListTotal  else {
+                   fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
+               }
+                 let data = viewModel.output!.screenData![indexPath.section].data
+                 cell.setupCell(ammount: viewModel.returnTotalAmount(data: data))
+               cell.separatorInset = .zero
+               return cell
+        case false:
+                   guard let cell = tableView.dequeueReusableCell(withIdentifier: "MTC", for: indexPath) as? WishListCell  else {
+                     fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
+                 }
+                   let data = viewModel.output!.screenData![indexPath.section].data[indexPath.row]
+                   cell.setupCell(data: viewModel.returnDataForCell(data: data))
+                 cell.separatorInset = .zero
+                 return cell
+        }
+  
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.input.deleteMeal.onNext(indexPath)
+        switch viewModel.canPress(index: indexPath){
+        case true:
+            viewModel.input.deleteMeal.onNext(indexPath)
+        case false:
+            break
+        }
+        
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.restoraunts.count
+        return viewModel.output?.screenData?.count ?? 0
     }
     
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView()
-        let label = UILabel()
-        let jnLabel = UILabel()
+        let headerLabel = UILabel()
+        let mobLabel = UILabel()
+        let telLabel = UILabel()
+        
+        var data = (rName: "", mText: "", tText: "", price: "")
+        let priceLabel = UILabel()
+        data = viewModel.dataForHeader(data: viewModel.output!.screenData![section])
         
         header.backgroundColor = UIColor(red: 255/255.0, green: 184/255.0, blue: 14/255.0, alpha: 1)
         
-        jnLabel.translatesAutoresizingMaskIntoConstraints = false
-        label.translatesAutoresizingMaskIntoConstraints = false
+        priceLabel.translatesAutoresizingMaskIntoConstraints = false
+        mobLabel.translatesAutoresizingMaskIntoConstraints = false
+        telLabel.translatesAutoresizingMaskIntoConstraints = false
+        headerLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        label.text = viewModel.restoraunts[section].0.uppercased()
+        headerLabel.text = data.rName.uppercased()
+        priceLabel.text = data.price
+        mobLabel.text = data.mText
+        telLabel.text = data.tText
         
         let customFont = UIFont(name: "Rubik-Bold", size: 14)
+        let customFontContact = UIFont(name: "Rubik-Italic", size: 14)
         
-        jnLabel.font = customFont
-        label.font = customFont
+        priceLabel.font = customFont
+        headerLabel.font = customFont
+        mobLabel.font = customFontContact
+        telLabel.font = customFontContact
         
+        header.addSubview(headerLabel)
+        header.addSubview(priceLabel)
+        header.addSubview(mobLabel)
+        header.addSubview(telLabel)
         
-        header.addSubview(label)
-        header.addSubview(jnLabel)
-        
-        label.snp.makeConstraints { (make) in
-            make.centerY.equalTo(header)
+        headerLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(header).offset(5)
             make.leading.equalTo(header).offset(10)
         }
         
-        jnLabel.snp.makeConstraints { (make) in
+        priceLabel.snp.makeConstraints { (make) in
                        make.centerY.equalTo(header)
                        make.trailing.equalTo(header).offset(-10)
         }
         
-        switch viewModel.isPizza(data: viewModel.meals[viewModel.restoraunts[section].1[0]]){
-        case true:
-            jnLabel.text = "J      N"
-        case false:
-            jnLabel.text = "N"
+        mobLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(headerLabel.snp.bottom).offset(5)
+            make.leading.equalTo(header).offset(10)
         }
+        telLabel.snp.makeConstraints { (make) in
+                   make.top.equalTo(mobLabel.snp.bottom).offset(5)
+                   make.leading.equalTo(header).offset(10)
+            make.bottom.equalTo(header).offset(-5)
+        }
+        
         return header
     }
     

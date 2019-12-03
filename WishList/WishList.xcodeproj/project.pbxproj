@@ -16,6 +16,10 @@
 		F014332D238692AD006FFEAF /* WishList.h in Headers */ = {isa = PBXBuildFile; fileRef = F014331F238692AC006FFEAF /* WishList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F014333B238692BD006FFEAF /* WishListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0143338238692BD006FFEAF /* WishListViewModel.swift */; };
 		F050033C238E6EBD00D6C750 /* WishListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F050033B238E6EBD00D6C750 /* WishListCell.swift */; };
+		F065A20B238F9E6A0023D74A /* WishListTotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F065A20A238F9E6A0023D74A /* WishListTotal.swift */; };
+		F065A20D238FA4DB0023D74A /* WishListControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F065A20C238FA4DB0023D74A /* WishListControllerTests.swift */; };
+		F065A210238FA6AF0023D74A /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F065A20F238FA6AF0023D74A /* GeneratedMocks.swift */; };
+		F065A21A238FD14F0023D74A /* WishScreenViewStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = F065A219238FD14F0023D74A /* WishScreenViewStruct.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +49,10 @@
 		F014332C238692AD006FFEAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0143338238692BD006FFEAF /* WishListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListViewModel.swift; sourceTree = "<group>"; };
 		F050033B238E6EBD00D6C750 /* WishListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListCell.swift; sourceTree = "<group>"; };
+		F065A20A238F9E6A0023D74A /* WishListTotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListTotal.swift; sourceTree = "<group>"; };
+		F065A20C238FA4DB0023D74A /* WishListControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListControllerTests.swift; sourceTree = "<group>"; };
+		F065A20F238FA6AF0023D74A /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
+		F065A219238FD14F0023D74A /* WishScreenViewStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishScreenViewStruct.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +147,8 @@
 			isa = PBXGroup;
 			children = (
 				F014332A238692AD006FFEAF /* WishListTests.swift */,
+				F065A20F238FA6AF0023D74A /* GeneratedMocks.swift */,
+				F065A20C238FA4DB0023D74A /* WishListControllerTests.swift */,
 				F014332C238692AD006FFEAF /* Info.plist */,
 			);
 			path = WishListTests;
@@ -147,10 +157,12 @@
 		F0143336238692BD006FFEAF /* WishListScreen */ = {
 			isa = PBXGroup;
 			children = (
+				F065A218238FD13C0023D74A /* WishScreenViewStruct */,
 				F013A3CA238698BF00754549 /* Coordinator */,
 				F013A3C42386959900754549 /* UI */,
 				F0143337238692BD006FFEAF /* ViewModel */,
 				F050033B238E6EBD00D6C750 /* WishListCell.swift */,
+				F065A20A238F9E6A0023D74A /* WishListTotal.swift */,
 			);
 			path = WishListScreen;
 			sourceTree = "<group>";
@@ -161,6 +173,14 @@
 				F0143338238692BD006FFEAF /* WishListViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		F065A218238FD13C0023D74A /* WishScreenViewStruct */ = {
+			isa = PBXGroup;
+			children = (
+				F065A219238FD14F0023D74A /* WishScreenViewStruct.swift */,
+			);
+			path = WishScreenViewStruct;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,6 +221,7 @@
 			buildConfigurationList = F0143333238692AD006FFEAF /* Build configuration list for PBXNativeTarget "WishListTests" */;
 			buildPhases = (
 				5F8634289A70A8B0CEEE45A0 /* [CP] Check Pods Manifest.lock */,
+				F065A20E238FA57E0023D74A /* ShellScript */,
 				F0143321238692AD006FFEAF /* Sources */,
 				F0143322238692AD006FFEAF /* Frameworks */,
 				F0143323238692AD006FFEAF /* Resources */,
@@ -332,6 +353,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WishList-WishListTests/Pods-WishList-WishListTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F065A20E238FA57E0023D74A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				/Shared/Shared/Repository/RestorauntDataRepository.swift,
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Define output file. Change \"${PROJECT_DIR}/${PROJECT_NAME}Tests\" to your test's root source folder, if it's not the default name.\nOUTPUT_FILE=\"${PROJECT_DIR}/${PROJECT_NAME}Tests/GeneratedMocks.swift\"\necho \"Generated Mocks File = ${OUTPUT_FILE}\"\n\n# Define input directory. Change \"${PROJECT_DIR}/${PROJECT_NAME}\" to your project's root source folder, if it's not the default name.\nINPUT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}\"\necho \"Mocks Input Directory = ${INPUT_DIR}\"\n\n# Generate mock files, include as many input files as you'd like to create mocks for.\n\"${PODS_ROOT}/Cuckoo/run\" generate --testable \"\" \\\n--output \"${OUTPUT_FILE}\" \n# ... and so forth, the last line should never end with a backslash\n\n# After running once, locate `GeneratedMocks.swift` and drag it into your Xcode test target group.\n\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -341,8 +380,10 @@
 			files = (
 				F050033C238E6EBD00D6C750 /* WishListCell.swift in Sources */,
 				F013A3CC23869A4300754549 /* WishListCoordinator.swift in Sources */,
+				F065A21A238FD14F0023D74A /* WishScreenViewStruct.swift in Sources */,
 				F014333B238692BD006FFEAF /* WishListViewModel.swift in Sources */,
 				F013A3C6238695A800754549 /* WishListViewController.swift in Sources */,
+				F065A20B238F9E6A0023D74A /* WishListTotal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +391,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F065A20D238FA4DB0023D74A /* WishListControllerTests.swift in Sources */,
+				F065A210238FA6AF0023D74A /* GeneratedMocks.swift in Sources */,
 				F014332B238692AD006FFEAF /* WishListTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

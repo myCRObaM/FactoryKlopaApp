@@ -13,8 +13,8 @@ import RxSwift
 import Nimble
 import Quick
 import Cuckoo
-import RestorauntsSingle
-@testable import Shared
+import Shared
+@testable import RestorauntsSingle
 
 class RestorauntsSingleModelTests: QuickSpec {
     override func spec() {
@@ -22,6 +22,7 @@ class RestorauntsSingleModelTests: QuickSpec {
             var mealsViewModel: RestorauntsSingleModel!
             var testScheduler: TestScheduler!
             var restorauntsData: [Restoraunts]!
+            var screenData: RestorauntsSingleScreenStruct!
             let disposeBag = DisposeBag()
             let mockedRepo = MockDataRepo()
             beforeSuite {
@@ -37,23 +38,25 @@ class RestorauntsSingleModelTests: QuickSpec {
             context("initialize viewModel"){
                 var dataReadySubject: TestableObserver<Bool>!
                 var expandableHandler: TestableObserver<ExpansionEnum>!
-                var saveMealSubject: TestableObserver<IndexPath>!
+                var saveMealSubject: TestableObserver<SaveToListEnum>!
                 beforeEach {
                     testScheduler = TestScheduler(initialClock: 0)
                     
-                    mealsViewModel = RestorauntsSingleModel(dependencies: RestorauntsSingleModel.Dependencies(scheduler: testScheduler, meals: restorauntsData[0]))
+                    mealsViewModel = RestorauntsSingleModel(dependencies: RestorauntsSingleModel.Dependencies(scheduler: testScheduler, meals: restorauntsData[0], realmManager: RealmManager()))
                     
-                    let output = mealsViewModel.transform(input: RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1)))
+                    let output = mealsViewModel.transform(input: RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1), saveMeal: PublishSubject<SaveToListEnum>()))
                     
                     for disposable in output.disposables{
                         disposable.disposed(by: disposeBag)
                     }
                     
+                    screenData = mealsViewModel.setupScreenData(data: restorauntsData[1])
+                    
                     dataReadySubject = testScheduler.createObserver(Bool.self)
                                    mealsViewModel.output.dataReady.subscribe(dataReadySubject).disposed(by: disposeBag)
                     expandableHandler = testScheduler.createObserver(ExpansionEnum.self)
                                     mealsViewModel.output.expandableHandler.subscribe(expandableHandler).disposed(by: disposeBag)
-                    expandableHandler = testScheduler.createObserver(IndexPath.self)
+                    saveMealSubject = testScheduler.createObserver(SaveToListEnum.self)
                                     mealsViewModel.input.saveMeal.subscribe(saveMealSubject).disposed(by: disposeBag)
                 }
                 it("check if data is loaded correctly"){
@@ -75,8 +78,8 @@ class RestorauntsSingleModelTests: QuickSpec {
                     mealsViewModel.dependencies.meals.meals[0].isCollapsed = false
                     mealsViewModel.dependencies.meals.meals[1].isCollapsed = false
                     
-                    expect(mealsViewModel.numberOfRows(section: 0)).toEventually(equal(1))
-                    expect(mealsViewModel.numberOfRows(section: 1)).toEventually(equal(44))
+                    expect(mealsViewModel.numberOfRows(section: screenData.section[0])).toEventually(equal(3))
+                    expect(mealsViewModel.numberOfRows(section: screenData.section[1])).toEventually(equal(0))
                 }
                 it("check is pizza function"){
                     testScheduler.start()
@@ -89,8 +92,10 @@ class RestorauntsSingleModelTests: QuickSpec {
                     
                     mealsViewModel.dependencies.meals.meals[0].isCollapsed = false
                     
-                    expect(mealsViewModel.isCollapsed(section: 0)).toEventually(equal(true))
-                    expect(mealsViewModel.isCollapsed(section: 1)).toEventually(equal(false))
+                    expect(mealsViewModel.isCollapsed(section: screenData.section[0])).toEventually(equal(false))
+                    expect(mealsViewModel.isCollapsed(section: screenData.section[1])).toEventually(equal(true))
+                    expect(mealsViewModel.isCollapsed(section: screenData.section[2])).toEventually(equal(true))
+                    expect(mealsViewModel.isCollapsed(section: screenData.section[3])).toEventually(equal(true))
                 }
             }
         }

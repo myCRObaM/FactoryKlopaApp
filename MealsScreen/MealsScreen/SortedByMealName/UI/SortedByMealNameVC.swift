@@ -268,14 +268,15 @@ class SortedByNameVC: UIViewController {
 
 extension SortedByNameVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.dependencies.meals.count
+        return viewModel.output?.screenData?.data.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MTC", for: indexPath) as? SortedByNameTableViewCell  else {
             fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
         }
-        cell.setupCell(name: viewModel.dependencies.meals[indexPath.row])
+        let data = viewModel.output?.screenData?.data[indexPath.row]
+        cell.setupCell(data: data!)
         cell.separatorInset = .zero
         return cell
     }    

@@ -22,6 +22,7 @@
 		F02CE08223842347007E0E07 /* RestorauntsSingle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F02CE08123842347007E0E07 /* RestorauntsSingle.framework */; };
 		F02CE08323842355007E0E07 /* RestorauntsSingle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F02CE08123842347007E0E07 /* RestorauntsSingle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F02CE08523842398007E0E07 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CE08423842398007E0E07 /* GradientView.swift */; };
+		F065A214238FB5750023D74A /* MainViewDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F065A213238FB5750023D74A /* MainViewDataModel.swift */; };
 		F096043723866B0E00F19789 /* RestorauntsModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096043623866B0E00F19789 /* RestorauntsModelTest.swift */; };
 		F096043D2386740E00F19789 /* Shared.framework in Sources */ = {isa = PBXBuildFile; fileRef = F0F22675237D3757003C1AD2 /* Shared.framework */; };
 		F0F22595237D2D43003C1AD2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F22594237D2D43003C1AD2 /* AppDelegate.swift */; };
@@ -88,6 +89,7 @@
 		F02CDFDE2384163A007E0E07 /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		F02CE08123842347007E0E07 /* RestorauntsSingle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RestorauntsSingle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F02CE08423842398007E0E07 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		F065A213238FB5750023D74A /* MainViewDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewDataModel.swift; sourceTree = "<group>"; };
 		F096043623866B0E00F19789 /* RestorauntsModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsModelTest.swift; sourceTree = "<group>"; };
 		F0960439238670D500F19789 /* Shared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Shared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F096043B238670F200F19789 /* Pods_Shared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Shared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,10 +167,9 @@
 		F02CDFBE238411E3007E0E07 /* RestorauntsScreen */ = {
 			isa = PBXGroup;
 			children = (
+				F065A212238FB54A0023D74A /* ViewDataModel */,
 				F02CDFBF238411E3007E0E07 /* UI */,
 				F02CDFC3238411E3007E0E07 /* Coordinator */,
-				F02CDFC5238411E3007E0E07 /* RestorauntsTableViewCell.swift */,
-				F02CDFC6238411E3007E0E07 /* CollectionViewCell.swift */,
 				F02CDFC7238411E3007E0E07 /* ViewModel */,
 			);
 			path = RestorauntsScreen;
@@ -177,6 +178,7 @@
 		F02CDFBF238411E3007E0E07 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				F065A211238FB3EB0023D74A /* Cells */,
 				F02CDFC0238411E3007E0E07 /* RestorauntsViewController.swift */,
 				F02CDFC1238411E3007E0E07 /* View */,
 			);
@@ -205,6 +207,23 @@
 				F02CDFC8238411E3007E0E07 /* RestorauntsViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		F065A211238FB3EB0023D74A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F02CDFC5238411E3007E0E07 /* RestorauntsTableViewCell.swift */,
+				F02CDFC6238411E3007E0E07 /* CollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		F065A212238FB54A0023D74A /* ViewDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				F065A213238FB5750023D74A /* MainViewDataModel.swift */,
+			);
+			path = ViewDataModel;
 			sourceTree = "<group>";
 		};
 		F0F22588237D2D43003C1AD2 = {
@@ -293,7 +312,6 @@
 			buildConfigurationList = F0F225B0237D2D44003C1AD2 /* Build configuration list for PBXNativeTarget "FactoryApp" */;
 			buildPhases = (
 				A1A143813E9EB1912E0F92CE /* [CP] Check Pods Manifest.lock */,
-				F02CDFD5238414E6007E0E07 /* ShellScript */,
 				F0F2258D237D2D43003C1AD2 /* Sources */,
 				F0F2258E237D2D43003C1AD2 /* Frameworks */,
 				F0F2258F237D2D43003C1AD2 /* Resources */,
@@ -473,24 +491,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FactoryAppTests/Pods-FactoryAppTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F02CDFD5238414E6007E0E07 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PROJECT_DIR}/FactoryApp/Repository/RestorauntDataRepository.swift",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Define output file. Change \"${PROJECT_DIR}/${PROJECT_NAME}Tests\" to your test's root source folder, if it's not the default name.\nOUTPUT_FILE=\"${PROJECT_DIR}/${PROJECT_NAME}Tests/GeneratedMocks.swift\"\necho \"Generated Mocks File = ${OUTPUT_FILE}\"\n\n# Define input directory. Change \"${PROJECT_DIR}/${PROJECT_NAME}\" to your project's root source folder, if it's not the default name.\nINPUT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}\"\necho \"Mocks Input Directory = ${INPUT_DIR}\"\n\n# Generate mock files, include as many input files as you'd like to create mocks for.\n\"${PODS_ROOT}/Cuckoo/run\" generate --testable \"${PROJECT_NAME}\" \\\n--output \"${OUTPUT_FILE}\" \n# ... and so forth, the last line should never end with a backslash\n\n# After running once, locate `GeneratedMocks.swift` and drag it into your Xcode test target group.\n\n";
-		};
 		F096043823866B2500F19789 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -521,6 +521,7 @@
 				F02CDFCE238411E3007E0E07 /* RestorauntsViewModel.swift in Sources */,
 				F0F22599237D2D43003C1AD2 /* ViewController.swift in Sources */,
 				F02CDFC9238411E3007E0E07 /* RestorauntsViewController.swift in Sources */,
+				F065A214238FB5750023D74A /* MainViewDataModel.swift in Sources */,
 				F0F22595237D2D43003C1AD2 /* AppDelegate.swift in Sources */,
 				F0F22597237D2D43003C1AD2 /* SceneDelegate.swift in Sources */,
 				F02CDFCB238411E3007E0E07 /* RestorauntsCoordinator.swift in Sources */,

@@ -25,7 +25,6 @@ class SortedByMealNameCoordinator: Coordinator{
         let viewModel = SortedByMealNameModel(dependencies: SortedByMealNameModel.Dependencies(meals: meals, scheduler: ConcurrentDispatchQueueScheduler(qos: .background)))
         self.viewController = SortedByNameVC(viewModel: viewModel)
         viewController.childHasFinished = self
-        #warning("popravi button i dodaj ga na background view?")
         viewController.basketButtonPress = self
     }
     

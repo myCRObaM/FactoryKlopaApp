@@ -138,14 +138,8 @@ public class SortedByNameTableViewCell: UITableViewCell {
             ingredients = "(" + ingredients + ")"
             self.ingredientsLabel.text = ingredients
         }
-        
-        if name.priceNormal != "" {
-            priceLabel.text = ((name.priceJumbo ?? "") + "  " + (name.priceNormal ?? ""))
-        }
-        else{
             priceLabel.text = name.price
-        }
-        
+    
        
     }
     

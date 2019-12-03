@@ -51,7 +51,7 @@ public class RealmManager {
         let realmRestoraunt = backThreadRealm.objects(RealmRestorauntsDataModel.self)
         var restoraunts: [MealsWithRestoraunt] = []
         for realmMeal in realmRestoraunt{
-            let meal = MealsWithRestoraunt(name: realmMeal.name, priceNormal: realmMeal.priceNormal, priceJumbo: realmMeal.priceJumbo, price: realmMeal.price, ingredients: [Ingredients(name: realmMeal.ingredients)], restorauntName: realmMeal.restoraunt, mobLabel: realmMeal.mob, telLabel: realmMeal.tel)
+            let meal = MealsWithRestoraunt(name: realmMeal.name, priceNormal: "", priceJumbo: "", price: realmMeal.price, ingredients: [Ingredients(name: realmMeal.ingredients)], restorauntName: realmMeal.restoraunt, mobLabel: realmMeal.mob, telLabel: realmMeal.tel)
             restoraunts.append(meal)
         }
         return restoraunts

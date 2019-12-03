@@ -13,8 +13,8 @@ import RxSwift
 import Nimble
 import Quick
 import Cuckoo
-import MealsScreen
-@testable import Shared
+import Shared
+@testable import MealsScreen
 
 class RestorauntMealTypesModelTests: QuickSpec {
     override func spec() {
@@ -40,13 +40,13 @@ class RestorauntMealTypesModelTests: QuickSpec {
                     testScheduler = TestScheduler(initialClock: 0)
                     mealCategories = self.arrayOfCategorySortedMeals(restorants: restorauntsData)
                     restorauntsViewModel = RestorauntMealTypesModel(dependencies: RestorauntMealTypesModel.Dependencies(scheduler: testScheduler, mealCategory: mealCategories[1]))
-
+                    
                     let output = restorauntsViewModel.transform(input: RestorauntMealTypesModel.Input(getData: ReplaySubject<Bool>.create(bufferSize: 1)))
-
+                    
                     for disposable in output.disposables {
                         disposable.disposed(by: disposeBag)
                     }
-
+                    
                 }
                 it("check if function is returning good value"){
                     testScheduler.start()
@@ -62,9 +62,20 @@ class RestorauntMealTypesModelTests: QuickSpec {
                     expect(margarite[5].restorauntName).toEventually(equal("Pizzeria 4M"))
                     expect(margarite[6].restorauntName).toEventually(equal("Sandwich bar Dennis"))
                 }
+                
+                it("check if function is returning good string value"){
+                    testScheduler.start()
+                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[0])).toEventually(equal("Desert"))
+                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[1])).toEventually(equal("Pizza"))
+                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[2])).toEventually(equal("Salata"))
+                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[3])).toEventually(equal("Tjestenina"))
+                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[4])).toEventually(equal("Hamburger"))
+                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[5])).toEventually(equal("Jela s rostilja"))
+                    expect(restorauntsViewModel.returnLabelData(meal: mealCategories[6])).toEventually(equal("Ostalo"))
+                }
             }
         }
-}
+    }
     
     
     func arrayOfCategorySortedMeals(restorants: [Restoraunts]) -> [MealCategory] {

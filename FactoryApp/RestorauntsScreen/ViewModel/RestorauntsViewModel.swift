@@ -12,60 +12,45 @@ import Shared
 
 public class RestorauntsViewModel {
     //MARK: Define structs
-    public struct Input {
-        public var getDataSubject: ReplaySubject<Bool>
-        
-        public init(getDataSubject: ReplaySubject<Bool>){
-            self.getDataSubject = getDataSubject
-        }
+    struct Input {
+        var getDataSubject: ReplaySubject<Bool>
     }
     
-    public struct Output {
-        public var dataIsDoneSubject: ReplaySubject<Bool>
-        public var errorSubject: PublishSubject<Bool>
-        public var disposables: [Disposable]
-        
-        public init(dataIsDoneSubject: ReplaySubject<Bool>, errorSubject: PublishSubject<Bool>, disposables: [Disposable]){
-            self.dataIsDoneSubject = dataIsDoneSubject
-            self.errorSubject = errorSubject
-            self.disposables = disposables
-        }
+    struct Output {
+        var dataIsDoneSubject: ReplaySubject<Bool>
+        var errorSubject: PublishSubject<Bool>
+        var disposables: [Disposable]
+        var viewData = [MainViewDataModel]()
     }
     
-    public struct Dependencies {
-        public var scheduler: SchedulerType
-        public var repo: DataRepo
-        
-        public init(scheduler: SchedulerType, repo: DataRepo){
-            self.scheduler = scheduler
-            self.repo = repo
-        }
+    struct Dependencies {
+        var scheduler: SchedulerType
+        var repo: DataRepo
     }
     
     //MARK: Variables
-    public let dependencies: Dependencies
-    public var input: Input!
-    public var output: Output!
-    public var restoraunts = [Restoraunts]()
-    
+    let dependencies: Dependencies
+    var input: Input!
+    var output: Output!
+    var restoraunts = [Restoraunts]()
     //MARK: Init
-    public init(dependencies: Dependencies) {
+    init(dependencies: Dependencies) {
         self.dependencies = dependencies
     }
     
     //MARK: Transfrom
-    public func transform(input: RestorauntsViewModel.Input) -> RestorauntsViewModel.Output {
+    func transform(input: RestorauntsViewModel.Input) -> RestorauntsViewModel.Output {
         self.input = input
         var disposables = [Disposable]()
         
         disposables.append(getData(subject: input.getDataSubject))
         
-        self.output = Output(dataIsDoneSubject: ReplaySubject<Bool>.create(bufferSize: 1), errorSubject: PublishSubject(), disposables: disposables)
+        self.output = Output(dataIsDoneSubject: ReplaySubject<Bool>.create(bufferSize: 1), errorSubject: PublishSubject(), disposables: disposables, viewData: [MainViewDataModel]())
         return output
     }
     
     
-    public func getData(subject: ReplaySubject<Bool>) -> Disposable {
+    func getData(subject: ReplaySubject<Bool>) -> Disposable {
          return subject
          .flatMap({ [unowned self] bool -> Observable<[RestorauntsModel]> in
              return self.dependencies.repo.getData()
@@ -73,6 +58,7 @@ public class RestorauntsViewModel {
          .observeOn(MainScheduler.instance)
          .subscribeOn(dependencies.scheduler)
          .subscribe(onNext: { [unowned self] bool in
+            self.output.viewData = self.setupViewData(data: self.convertToStruct(restoraunts: bool))
             self.restoraunts = self.convertToStruct(restoraunts: bool)
             self.output.dataIsDoneSubject.onNext(true)
             
@@ -81,14 +67,22 @@ public class RestorauntsViewModel {
          })
     }
     
+    
+    func setupViewData(data: [Restoraunts]) -> [MainViewDataModel]{
+        var viewDataModel = [MainViewDataModel]()
+        for (n, restoraunt) in data.enumerated() {
+            viewDataModel.append(MainViewDataModel(id: n, title: restoraunt.name, mob: restoraunt.mob, tel: restoraunt.tel))
+        }
+        return viewDataModel
+    }
     //MARK: Model to Data functions
-    public func convertToStruct(restoraunts: [RestorauntsModel]) -> [Restoraunts] {
+    func convertToStruct(restoraunts: [RestorauntsModel]) -> [Restoraunts] {
         let convertClass = ConvertToStruct()
         return convertClass.convertToStruct(restoraunts: restoraunts)
     }
     
     //MARK: return Cell data
-      public func returnCellData(type: MealCategory) -> (String, URL) {
+      func returnCellData(type: MealCategory) -> (String, URL) {
         switch type.type {
           case .additions:
               return ("Dodatci", URL(string: "http://klopa.factory.hr/wp-content/uploads/2019/02/lazanje.jpg")!)
@@ -121,7 +115,7 @@ public class RestorauntsViewModel {
           }
       }
     
-    public func arrayOfCategorySortedMeals(restorants: [Restoraunts]) -> [MealCategory] {
+    func arrayOfCategorySortedMeals(restorants: [Restoraunts]) -> [MealCategory] {
         var array = [MealCategory]()
         var meals = [MealsWithRestoraunt]()
         var didAdd: Bool = false

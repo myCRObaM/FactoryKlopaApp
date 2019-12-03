@@ -20,24 +20,6 @@ class WishListCell: UITableViewCell {
          return view
      }()
      
-     let telLabel: UILabel = {
-         let view = UILabel()
-         let customFont = UIFont(name: "Rubik-Regular", size: 14.0)
-         view.font = customFont
-         view.textColor = .darkGray
-         view.translatesAutoresizingMaskIntoConstraints = false
-         return view
-     }()
-     
-     let mobLabel: UILabel = {
-         let view = UILabel()
-         let customFont = UIFont(name: "Rubik-Regular", size: 14.0)
-         view.font = customFont
-         view.textColor = .darkGray
-         view.translatesAutoresizingMaskIntoConstraints = false
-         return view
-     }()
-     
      let ingredientsLabel: UILabel = {
          let view = UILabel()
          let customFont = UIFont(name: "Rubik-Italic", size: 14.0)
@@ -70,8 +52,6 @@ class WishListCell: UITableViewCell {
      
      func setupView() {
          contentView.addSubview(nameLabel)
-         contentView.addSubview(telLabel)
-         contentView.addSubview(mobLabel)
          contentView.addSubview(ingredientsLabel)
          contentView.addSubview(priceLabel)
      }
@@ -80,15 +60,7 @@ class WishListCell: UITableViewCell {
          nameLabel.snp.makeConstraints { (make) in
              make.leading.equalTo(contentView).offset(8)
              make.top.equalTo(contentView).offset(5)
-         }
-         mobLabel.snp.makeConstraints { (make) in
-             make.leading.equalTo(contentView).offset(8)
-             make.top.equalTo(telLabel.snp.bottom).offset(3)
-             make.bottom.equalTo(contentView).offset(-5)
-         }
-         telLabel.snp.makeConstraints { (make) in
-             make.top.equalTo(nameLabel.snp.bottom).offset(5)
-             make.leading.equalTo(contentView).offset(8)
+            make.bottom.equalTo(contentView).offset(-8)
          }
          ingredientsLabel.snp.makeConstraints { (make) in
              make.leading.equalTo(contentView.snp.centerX).offset(-UIScreen.main.bounds.width/10)
@@ -104,37 +76,10 @@ class WishListCell: UITableViewCell {
          
      }
      
-     public func setupCell(name: MealsWithRestoraunt) {
-        nameLabel.text = name.name
-         
-         if name.telLabel != "" {
-             telLabel.text = name.telLabel!
-         }
-         if name.mobLabel != "" {
-             mobLabel.text = name.mobLabel!
-         }
-         if name.ingredients?.count ?? 0 > 0 {
-             var ingredients: String = ""
-             for ingredient in name.ingredients! {
-                 if ingredients != "" {
-                     ingredients = ingredients + ", " + ingredient.name!
-                 }
-                 else {
-                     ingredients = ingredient.name!
-                 }
-             }
-             ingredients = "(" + ingredients + ")"
-             self.ingredientsLabel.text = ingredients
-         }
-         
-         if name.priceNormal != nil {
-             priceLabel.text = ((name.priceJumbo ?? "") + "  " + (name.priceNormal ?? ""))
-         }
-         else{
-             priceLabel.text = name.price
-         }
-         
-        
+    public func setupCell(data: (String, String, String)) {
+        nameLabel.text = data.0
+        ingredientsLabel.text = data.1
+        priceLabel.text = data.2
      }
      
     

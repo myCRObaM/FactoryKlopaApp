@@ -11,53 +11,39 @@ import Shared
 import RxSwift
 
 
-public class SortedByMealNameModel {
+class SortedByMealNameModel {
     //MARK: Struct declaration
-    public struct Input
+    struct Input
     {
-        public var getData: ReplaySubject<Bool>
-        
-        public init(getData: ReplaySubject<Bool>){
-            self.getData = getData
-        }
+        var getData: ReplaySubject<Bool>
     }
     
-    public struct Output
+    struct Output
     {
-        public var dataReady: ReplaySubject<Bool>
-        public var disposables: [Disposable]
-        public var errorSubject: PublishSubject<Bool>
-        
-        public init(dataReady: ReplaySubject<Bool>, disposables: [Disposable], errorSubject: PublishSubject<Bool>){
-            self.dataReady = dataReady
-            self.disposables = disposables
-            self.errorSubject = errorSubject
-        }
+        var dataReady: ReplaySubject<Bool>
+        var disposables: [Disposable]
+        var errorSubject: PublishSubject<Bool>
+        var screenData: Section?
     }
     
-    public struct Dependencies
+    struct Dependencies
     {
-        public var meals: [MealsWithRestoraunt]
-        public var scheduler: SchedulerType
-        
-        public init(meals: [MealsWithRestoraunt], scheduler: SchedulerType){
-            self.meals = meals
-            self.scheduler = scheduler
-        }
+        var meals: [MealsWithRestoraunt]
+        var scheduler: SchedulerType
     }
     
     //MARK: Variables
-    public let dependencies: Dependencies
-    public var input: Input!
-    public var output: Output!
+    let dependencies: Dependencies
+    var input: Input!
+    var output: Output!
     
     //MARK: init
-    public init(dependencies: SortedByMealNameModel.Dependencies) {
+    init(dependencies: SortedByMealNameModel.Dependencies) {
         self.dependencies = dependencies
     }
     
     //MARK: Transform
-    public func transform(input: SortedByMealNameModel.Input) -> SortedByMealNameModel.Output {
+    func transform(input: SortedByMealNameModel.Input) -> SortedByMealNameModel.Output {
         self.input = input
         var disposables = [Disposable]()
         
@@ -67,11 +53,15 @@ public class SortedByMealNameModel {
         return output
     }
     //MARK: getData
-    public func getData(subject: ReplaySubject<Bool>) -> Disposable {
+    func getData(subject: ReplaySubject<Bool>) -> Disposable {
         return subject
         .observeOn(MainScheduler.instance)
         .subscribeOn(dependencies.scheduler)
+        .map({ bool -> Section in
+            return self.setupScreenData(data: self.dependencies.meals)
+            })
         .subscribe(onNext: { [unowned self] bool in
+            self.output.screenData = bool
             self.output.dataReady.onNext(true)
         },  onError: {[unowned self] (error) in
                 self.output.errorSubject.onNext(true)
@@ -79,7 +69,20 @@ public class SortedByMealNameModel {
         })
     }
     
-    public func isPizza(meal: MealsWithRestoraunt) -> Bool {
+    func setupScreenData(data: [MealsWithRestoraunt]) -> Section {
+        let ingRepo = IngredientsOperator()
+        var name: String = ""
+        var meals = [Rows]()
+        
+        for meal in data {
+            let ingredients = ingRepo.returnIngredients(data: meal)
+            name = meal.name
+            meals.append(Rows(restorauntName: meal.restorauntName, mob: meal.mobLabel, tel: meal.telLabel, price: meal.price, ingredients: ingredients, priceJumbo: meal.priceJumbo, priceNormal: meal.priceNormal))
+        }
+        return (Section(mealName: name, data: meals))
+    }
+    
+    func isPizza(meal: MealsWithRestoraunt) -> Bool {
         if meal.isPizza {
             return true
         }

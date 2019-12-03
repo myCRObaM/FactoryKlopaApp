@@ -14,6 +14,9 @@
 		F02CDF4D2383C284007E0E07 /* SortedByMealNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF4C2383C284007E0E07 /* SortedByMealNameVC.swift */; };
 		F02CDF4F2383C3D2007E0E07 /* SortedByMealNameCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF4E2383C3D2007E0E07 /* SortedByMealNameCoordinator.swift */; };
 		F02CDF532383C955007E0E07 /* SortedByNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02CDF522383C955007E0E07 /* SortedByNameTableViewCell.swift */; };
+		F065A21D238FE9850023D74A /* SortedByMealNameScreenStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = F065A21C238FE9850023D74A /* SortedByMealNameScreenStruct.swift */; };
+		F065A22423963B9E0023D74A /* RestorauntMealTypesModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F065A22223963B9E0023D74A /* RestorauntMealTypesModelTests.swift */; };
+		F065A22523963B9E0023D74A /* SortedByMealNameModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F065A22323963B9E0023D74A /* SortedByMealNameModelTests.swift */; };
 		F09604492386770D00F19789 /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09604482386770D00F19789 /* GeneratedMocks.swift */; };
 		F0F22621237D2FEA003C1AD2 /* MealsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F22620237D2FEA003C1AD2 /* MealsScreenTests.swift */; };
 		F0F22623237D2FEA003C1AD2 /* MealsScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F22615237D2FEA003C1AD2 /* MealsScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -49,6 +52,9 @@
 		F02CDF4C2383C284007E0E07 /* SortedByMealNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedByMealNameVC.swift; sourceTree = "<group>"; };
 		F02CDF4E2383C3D2007E0E07 /* SortedByMealNameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedByMealNameCoordinator.swift; sourceTree = "<group>"; };
 		F02CDF522383C955007E0E07 /* SortedByNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedByNameTableViewCell.swift; sourceTree = "<group>"; };
+		F065A21C238FE9850023D74A /* SortedByMealNameScreenStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedByMealNameScreenStruct.swift; sourceTree = "<group>"; };
+		F065A22223963B9E0023D74A /* RestorauntMealTypesModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntMealTypesModelTests.swift; sourceTree = "<group>"; };
+		F065A22323963B9E0023D74A /* SortedByMealNameModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortedByMealNameModelTests.swift; sourceTree = "<group>"; };
 		F09604482386770D00F19789 /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		F0F22612237D2FEA003C1AD2 /* MealsScreen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MealsScreen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F22615237D2FEA003C1AD2 /* MealsScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MealsScreen.h; sourceTree = "<group>"; };
@@ -113,6 +119,7 @@
 		F02CDF462383C079007E0E07 /* SortedByMealName */ = {
 			isa = PBXGroup;
 			children = (
+				F065A21B238FE9330023D74A /* SortedByMealNameScreenStruct */,
 				F02CDF492383C09F007E0E07 /* UI */,
 				F02CDF482383C09A007E0E07 /* Coordinator */,
 				F02CDF472383C095007E0E07 /* ViewModel */,
@@ -143,6 +150,14 @@
 				F02CDF4C2383C284007E0E07 /* SortedByMealNameVC.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		F065A21B238FE9330023D74A /* SortedByMealNameScreenStruct */ = {
+			isa = PBXGroup;
+			children = (
+				F065A21C238FE9850023D74A /* SortedByMealNameScreenStruct.swift */,
+			);
+			path = SortedByMealNameScreenStruct;
 			sourceTree = "<group>";
 		};
 		F0988789237D432500C206C8 /* Recovered References */ = {
@@ -192,6 +207,8 @@
 			children = (
 				F02CDF3E237D5F1C007E0E07 /* JSONtests.json */,
 				F0F22622237D2FEA003C1AD2 /* Info.plist */,
+				F065A22223963B9E0023D74A /* RestorauntMealTypesModelTests.swift */,
+				F065A22323963B9E0023D74A /* SortedByMealNameModelTests.swift */,
 				F09604482386770D00F19789 /* GeneratedMocks.swift */,
 				F0F22620237D2FEA003C1AD2 /* MealsScreenTests.swift */,
 			);
@@ -279,7 +296,7 @@
 			buildConfigurationList = F0F22629237D2FEA003C1AD2 /* Build configuration list for PBXNativeTarget "MealsScreenTests" */;
 			buildPhases = (
 				CFD69FE71BD96E7986BE2B8A /* [CP] Check Pods Manifest.lock */,
-				F0A3CDD6237D53B700498E65 /* ShellScript */,
+				F065A22D239642070023D74A /* ShellScript */,
 				F0F22617237D2FEA003C1AD2 /* Sources */,
 				F0F22618237D2FEA003C1AD2 /* Frameworks */,
 				F0F22619237D2FEA003C1AD2 /* Resources */,
@@ -413,7 +430,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MealsScreen-MealsScreenTests/Pods-MealsScreen-MealsScreenTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F0A3CDD6237D53B700498E65 /* ShellScript */ = {
+		F065A22D239642070023D74A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -421,7 +438,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PROJECT_DIR}/${PROJECT_NAME}/Repository/RestorauntDataRepository.swift",
+				../Shared/Shared/Repository/RestorauntDataRepository.swift,
 			);
 			outputFileListPaths = (
 			);
@@ -444,6 +461,7 @@
 				F0F22640237D3080003C1AD2 /* RestorauntMealTypesScreenController.swift in Sources */,
 				F02CDF4B2383C0BD007E0E07 /* SortedByMealNameModel.swift in Sources */,
 				F02CDF4F2383C3D2007E0E07 /* SortedByMealNameCoordinator.swift in Sources */,
+				F065A21D238FE9850023D74A /* SortedByMealNameScreenStruct.swift in Sources */,
 				F02CDF4D2383C284007E0E07 /* SortedByMealNameVC.swift in Sources */,
 				F02CDF45237D807E007E0E07 /* MealTypeCell.swift in Sources */,
 				F02CDF532383C955007E0E07 /* SortedByNameTableViewCell.swift in Sources */,
@@ -455,6 +473,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0F22621237D2FEA003C1AD2 /* MealsScreenTests.swift in Sources */,
+				F065A22423963B9E0023D74A /* RestorauntMealTypesModelTests.swift in Sources */,
+				F065A22523963B9E0023D74A /* SortedByMealNameModelTests.swift in Sources */,
 				F09604492386770D00F19789 /* GeneratedMocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

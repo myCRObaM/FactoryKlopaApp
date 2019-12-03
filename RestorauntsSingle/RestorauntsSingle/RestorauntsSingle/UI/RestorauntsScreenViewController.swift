@@ -72,7 +72,7 @@ class RestorauntsScreenViewController: UIViewController {
     }
     //MARK: ViewModel Setup
     func prepareViewModel(){
-        let input = RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1), saveMeal: PublishSubject<IndexPath>())
+        let input = RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1), saveMeal: PublishSubject<SaveToListEnum>())
         
         let output = viewModel.transform(input: input)
         
@@ -83,8 +83,8 @@ class RestorauntsScreenViewController: UIViewController {
         output.dataReady
             .observeOn(MainScheduler.instance)
             .subscribeOn(viewModel.dependencies.scheduler)
-            .subscribe(onNext: {bool in
-
+            .subscribe(onNext: {[unowned self] bool in
+                self.setupData()
             }).disposed(by: disposeBag)
         
         output.errorSubject
@@ -95,6 +95,7 @@ class RestorauntsScreenViewController: UIViewController {
         }).disposed(by: disposeBag)
         
         expensionHandler(subject: output.expandableHandler).disposed(by: disposeBag)
+        savedAlertHandler(subject: output.popupSubject).disposed(by: disposeBag)
         
         viewModel.input.loadScreenData.onNext(true)
     }
@@ -105,8 +106,6 @@ class RestorauntsScreenViewController: UIViewController {
         view.insertSubview(customView, aboveSubview: backgroundView)
         view.addSubview(tableView)
         view.addSubview(basketButton)
-        
-        setupData()
     }
     //MARK: Setup data
     func setupData(){
@@ -116,10 +115,10 @@ class RestorauntsScreenViewController: UIViewController {
         
         tableView.register(MealsTableViewCell.self, forCellReuseIdentifier: "asd")
         
-        customView.nameLabel.text = viewModel.dependencies.meals.name
-        customView.telLabel.text = viewModel.dependencies.meals.tel
-        customView.mobLabel.text = viewModel.dependencies.meals.mob
-        customView.wHoursLabel.text = viewModel.dependencies.meals.workingHours
+        customView.nameLabel.text = viewModel.output?.screenData.title ?? ""
+        customView.telLabel.text = viewModel.output?.screenData.tel ?? ""
+        customView.mobLabel.text = viewModel.output?.screenData.mob ?? ""
+        customView.wHoursLabel.text = viewModel.output?.screenData.workingHours ?? ""
         
         backgroundView.backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
         
@@ -139,7 +138,7 @@ class RestorauntsScreenViewController: UIViewController {
         }
         tableView.snp.makeConstraints { (make) in
             make.bottom.leading.trailing.equalTo(view)
-            make.top.equalTo(customView.priceButton.snp.bottom).offset(34)
+            make.top.equalTo(customView.priceButton.snp.bottom).offset(-34)
         }
         backgroundView.snp.makeConstraints { (make) in
             make.edges.equalTo(view)
@@ -175,7 +174,7 @@ class RestorauntsScreenViewController: UIViewController {
         }
         switch viewModel.isPizza(category: category) {
         case true:
-            switch viewModel.isCollapsed(section: section) {
+            switch viewModel.isCollapsed(section: viewModel.output.screenData.section[section]) {
             case true:
                 pizzaView = setupPizzaHeader()
                 bothViews.addSubview(pizzaView)
@@ -213,7 +212,7 @@ class RestorauntsScreenViewController: UIViewController {
         
         expandButton.addTarget(self, action: #selector(expandableButtonPressed), for: .touchUpInside)
         expandButton.tag = section
-        expandButton.isSelected = viewModel.isCollapsed(section: section)
+        expandButton.isSelected = viewModel.isCollapsed(section: viewModel.output.screenData.section[section])
         
         let customFont = UIFont(name: "Rubik-Black", size: 14)
         
@@ -354,12 +353,63 @@ class RestorauntsScreenViewController: UIViewController {
     @objc func openWishlistScreen(){
         basketButtonPress?.openCart()
     }
+    
+    func savedAlertHandler(subject: PublishSubject<Bool>) -> Disposable{
+        return subject
+        .subscribeOn(viewModel.dependencies.scheduler)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (locations) in
+                let viewForAlert = UIView()
+                let labelText = UILabel()
+                
+                labelText.translatesAutoresizingMaskIntoConstraints = false
+                viewForAlert.translatesAutoresizingMaskIntoConstraints = false
+                labelText.text = "Dodano u WishList"
+                let customFont = UIFont(name: "Rubik-Bold", size: 14)
+                labelText.font = customFont
+                
+                viewForAlert.addSubview(labelText)
+                self.view.addSubview(viewForAlert)
+                
+                labelText.snp.makeConstraints { (make) in
+                    make.centerX.equalTo(viewForAlert)
+                    make.centerY.equalTo(viewForAlert)
+                    make.bottom.equalTo(viewForAlert).offset(-5)
+                }
+                viewForAlert.snp.makeConstraints { (make) in
+                    make.bottom.leading.trailing.equalTo(self.view)
+                    make.height.equalTo(50)
+                }
+                
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    viewForAlert.removeFromSuperview()
+                }
+            })
+        
+        
+        
+    }
 }
 
 //MARK: TableView delegates
 extension RestorauntsScreenViewController: UITableViewDelegate, UITableViewDataSource, ShopingCartButtonPress {
     func didPress(index: IndexPath) {
-        viewModel.input.saveMeal.onNext(index)
+        
+        switch viewModel.hasJumboPrice(price: viewModel.dependencies.meals.meals[index.section].meals[index.row].priceJumbo ?? "") {
+        case true:
+            let alert = UIAlertController(title: "Zelite li Jumbo ili Normalnu", message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Normalna", style: .default, handler: {[unowned self] action in
+                self.viewModel.input.saveMeal.onNext(.normal(index))
+            }))
+            alert.addAction(UIAlertAction(title: "Jumbo", style: .default, handler: {[unowned self] action in
+                self.viewModel.input.saveMeal.onNext(.jumbo(index))
+            }))
+            self.present(alert, animated: true)
+            
+        case false:
+            viewModel.input.saveMeal.onNext(.normal(index))
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -367,11 +417,11 @@ extension RestorauntsScreenViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.dependencies.meals.meals.count
+        return viewModel.output?.screenData?.section.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRows(section: section)
+        return viewModel.numberOfRows(section: viewModel.output.screenData.section[section])
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -379,7 +429,8 @@ extension RestorauntsScreenViewController: UITableViewDelegate, UITableViewDataS
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "asd", for: indexPath) as? MealsTableViewCell  else {
             fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
         }
-        cell.setupCell(meal: viewModel.dependencies.meals.meals[indexPath.section].meals[indexPath.row], indexPath: indexPath)
+        let data = viewModel.output.screenData!.section[indexPath.section].data[indexPath.row]
+        cell.setupCell(data: viewModel.setupCellData(data: data), indexPath: indexPath)
         cell.shoppingCartButton = self
         cell.backgroundColor = .white
         return cell

@@ -18,15 +18,12 @@
 		F0566F862386AE5300984D03 /* MealsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0566F852386AE5300984D03 /* MealsTableViewCell.swift */; };
 		F0566F882386B63300984D03 /* SortedByNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0566F872386B63300984D03 /* SortedByNameTableViewCell.swift */; };
 		F0566F8A2386CBAD00984D03 /* ShopingCartButtonPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0566F892386CBAD00984D03 /* ShopingCartButtonPress.swift */; };
+		F065A21F238FEAD90023D74A /* IngredientsOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F065A21E238FEAD90023D74A /* IngredientsOperator.swift */; };
+		F065A221238FFBE30023D74A /* SaveToListEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F065A220238FFBE30023D74A /* SaveToListEnum.swift */; };
 		F096040E2384284800F19789 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096040D2384284800F19789 /* GradientView.swift */; };
-		F0960416238529C300F19789 /* JSONtests.json in Resources */ = {isa = PBXBuildFile; fileRef = F0960415238529C300F19789 /* JSONtests.json */; };
 		F0960418238529FB00F19789 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = F0960417238529FB00F19789 /* data.json */; };
 		F096042423852C9600F19789 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096042123852C9600F19789 /* DataManager.swift */; };
-		F096042D23852D7C00F19789 /* RestorauntsSingleModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096042A23852D7C00F19789 /* RestorauntsSingleModelTests.swift */; };
-		F096042E23852D7C00F19789 /* RestorauntMealTypesModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096042B23852D7C00F19789 /* RestorauntMealTypesModelTests.swift */; };
-		F096042F23852D7C00F19789 /* SortedByMealNameModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096042C23852D7C00F19789 /* SortedByMealNameModelTests.swift */; };
 		F0960441238674C400F19789 /* RestorauntDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0960440238674C400F19789 /* RestorauntDataRepository.swift */; };
-		F096044B238678AD00F19789 /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F096044A238678AD00F19789 /* GeneratedMocks.swift */; };
 		F0F225E9237D2F57003C1AD2 /* SharedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F225E8237D2F57003C1AD2 /* SharedTests.swift */; };
 		F0F225EB237D2F57003C1AD2 /* Shared.h in Headers */ = {isa = PBXBuildFile; fileRef = F0F225DD237D2F57003C1AD2 /* Shared.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F0F225F6237D2F74003C1AD2 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F225F5237D2F74003C1AD2 /* Coordinator.swift */; };
@@ -66,15 +63,12 @@
 		F0566F852386AE5300984D03 /* MealsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealsTableViewCell.swift; sourceTree = "<group>"; };
 		F0566F872386B63300984D03 /* SortedByNameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortedByNameTableViewCell.swift; sourceTree = "<group>"; };
 		F0566F892386CBAD00984D03 /* ShopingCartButtonPress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopingCartButtonPress.swift; sourceTree = "<group>"; };
+		F065A21E238FEAD90023D74A /* IngredientsOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsOperator.swift; sourceTree = "<group>"; };
+		F065A220238FFBE30023D74A /* SaveToListEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveToListEnum.swift; sourceTree = "<group>"; };
 		F096040D2384284800F19789 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
-		F0960415238529C300F19789 /* JSONtests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = JSONtests.json; sourceTree = "<group>"; };
 		F0960417238529FB00F19789 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		F096042123852C9600F19789 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		F096042A23852D7C00F19789 /* RestorauntsSingleModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntsSingleModelTests.swift; sourceTree = "<group>"; };
-		F096042B23852D7C00F19789 /* RestorauntMealTypesModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntMealTypesModelTests.swift; sourceTree = "<group>"; };
-		F096042C23852D7C00F19789 /* SortedByMealNameModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortedByMealNameModelTests.swift; sourceTree = "<group>"; };
 		F0960440238674C400F19789 /* RestorauntDataRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorauntDataRepository.swift; sourceTree = "<group>"; };
-		F096044A238678AD00F19789 /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		F0F225DA237D2F57003C1AD2 /* Shared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Shared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0F225DD237D2F57003C1AD2 /* Shared.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
 		F0F225DE237D2F57003C1AD2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -236,6 +230,7 @@
 				F0F225DD237D2F57003C1AD2 /* Shared.h */,
 				F0960417238529FB00F19789 /* data.json */,
 				F0F225DE237D2F57003C1AD2 /* Info.plist */,
+				F065A21E238FEAD90023D74A /* IngredientsOperator.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -244,11 +239,6 @@
 			isa = PBXGroup;
 			children = (
 				F0F225E8237D2F57003C1AD2 /* SharedTests.swift */,
-				F096042B23852D7C00F19789 /* RestorauntMealTypesModelTests.swift */,
-				F096042A23852D7C00F19789 /* RestorauntsSingleModelTests.swift */,
-				F096044A238678AD00F19789 /* GeneratedMocks.swift */,
-				F096042C23852D7C00F19789 /* SortedByMealNameModelTests.swift */,
-				F0960415238529C300F19789 /* JSONtests.json */,
 				F0F225EA237D2F57003C1AD2 /* Info.plist */,
 			);
 			path = SharedTests;
@@ -296,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				F0F22606237D2F9D003C1AD2 /* MealTypeEnum.swift */,
+				F065A220238FFBE30023D74A /* SaveToListEnum.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -338,7 +329,6 @@
 			buildConfigurationList = F0F225F1237D2F57003C1AD2 /* Build configuration list for PBXNativeTarget "SharedTests" */;
 			buildPhases = (
 				AB868E5C67C48DFB82862B8A /* [CP] Check Pods Manifest.lock */,
-				F096041923852B4600F19789 /* ShellScript */,
 				F0F225DF237D2F57003C1AD2 /* Sources */,
 				F0F225E0237D2F57003C1AD2 /* Frameworks */,
 				F0F225E1237D2F57003C1AD2 /* Resources */,
@@ -404,7 +394,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0960416238529C300F19789 /* JSONtests.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,25 +461,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F096041923852B4600F19789 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"",
-				"${PROJECT_DIR}/Shared/Repository/RestorauntDataRepository.swift",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Define output file. Change \"${PROJECT_DIR}/${PROJECT_NAME}Tests\" to your test's root source folder, if it's not the default name.\nOUTPUT_FILE=\"${PROJECT_DIR}/${PROJECT_NAME}Tests/GeneratedMocks.swift\"\necho \"Generated Mocks File = ${OUTPUT_FILE}\"\n\n# Define input directory. Change \"${PROJECT_DIR}/${PROJECT_NAME}\" to your project's root source folder, if it's not the default name.\nINPUT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}\"\necho \"Mocks Input Directory = ${INPUT_DIR}\"\n\n# Generate mock files, include as many input files as you'd like to create mocks for.\n\"${PODS_ROOT}/Cuckoo/run\" generate --testable \"${PROJECT_NAME}\" \\\n--output \"${OUTPUT_FILE}\" \n# ... and so forth, the last line should never end with a backslash\n\n# After running once, locate `GeneratedMocks.swift` and drag it into your Xcode test target group.\n\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -501,11 +471,13 @@
 				F0566F862386AE5300984D03 /* MealsTableViewCell.swift in Sources */,
 				F0566F832386AA0000984D03 /* RealmManager.swift in Sources */,
 				F0F22604237D2F90003C1AD2 /* DataModel.swift in Sources */,
+				F065A221238FFBE30023D74A /* SaveToListEnum.swift in Sources */,
 				F096042423852C9600F19789 /* DataManager.swift in Sources */,
 				F0566F882386B63300984D03 /* SortedByNameTableViewCell.swift in Sources */,
 				F0566F8A2386CBAD00984D03 /* ShopingCartButtonPress.swift in Sources */,
 				F0F225F9237D2F7A003C1AD2 /* DataStruct.swift in Sources */,
 				F096040E2384284800F19789 /* GradientView.swift in Sources */,
+				F065A21F238FEAD90023D74A /* IngredientsOperator.swift in Sources */,
 				F0F22673237D3183003C1AD2 /* ConvertToStruct.swift in Sources */,
 				F02CDFA023840DAD007E0E07 /* ExpandButton.swift in Sources */,
 				F02CDFA223840DD7007E0E07 /* RestorauntsDelegate.swift in Sources */,
@@ -524,11 +496,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F096042F23852D7C00F19789 /* SortedByMealNameModelTests.swift in Sources */,
-				F096042D23852D7C00F19789 /* RestorauntsSingleModelTests.swift in Sources */,
-				F096042E23852D7C00F19789 /* RestorauntMealTypesModelTests.swift in Sources */,
 				F0F225E9237D2F57003C1AD2 /* SharedTests.swift in Sources */,
-				F096044B238678AD00F19789 /* GeneratedMocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
