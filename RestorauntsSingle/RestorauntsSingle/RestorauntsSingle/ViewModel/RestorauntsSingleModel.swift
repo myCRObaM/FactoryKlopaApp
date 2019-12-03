@@ -10,71 +10,52 @@ import Foundation
 import RxSwift
 import Shared
 
-public class RestorauntsSingleModel {
+class RestorauntsSingleModel {
     
     //MARK: Defining structs
-    public struct Input {
-        public var loadScreenData: ReplaySubject<Bool>
-        public var saveMeal: PublishSubject<SaveToListEnum>
-        public init(loadScreenData: ReplaySubject<Bool>, saveMeal: PublishSubject<SaveToListEnum>){
-            self.loadScreenData = loadScreenData
-            self.saveMeal = saveMeal
-        }
+    struct Input {
+        var loadScreenData: ReplaySubject<Bool>
+        var saveMeal: PublishSubject<SaveToListEnum>
     }
     
-    public struct Output {
-        public var dataReady: ReplaySubject<Bool>
-        public var disposables: [Disposable]
+    struct Output {
+        var dataReady: ReplaySubject<Bool>
+        var disposables: [Disposable]
         var screenData: RestorauntsSingleScreenStruct!
-        public var expandableHandler: PublishSubject<ExpansionEnum>
-        public var errorSubject: PublishSubject<Bool>
+        var expandableHandler: PublishSubject<ExpansionEnum>
+        var errorSubject: PublishSubject<Bool>
         var popupSubject: PublishSubject<Bool>
-        
-        public init(dataReady: ReplaySubject<Bool>, disposables: [Disposable], expandableHandler: PublishSubject<ExpansionEnum>, errorSubject: PublishSubject<Bool>, screenData: RestorauntsSingleScreenStruct?, popupSubject: PublishSubject<Bool>){
-            self.dataReady = dataReady
-            self.disposables = disposables
-            self.expandableHandler = expandableHandler
-            self.errorSubject = errorSubject
-            self.screenData = screenData
-            self.popupSubject = popupSubject
-        }
     }
     
-    public struct Dependencies {
-        public var scheduler: SchedulerType
-        public var meals: Restoraunts
-        public var realmManager: RealmManager
-        
-        public init(scheduler: SchedulerType, meals: Restoraunts, realmManager: RealmManager){
-            self.scheduler = scheduler
-            self.meals = meals
-            self.realmManager = realmManager
-        }
+    struct Dependencies {
+        var scheduler: SchedulerType
+        var meals: Restoraunts
+        var realmManager: RealmManager
     }
     
     //MARK: Variables
-    public var dependencies: Dependencies
-    public var input: Input!
-    public var output: Output!
+    var dependencies: Dependencies
+    var input: Input!
+    var output: Output!
     
     //MARK: Init
-    public init(dependencies: RestorauntsSingleModel.Dependencies) {
+    init(dependencies: RestorauntsSingleModel.Dependencies) {
         self.dependencies = dependencies
     }
     
     //MARK: Transform
-    public func transform(input: RestorauntsSingleModel.Input) -> RestorauntsSingleModel.Output {
+    func transform(input: RestorauntsSingleModel.Input) -> RestorauntsSingleModel.Output {
         self.input = input
         var disposables = [Disposable]()
         
         disposables.append(setupData(subject: input.loadScreenData))
         disposables.append(addMealToWishList(subject: input.saveMeal))
         
-        self.output = Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), disposables: disposables, expandableHandler: PublishSubject(), errorSubject: PublishSubject<Bool>(), screenData: nil, popupSubject: PublishSubject<Bool>())
+        self.output = Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), disposables: disposables, screenData: nil, expandableHandler: PublishSubject(), errorSubject: PublishSubject<Bool>(), popupSubject: PublishSubject<Bool>())
         return output
     }
     
-    public func setupData(subject: ReplaySubject<Bool>) -> Disposable {
+    func setupData(subject: ReplaySubject<Bool>) -> Disposable {
         return subject
         .observeOn(MainScheduler.instance)
         .subscribeOn(dependencies.scheduler)
@@ -100,7 +81,7 @@ public class RestorauntsSingleModel {
         return RestorauntsSingleScreenStruct(title: data.name, mob: data.mob, tel: data.tel, workingHours: data.workingHours ?? "", section: section)
     }
     
-    public func returnHeaderName(meal: MealTypes) -> String {
+    func returnHeaderName(meal: MealTypes) -> String {
         switch meal.type {
         case .desert:
             return "Desert"
@@ -133,7 +114,7 @@ public class RestorauntsSingleModel {
         }
     }
     
-    public func isPizza(category: String) -> Bool {
+    func isPizza(category: String) -> Bool {
         return category == "Pizza"
     }
     
@@ -150,7 +131,7 @@ public class RestorauntsSingleModel {
             return section.data.count
         }
     }
-    public func expandableHandler(section: Int) {
+    func expandableHandler(section: Int) {
         var indexpath = [IndexPath]()
         
         for (n, _) in output.screenData.section[section].data.enumerated(){
@@ -168,11 +149,11 @@ public class RestorauntsSingleModel {
             self.output.expandableHandler.onNext(.colapse(indexpath))
         }
     }
-    public func isCollapsed(section: Section) -> Bool {
+    func isCollapsed(section: Section) -> Bool {
         return section.isCollapsed
     }
     
-    public func detailsButtonSelected(bool: Bool) -> (Bool, Bool){
+    func detailsButtonSelected(bool: Bool) -> (Bool, Bool){
         var detailsButtonIsPressed: Bool = true
         if bool {
             detailsButtonIsPressed = true

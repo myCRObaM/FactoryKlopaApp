@@ -16,6 +16,7 @@ class SortedByMealNameModel {
     struct Input
     {
         var getData: ReplaySubject<Bool>
+        var saveMeal: PublishSubject<SaveToListEnum>
     }
     
     struct Output
@@ -24,12 +25,14 @@ class SortedByMealNameModel {
         var disposables: [Disposable]
         var errorSubject: PublishSubject<Bool>
         var screenData: Section?
+        var popupSubject: PublishSubject<Bool>
     }
     
     struct Dependencies
     {
         var meals: [MealsWithRestoraunt]
         var scheduler: SchedulerType
+        var realmManager: RealmManager
     }
     
     //MARK: Variables
@@ -48,8 +51,9 @@ class SortedByMealNameModel {
         var disposables = [Disposable]()
         
         disposables.append(getData(subject: input.getData))
+        disposables.append(addMealToWishList(subject: input.saveMeal))
         
-        output = Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), disposables: disposables, errorSubject: PublishSubject<Bool>())
+        output = Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), disposables: disposables, errorSubject: PublishSubject<Bool>(), popupSubject: PublishSubject<Bool>())
         return output
     }
     //MARK: getData
@@ -89,5 +93,39 @@ class SortedByMealNameModel {
         else {
             return false
         }
+    }
+    
+    func hasJumboPrice(price: String) -> Bool {
+        return !(price == "")
+    }
+    
+    func addMealToWishList(subject: PublishSubject<SaveToListEnum>) -> Disposable {
+     return subject
+        .flatMap({[unowned self] enumValue -> Observable<String> in
+            var bool: IndexPath!
+            var price: String = ""
+            switch enumValue {
+            case .jumbo(let index):
+                price = self.output.screenData!.data[index.row].priceJumbo ?? ""
+                bool = index
+            case .normal(let index):
+                price = self.output.screenData!.data[index.row].price ?? ""
+                bool = index
+            }
+            let data = self.output.screenData!.data[bool.row]
+            let object = MealsWithRestoraunt(name: self.output.screenData!.mealName, priceNormal: "", priceJumbo: "", price: price, ingredients: [Ingredients(name: data.ingredients)], restorauntName: data.restorauntName, mobLabel: data.mob, telLabel: data.tel)
+            
+            
+            let meals = self.dependencies.realmManager.saveMeal(meal: object)
+                   return meals
+               })
+                   .subscribeOn(dependencies.scheduler)
+                   .observeOn(MainScheduler.instance)
+                   .subscribe(onNext: { (locations) in
+                    self.output.popupSubject.onNext(true)
+            },  onError: {[unowned self] (error) in
+                    self.output.errorSubject.onNext(true)
+                    print(error)
+            })
     }
 }

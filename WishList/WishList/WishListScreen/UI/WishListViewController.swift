@@ -116,10 +116,10 @@ public class WishListViewController: UIViewController {
             .observeOn(MainScheduler.instance)
             .subscribeOn(viewModel.dependencies.scheduler)
             .subscribe(onNext: { [unowned self] bool in
-                
-                self.tableView.deleteRows(at: [bool], with: .automatic)
-                let indexForTotal = self.viewModel.output!.screenData![bool.section].data.count
-                self.tableView.reloadRows(at: [IndexPath(row: indexForTotal, section: bool.section)], with: .middle)
+                //self.tableView.deleteRows(at: [bool], with: .automatic)
+                //let indexForTotal = self.viewModel.output!.screenData![bool.section].data.count
+                //self.tableView.reloadRows(at: [IndexPath(row: indexForTotal, section: bool.section)], with: .middle)
+                self.tableView.reloadData()
             })
         
     }

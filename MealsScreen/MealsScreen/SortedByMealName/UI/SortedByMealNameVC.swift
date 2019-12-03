@@ -30,11 +30,11 @@ class SortedByNameVC: UIViewController {
     }()
     
     let basketButton: UIButton = {
-           let view = UIButton()
-           view.setImage(UIImage(named: "addBasket"), for: .normal)
-           view.translatesAutoresizingMaskIntoConstraints = false
-           return view
-       }()
+        let view = UIButton()
+        view.setImage(UIImage(named: "addBasket"), for: .normal)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     //MARK: Variables
     let viewModel: SortedByMealNameModel
@@ -97,34 +97,36 @@ class SortedByNameVC: UIViewController {
         }
         
         basketButton.snp.makeConstraints { (make) in
-              make.bottom.equalTo(backgroundView.customView.snp.top).offset(5)
-              make.trailing.equalTo(backgroundView.customView).offset(-5)
-              make.height.width.equalTo(40)
-          }
+            make.bottom.equalTo(backgroundView.customView.snp.top).offset(5)
+            make.trailing.equalTo(backgroundView.customView).offset(-5)
+            make.height.width.equalTo(40)
+        }
     }
     //MARK: Setup ViewModel
     func setupViewModel(){
-        let input = SortedByMealNameModel.Input(getData: ReplaySubject<Bool>.create(bufferSize: 1))
+        let input = SortedByMealNameModel.Input(getData: ReplaySubject<Bool>.create(bufferSize: 1), saveMeal: PublishSubject<SaveToListEnum>())
         let output = viewModel.transform(input: input)
         
         
         for disposable in output.disposables{
             disposable.disposed(by: disposeBag)
         }
+        savedAlertHandler(subject: output.popupSubject).disposed(by: disposeBag)
+        
         
         output.dataReady
             .observeOn(MainScheduler.instance)
             .subscribeOn(viewModel.dependencies.scheduler)
             .subscribe(onNext: { bool in
-               
+                
             }).disposed(by: disposeBag)
         
         output.errorSubject
-        .observeOn(MainScheduler.instance)
-        .subscribeOn(viewModel.dependencies.scheduler)
-        .subscribe(onNext: {[unowned self] bool in
-            self.showPopUp()
-        }).disposed(by: disposeBag)
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(viewModel.dependencies.scheduler)
+            .subscribe(onNext: {[unowned self] bool in
+                self.showPopUp()
+            }).disposed(by: disposeBag)
         
         viewModel.input.getData.onNext(true)
     }
@@ -133,7 +135,7 @@ class SortedByNameVC: UIViewController {
         navigationController?.popViewController(animated: false)
     }
     //MARK: Header
-
+    
     func setupHeader() -> UIView{
         let bothViews = UIView()
         let views = setupNormalHeader()
@@ -156,15 +158,15 @@ class SortedByNameVC: UIViewController {
         }
         switch viewModel.isPizza(meal: viewModel.dependencies.meals[0]) {
         case true:
-                pizzaView = setupPizzaHeader()
-                bothViews.addSubview(pizzaView)
-                pizzaView.translatesAutoresizingMaskIntoConstraints = false
-                pizzaView.backgroundColor = .white
-                pizzaView.snp.makeConstraints { (make) in
-                    make.leading.trailing.bottom.equalTo(bothViews)
-                    make.top.equalTo(views.snp.bottom)
-                    make.height.equalTo(views)
-                }
+            pizzaView = setupPizzaHeader()
+            bothViews.addSubview(pizzaView)
+            pizzaView.translatesAutoresizingMaskIntoConstraints = false
+            pizzaView.backgroundColor = .white
+            pizzaView.snp.makeConstraints { (make) in
+                make.leading.trailing.bottom.equalTo(bothViews)
+                make.top.equalTo(views.snp.bottom)
+                make.height.equalTo(views)
+            }
         default:
             views.snp.makeConstraints { (make) in
                 make.bottom.equalTo(bothViews)
@@ -248,12 +250,12 @@ class SortedByNameVC: UIViewController {
     }
     
     func showPopUp(){
-         let alert = UIAlertController(title: "Error", message: "Something went wrong.", preferredStyle: .alert)
-         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
-             alert.dismiss(animated: true, completion: nil)
-         }))
-         self.present(alert, animated: true)
-     }
+        let alert = UIAlertController(title: "Error", message: "Something went wrong.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true)
+    }
     
     deinit {
         print("Deinit: ", self)
@@ -263,10 +265,65 @@ class SortedByNameVC: UIViewController {
         basketButtonPress?.openCart()
     }
     
+    
+    func savedAlertHandler(subject: PublishSubject<Bool>) -> Disposable{
+        return subject
+            .subscribeOn(viewModel.dependencies.scheduler)
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (locations) in
+                let viewForAlert = UIView()
+                let labelText = UILabel()
+                
+                labelText.translatesAutoresizingMaskIntoConstraints = false
+                viewForAlert.translatesAutoresizingMaskIntoConstraints = false
+                labelText.text = "Dodano u WishList"
+                let customFont = UIFont(name: "Rubik-Bold", size: 14)
+                labelText.font = customFont
+                
+                viewForAlert.addSubview(labelText)
+                self.view.addSubview(viewForAlert)
+                
+                labelText.snp.makeConstraints { (make) in
+                    make.centerX.equalTo(viewForAlert)
+                    make.centerY.equalTo(viewForAlert)
+                    make.bottom.equalTo(viewForAlert).offset(-5)
+                }
+                viewForAlert.snp.makeConstraints { (make) in
+                    make.bottom.leading.trailing.equalTo(self.view)
+                    make.height.equalTo(50)
+                }
+                
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    viewForAlert.removeFromSuperview()
+                }
+            })
+        
+        
+        
+    }
+    
 }
 
 
-extension SortedByNameVC: UITableViewDelegate, UITableViewDataSource {
+extension SortedByNameVC: UITableViewDelegate, UITableViewDataSource, ShopingCartButtonPress{
+    func didPress(index: IndexPath) {
+        switch viewModel.hasJumboPrice(price: viewModel.output.screenData!.data[index.row].priceJumbo ?? "") {
+        case true:
+            let alert = UIAlertController(title: "Zelite li Jumbo ili Normalnu", message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Normalna", style: .default, handler: {[unowned self] action in
+                self.viewModel.input.saveMeal.onNext(.normal(index))
+            }))
+            alert.addAction(UIAlertAction(title: "Jumbo", style: .default, handler: {[unowned self] action in
+                self.viewModel.input.saveMeal.onNext(.jumbo(index))
+            }))
+            self.present(alert, animated: true)
+            
+        case false:
+            viewModel.input.saveMeal.onNext(.normal(index))
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.output?.screenData?.data.count ?? 0
     }
@@ -276,7 +333,8 @@ extension SortedByNameVC: UITableViewDelegate, UITableViewDataSource {
             fatalError("The dequeued cell is not an instance of RestorauntsTableViewCell.")
         }
         let data = viewModel.output?.screenData?.data[indexPath.row]
-        cell.setupCell(data: data!)
+        cell.setupCell(data: data!, index: indexPath)
+        cell.shoppingCartButton = self
         cell.separatorInset = .zero
         return cell
     }    

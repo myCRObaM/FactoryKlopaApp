@@ -79,18 +79,16 @@ public class WishListViewModel{
             .flatMap({[unowned self] (bool) -> Observable<String> in
                 let meals = self.dependencies.realmRepo.deleteMeal(name: self.output!.screenData![bool.section].data[bool.row].mealName)
                 self.output!.screenData![bool.section].data.remove(at: bool.row)
+                
                 self.output.deleteCell.onNext(bool)
-                if bool.row == 0 {
-                    self.output.dataReady.onNext(true)
-                }
                 return meals
             })
             .subscribeOn(dependencies.scheduler)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (bool) in
-                },  onError: {[unowned self] (error) in
-                    self.output.errorSubject.onNext(true)
-                    print(error)
+            },  onError: {[unowned self] (error) in
+                self.output.errorSubject.onNext(true)
+                print(error)
             })
     }
     
@@ -135,7 +133,7 @@ public class WishListViewModel{
         }
         else
         {
-           return true
+            return true
         }
         
     }
@@ -167,11 +165,11 @@ public class WishListViewModel{
                 var savedRestoraunt: Bool = false
                 for saved in restoraunts {
                     if saved.restorauntName == restoraunt.restorauntName {
-                       savedRestoraunt = true
+                        savedRestoraunt = true
                     }
                 }
                 if !savedRestoraunt {
-                     restoraunts.append(Section(restorauntName: restoraunt.restorauntName, mob: restoraunt.mobLabel ?? "", tel: restoraunt.telLabel ?? "", data: [Row]()))
+                    restoraunts.append(Section(restorauntName: restoraunt.restorauntName, mob: restoraunt.mobLabel ?? "", tel: restoraunt.telLabel ?? "", data: [Row]()))
                 }
             }
         }

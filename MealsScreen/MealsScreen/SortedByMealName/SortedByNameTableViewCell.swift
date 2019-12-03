@@ -12,6 +12,10 @@ import Shared
 
 class SortedByNameTableViewCell: UITableViewCell {
     
+    
+    public weak var shoppingCartButton: ShopingCartButtonPress?
+    var index: IndexPath!
+    
     let nameLabel: UILabel = {
         let view = UILabel()
         let customFont = UIFont(name: "Rubik-Regular", size: 14.0)
@@ -117,7 +121,8 @@ class SortedByNameTableViewCell: UITableViewCell {
         
     }
     
-    func setupCell(data: Rows) {
+    func setupCell(data: Rows, index: IndexPath) {
+        self.index = index
         nameLabel.text = data.restorauntName
         mobLabel.text = data.mob
         telLabel.text = data.tel
@@ -129,8 +134,12 @@ class SortedByNameTableViewCell: UITableViewCell {
             priceLabel.text = data.price ?? ""
         }
         
+        basketButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        
     }
-    
+    @objc func buttonPressed(){
+         shoppingCartButton?.didPress(index: index)
+     }
    
     
 }

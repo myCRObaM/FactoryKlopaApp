@@ -22,7 +22,7 @@ class SortedByMealNameCoordinator: Coordinator{
     init(presenter: UINavigationController, meals: [MealsWithRestoraunt]) {
         self.presenter = presenter
         self.meals = meals
-        let viewModel = SortedByMealNameModel(dependencies: SortedByMealNameModel.Dependencies(meals: meals, scheduler: ConcurrentDispatchQueueScheduler(qos: .background)))
+        let viewModel = SortedByMealNameModel(dependencies: SortedByMealNameModel.Dependencies(meals: meals, scheduler: ConcurrentDispatchQueueScheduler(qos: .background), realmManager: RealmManager()))
         self.viewController = SortedByNameVC(viewModel: viewModel)
         viewController.childHasFinished = self
         viewController.basketButtonPress = self
