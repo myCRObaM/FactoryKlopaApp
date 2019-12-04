@@ -181,9 +181,10 @@ class WishListViewController: UIViewController {
         let mobLabel = UILabel()
         let telLabel = UILabel()
         
-        var data = (rName: "", mText: "", tText: "", price: "")
         let priceLabel = UILabel()
-        data = viewModel.dataForHeader(data: viewModel.output!.screenData![section])
+        
+        guard let sectionData = viewModel.output?.screenData?[section] else {return UIView()}
+        let data = viewModel.dataForHeader(data: sectionData)
         
         header.backgroundColor = UIColor.init(named: "headerBackground")
         
