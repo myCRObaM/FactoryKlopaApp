@@ -194,7 +194,7 @@ class RestorauntsSingleModel {
             })
     }
     //MARK: Cell data
-    func setupCellData(data: Meals) -> (String, String, String) {
+    func setupCellData(data: Meals) -> (mealName: String, price: String, ingredients: String) {
         var ingredients: String = ""
         let mealName: String = data.name.uppercased()
         var price: String = data.price ?? ""

@@ -55,7 +55,7 @@ class RestorauntsTableViewCell: UITableViewCell {
     
     func setupConstraints(){
         nameLabel.snp.makeConstraints { (make) in
-            make.centerY.equalTo(contentView)
+            make.top.bottom.equalTo(contentView).inset(20)
             make.leading.equalTo(contentView).offset(8)
         }
         mobLabel.snp.makeConstraints { (make) in

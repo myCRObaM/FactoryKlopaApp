@@ -104,7 +104,7 @@ public class SortedByNameTableViewCell: UITableViewCell {
             make.trailing.equalTo(contentView.snp.centerX).offset(UIScreen.main.bounds.width/4)
         }
         priceLabel.snp.makeConstraints { (make) in
-            make.trailing.equalTo(contentView).inset(UIScreen.main.bounds.width/8.3)
+            make.trailing.equalTo(contentView).inset(UIScreen.main.bounds.width/9.5)
             make.centerY.equalTo(contentView)
         }
         

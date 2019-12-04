@@ -72,9 +72,9 @@ public class MealsTableViewCell: UITableViewCell {
     
     func setupConstraints(){
         pricesLabel.snp.makeConstraints { (make) in
-            make.trailing.equalTo(contentView).inset(UIScreen.main.bounds.width/8.3)
-            make.width.equalTo(44)
-            make.centerY.equalTo(basketButton)
+            make.trailing.equalTo(contentView).inset(UIScreen.main.bounds.width/9.5).priority(.required)
+            make.width.equalTo(44).priority(.required)
+            make.centerY.equalTo(basketButton).priority(.required)
         }
         
         mealName.snp.makeConstraints { (make) in

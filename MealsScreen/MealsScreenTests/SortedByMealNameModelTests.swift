@@ -63,6 +63,12 @@ class SortedByMealNameModelTests: QuickSpec {
                     expect(data.mealName).toEventually(equal("Margarita"))
                     expect(data.data[1].priceJumbo).toEventually(equal("50"))
                 }
+                it("check jumbo price function"){
+                    testScheduler.start()
+                    
+                    expect(sortedByViewModel.hasJumboPrice(price: "")).toEventually(equal(false))
+                    expect(sortedByViewModel.hasJumboPrice(price: "23")).toEventually(equal(true))
+                }
        
             }
         }

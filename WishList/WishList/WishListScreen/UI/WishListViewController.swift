@@ -236,7 +236,10 @@ class WishListViewController: UIViewController {
 //MARK: TableView Extensions
 extension WishListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.returnNumberOfCells(section: section)
+        guard let data = viewModel.output?.screenData?[section] else {
+            return 0
+        }
+        return viewModel.returnNumberOfCells(section: data)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

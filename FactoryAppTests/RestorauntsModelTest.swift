@@ -54,6 +54,7 @@ class RestorauntsModelTests: QuickSpec {
                     
                     restorauntsViewModel.input.getDataSubject.onNext(true)
                     expect(restorauntsViewModel.restoraunts.count).toEventually(equal(restorauntsData.count))
+                    expect(restorauntsViewModel.restoraunts[0].name).toEventually(equal(restorauntsData[0].name))
                 }
                 it("check if data is correctly sorted into categories"){
                     testScheduler.start()
@@ -78,6 +79,18 @@ class RestorauntsModelTests: QuickSpec {
                     expect(sorted[5].meals.count).toEventually(equal(22))
                     expect(sorted[6].meals.count).toEventually(equal(10))
                     expect(sorted[7].meals.count).toEventually(equal(19))
+                }
+                it("check if function is returning good cell data"){
+                    testScheduler.start()
+                    
+                    let data = restorauntsViewModel.arrayOfCategorySortedMeals(restorants: restorauntsData)
+                    
+                    expect(restorauntsViewModel.returnCellData(type: data[0]).0).toEventually(equal("Deserti"))
+                    expect(restorauntsViewModel.returnCellData(type: data[1]).0).toEventually(equal("Pizze"))
+                    expect(restorauntsViewModel.returnCellData(type: data[2]).0).toEventually(equal("Salate"))
+                    expect(restorauntsViewModel.returnCellData(type: data[3]).0).toEventually(equal("Tjestenina"))
+                    expect(restorauntsViewModel.returnCellData(type: data[4]).0).toEventually(equal("Hamburgeri"))
+                    expect(restorauntsViewModel.returnCellData(type: data[5]).0).toEventually(equal("GrillMeals"))
                 }
             }
         }

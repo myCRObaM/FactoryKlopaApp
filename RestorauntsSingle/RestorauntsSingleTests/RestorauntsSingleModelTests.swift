@@ -65,6 +65,21 @@ class RestorauntsSingleModelTests: QuickSpec {
                     
                     expect(dataReadySubject.events[0].value.element).toEventually(equal(true))
                 }
+                it("check if setupScreenData function is working correctly"){
+                    testScheduler.start()
+                    
+                    expect(mealsViewModel.setupScreenData(data: restorauntsData[0]).section.count).toEventually(equal(2))
+                    expect(mealsViewModel.setupScreenData(data: restorauntsData[0]).workingHours).toEventually(equal("Ponedjeljak - Subota od 8:00 - 22.30"))
+                    expect(mealsViewModel.setupScreenData(data: restorauntsData[0]).title).toEventually(equal("Dadorely"))
+                    expect(mealsViewModel.setupScreenData(data: restorauntsData[0]).mob).toEventually(equal("097 673 2130"))
+                }
+                it("check has jumbo price function"){
+                    testScheduler.start()
+                    
+                    expect(mealsViewModel.hasJumboPrice(price: "2")).toEventually(equal(true))
+                    expect(mealsViewModel.hasJumboPrice(price: "")).toEventually(equal(false))
+                }
+                
                 it("check if function is returning good values for header"){
                     testScheduler.start()
                     
@@ -87,6 +102,14 @@ class RestorauntsSingleModelTests: QuickSpec {
                     expect(mealsViewModel.isCollapsed(section: screenData.section[1])).toEventually(equal(true))
                     expect(mealsViewModel.isCollapsed(section: screenData.section[2])).toEventually(equal(true))
                     expect(mealsViewModel.isCollapsed(section: screenData.section[3])).toEventually(equal(true))
+                }
+                it("check setupCellData function"){
+                    testScheduler.start()
+                    
+                    let data = screenData.section[0].data
+                    expect(mealsViewModel.setupCellData(data: data[0]).0).toEventually(equal("COKOLADA 4 KOMADA"))
+                    expect(mealsViewModel.setupCellData(data: data[0]).1).toEventually(equal("20"))
+                    expect(mealsViewModel.setupCellData(data: data[0]).2).toEventually(equal(""))
                 }
             }
         }

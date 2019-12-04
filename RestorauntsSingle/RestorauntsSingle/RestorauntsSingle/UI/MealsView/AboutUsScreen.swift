@@ -43,11 +43,7 @@ class AboutUsScreen: UIView {
     
     func setupConstraints(){
         mapView.snp.makeConstraints { (make) in
-            
-            make.height.equalTo(UIScreen.main.bounds.width*(2/3))
-            make.leading.equalTo(self)
-            make.trailing.equalTo(self)
-            make.top.equalTo(self).offset(UIScreen.main.bounds.width/3)
+            make.edges.equalTo(self).inset(5)
             
         }
     }

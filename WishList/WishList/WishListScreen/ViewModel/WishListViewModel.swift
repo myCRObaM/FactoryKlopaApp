@@ -128,13 +128,15 @@ public class WishListViewModel{
         }
     }
     //MARK: Data for cell
-    func returnDataForCell(data: Row) -> (String, String, String){
+    func returnDataForCell(data: Row) -> (mealName: String, ingredients: String, price: String){
         var ingredients = data.ingredients ?? ""
         if ingredients == "()" {
             ingredients = ""
         }
         return (data.mealName, ingredients, data.price ?? "")
     }
+    
+    
     //MARK: AllowsPress
     func canPress(index: IndexPath) -> Bool {
         if index.row == output!.screenData![index.section].data.count {
@@ -154,13 +156,15 @@ public class WishListViewModel{
         }
         return total
     }
+    
+    
     //MARK: Number of cells
-    func returnNumberOfCells(section: Int) -> Int {
-        if (output?.screenData?[section].data.count) ?? 0 == 0 {
+    func returnNumberOfCells(section: Section) -> Int {
+        if section.data.count == 0 {
             return 0
         }
         else {
-            return output!.screenData![section].data.count + 1
+            return section.data.count + 1
         }
     }
     //MARK: Setup Screen data
