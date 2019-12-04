@@ -91,6 +91,12 @@ class RestorauntsModelTests: QuickSpec {
                     expect(restorauntsViewModel.returnCellData(type: data[3]).0).toEventually(equal("Tjestenina"))
                     expect(restorauntsViewModel.returnCellData(type: data[4]).0).toEventually(equal("Hamburgeri"))
                     expect(restorauntsViewModel.returnCellData(type: data[5]).0).toEventually(equal("GrillMeals"))
+                    expect(restorauntsViewModel.returnCellData(type: data[6]).0).toEventually(equal("Ostalo"))
+                    expect(restorauntsViewModel.returnCellData(type: data[7]).0).toEventually(equal("Prilozi"))
+                    expect(restorauntsViewModel.returnCellData(type: data[8]).0).toEventually(equal("Sendvici"))
+                    expect(restorauntsViewModel.returnCellData(type: data[9]).0).toEventually(equal("Kebab"))
+                    expect(restorauntsViewModel.returnCellData(type: data[10]).0).toEventually(equal("Riblja jela"))
+                    expect(restorauntsViewModel.returnCellData(type: data[11]).0).toEventually(equal("Dodatci"))
                 }
             }
         }
