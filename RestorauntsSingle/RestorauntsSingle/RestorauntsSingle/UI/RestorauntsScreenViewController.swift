@@ -290,6 +290,7 @@ class RestorauntsScreenViewController: UIViewController {
     }
     //MARK: Button action
     @objc func backButtonPressed(){
+        childHasFinished?.viewControllerHasFinished()
         navigationController?.popViewController(animated: false)
     }
     
@@ -335,10 +336,6 @@ class RestorauntsScreenViewController: UIViewController {
             alert.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        childHasFinished?.viewControllerHasFinished()
     }
     
     deinit {

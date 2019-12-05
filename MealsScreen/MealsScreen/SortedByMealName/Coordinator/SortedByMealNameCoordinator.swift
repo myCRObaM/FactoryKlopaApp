@@ -15,7 +15,7 @@ import WishList
 class SortedByMealNameCoordinator: Coordinator{
     var childCoordinators: [Coordinator] = []
     let presenter: UINavigationController
-    let viewController: SortedByNameVC
+    let viewController: SortedByNameViewController
     let meals: [MealsWithRestoraunt]
     public weak var parentCoordinator: ParentCoordinatorDelegate?
     
@@ -23,7 +23,7 @@ class SortedByMealNameCoordinator: Coordinator{
         self.presenter = presenter
         self.meals = meals
         let viewModel = SortedByMealNameModel(dependencies: SortedByMealNameModel.Dependencies(meals: meals, scheduler: ConcurrentDispatchQueueScheduler(qos: .background), realmManager: RealmManager()))
-        self.viewController = SortedByNameVC(viewModel: viewModel)
+        self.viewController = SortedByNameViewController(viewModel: viewModel)
         viewController.childHasFinished = self
         viewController.basketButtonPress = self
     }

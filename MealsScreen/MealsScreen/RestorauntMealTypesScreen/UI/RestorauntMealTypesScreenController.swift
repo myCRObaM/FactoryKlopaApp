@@ -137,6 +137,7 @@ class RestorauntMealTypesScreenController: UIViewController {
     }
     //MARK: Button action
     @objc func backButtonPressed(){
+        childHasFinished?.viewControllerHasFinished()
         navigationController?.popViewController(animated: false)
     }
     

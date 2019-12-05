@@ -12,7 +12,7 @@ import Shared
 import RxSwift
 import SnapKit
 
-class SortedByNameVC: UIViewController {
+class SortedByNameViewController: UIViewController {
     //MARK: ViewElements
     let tableView: UITableView = {
         let view = UITableView()
@@ -78,7 +78,7 @@ class SortedByNameVC: UIViewController {
         backgroundView.backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
         basketButton.addTarget(self, action: #selector(openWishlistScreen), for: .touchUpInside)
     }
-    
+
     func setupConstrints(){
         
         tableView.snp.makeConstraints { (make) in
@@ -132,6 +132,7 @@ class SortedByNameVC: UIViewController {
     }
     //MARK: Button action
     @objc func backButtonPressed(){
+        childHasFinished?.viewControllerHasFinished()
         navigationController?.popViewController(animated: false)
     }
     
@@ -248,7 +249,6 @@ class SortedByNameVC: UIViewController {
     }
     
     
-    
     deinit {
         print("Deinit: ", self)
     }
@@ -295,7 +295,7 @@ class SortedByNameVC: UIViewController {
 }
 
 
-extension SortedByNameVC: UITableViewDelegate, UITableViewDataSource, ShopingCartButtonPress{
+extension SortedByNameViewController: UITableViewDelegate, UITableViewDataSource, ShopingCartButtonPress{
     func didPress(index: IndexPath) {
         switch viewModel.hasJumboPrice(price: viewModel.output.screenData!.data[index.row].priceJumbo ?? "") {
         case true:
