@@ -39,12 +39,13 @@ class RestorauntsSingleModelTests: QuickSpec {
                 var dataReadySubject: TestableObserver<Bool>!
                 var expandableHandler: TestableObserver<ExpansionEnum>!
                 var saveMealSubject: TestableObserver<SaveToListEnum>!
+                var expandButton: TestableObserver<Bool>!
                 beforeEach {
                     testScheduler = TestScheduler(initialClock: 0)
                     
                     mealsViewModel = RestorauntsSingleModel(dependencies: RestorauntsSingleModel.Dependencies(scheduler: testScheduler, meals: restorauntsData[0], realmManager: RealmManager()))
                     
-                    let output = mealsViewModel.transform(input: RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1), saveMeal: PublishSubject<SaveToListEnum>(), screenSelectionButtonSubject: PublishSubject<Bool>()))
+                    let output = mealsViewModel.transform(input: RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1), saveMeal: PublishSubject<SaveToListEnum>(), screenSelectionButtonSubject: PublishSubject<Bool>(), expandButtonStateSubject: ReplaySubject<Section>.create(bufferSize: 1)))
                     
                     for disposable in output.disposables{
                         disposable.disposed(by: disposeBag)
@@ -58,6 +59,8 @@ class RestorauntsSingleModelTests: QuickSpec {
                                     mealsViewModel.output.expandableHandler.subscribe(expandableHandler).disposed(by: disposeBag)
                     saveMealSubject = testScheduler.createObserver(SaveToListEnum.self)
                                     mealsViewModel.input.saveMeal.subscribe(saveMealSubject).disposed(by: disposeBag)
+                    expandButton = testScheduler.createObserver(Bool.self)
+                                    mealsViewModel.output.expandButtonStateSubject.subscribe(expandButton).disposed(by: disposeBag)
                 }
                 it("check if data is loaded correctly"){
                     testScheduler.start()
@@ -83,25 +86,33 @@ class RestorauntsSingleModelTests: QuickSpec {
                 it("check if function is returning good values for header"){
                     testScheduler.start()
                     
-                    expect(mealsViewModel.returnHeaderName(meal: restorauntsData[1].meals[0])).toEventually(equal("Desert"))
-                    expect(mealsViewModel.returnHeaderName(meal: restorauntsData[1].meals[1])).toEventually(equal("Pizza"))
-                    expect(mealsViewModel.returnHeaderName(meal: restorauntsData[1].meals[2])).toEventually(equal("Salata"))
+                    expect(mealsViewModel.returnHeaderName(meal: restorauntsData[1].meals[0].type)).toEventually(equal("Desert"))
+                    expect(mealsViewModel.returnHeaderName(meal: restorauntsData[1].meals[1].type)).toEventually(equal("Pizza"))
+                    expect(mealsViewModel.returnHeaderName(meal: restorauntsData[1].meals[2].type)).toEventually(equal("Salata"))
                 }
                 it("check is pizza function"){
                     testScheduler.start()
                     
-                    expect(mealsViewModel.isPizza(category: "ne")).toEventually(equal(false))
-                    expect(mealsViewModel.isPizza(category: "Pizza")).toEventually(equal(true))
+                    screenData.section[1].isCollapsed = false
+                    expect(mealsViewModel.isPizza(category: screenData.section[0])).toEventually(equal(false))
+                    expect(mealsViewModel.isPizza(category: screenData.section[1])).toEventually(equal(true))
                 }
                 it("check if collapsed checker is good"){
                     testScheduler.start()
                     
                     mealsViewModel.dependencies.meals.meals[0].isCollapsed = false
                     
-                    expect(mealsViewModel.isCollapsed(section: screenData.section[0])).toEventually(equal(false))
-                    expect(mealsViewModel.isCollapsed(section: screenData.section[1])).toEventually(equal(true))
-                    expect(mealsViewModel.isCollapsed(section: screenData.section[2])).toEventually(equal(true))
-                    expect(mealsViewModel.isCollapsed(section: screenData.section[3])).toEventually(equal(true))
+                    mealsViewModel.input.expandButtonStateSubject.onNext(screenData.section[0])
+                    expect(expandButton.events[0].value.element).toEventually(equal(false))
+                    
+                    mealsViewModel.input.expandButtonStateSubject.onNext(screenData.section[1])
+                    expect(expandButton.events[1].value.element).toEventually(equal(true))
+                    
+                    mealsViewModel.input.expandButtonStateSubject.onNext(screenData.section[2])
+                    expect(expandButton.events[2].value.element).toEventually(equal(true))
+                    
+                    mealsViewModel.input.expandButtonStateSubject.onNext(screenData.section[3])
+                    expect(expandButton.events[3].value.element).toEventually(equal(true))
                 }
                 it("check setupCellData function"){
                     testScheduler.start()
