@@ -72,7 +72,7 @@ class RestorauntsScreenViewController: UIViewController {
     }
     //MARK: ViewModel Setup
     func prepareViewModel(){
-        let input = RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1), saveMeal: PublishSubject<SaveToListEnum>(), screenSelectionButtonSubject: PublishSubject<Bool>())
+        let input = RestorauntsSingleModel.Input(loadScreenData: ReplaySubject<Bool>.create(bufferSize: 1), saveMeal: PublishSubject<SaveToListEnum>(), screenSelectionButtonSubject: PublishSubject<Bool>(), expandButtonStateSubject: ReplaySubject<Section>.create(bufferSize: 1))
         
         let output = viewModel.transform(input: input)
         
@@ -167,23 +167,17 @@ class RestorauntsScreenViewController: UIViewController {
         views.snp.makeConstraints { (make) in
             make.top.leading.trailing.equalTo(bothViews)
         }
-        switch viewModel.isPizza(category: category) {
+        
+        switch viewModel.isPizza(category: viewModel.output.screenData.section[section]) {
         case true:
-            switch !viewModel.isCollapsed(section: viewModel.output.screenData.section[section]) {
-            case true:
-                pizzaView = setupPizzaHeader()
-                bothViews.addSubview(pizzaView)
-                pizzaView.translatesAutoresizingMaskIntoConstraints = false
-                pizzaView.backgroundColor = .white
-                pizzaView.snp.makeConstraints { (make) in
-                    make.leading.trailing.bottom.equalTo(bothViews)
-                    make.top.equalTo(views.snp.bottom)
-                    make.height.equalTo(views)
-                }
-            case false:
-                views.snp.makeConstraints { (make) in
-                    make.bottom.equalTo(bothViews)
-                }
+            pizzaView = setupPizzaHeader()
+            bothViews.addSubview(pizzaView)
+            pizzaView.translatesAutoresizingMaskIntoConstraints = false
+            pizzaView.backgroundColor = .white
+            pizzaView.snp.makeConstraints { (make) in
+                make.leading.trailing.bottom.equalTo(bothViews)
+                make.top.equalTo(views.snp.bottom)
+                make.height.equalTo(views)
             }
         default:
             views.snp.makeConstraints { (make) in
@@ -206,7 +200,14 @@ class RestorauntsScreenViewController: UIViewController {
         
         expandButton.addTarget(self, action: #selector(expandableButtonPressed), for: .touchUpInside)
         expandButton.tag = section
-        expandButton.isSelected = !viewModel.isCollapsed(section: viewModel.output.screenData.section[section])
+        viewModel.input.expandButtonStateSubject.onNext(viewModel.output.screenData.section[section])
+        
+        viewModel.output.expandButtonStateSubject
+        .observeOn(MainScheduler.instance)
+        .subscribeOn(viewModel.dependencies.scheduler)
+        .subscribe(onNext: { bool in
+            expandButton.isSelected = !bool
+        }).disposed(by: disposeBag)
         
         let customFont = UIFont(name: "Rubik-Black", size: 14)
         
@@ -319,12 +320,12 @@ class RestorauntsScreenViewController: UIViewController {
     //MARK Button setup
     func setupButtons(subject: PublishSubject<Bool>) -> Disposable{
         return subject
-        .observeOn(MainScheduler.instance)
-        .subscribeOn(viewModel.dependencies.scheduler)
-        .subscribe(onNext: {[unowned self] bool in
-            self.customView.detailsButton.isSelected = bool
-            self.customView.priceButton.isSelected = !bool
-        })
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(viewModel.dependencies.scheduler)
+            .subscribe(onNext: {[unowned self] bool in
+                self.customView.detailsButton.isSelected = bool
+                self.customView.priceButton.isSelected = !bool
+            })
         
     }
     //MARK: popUp function
@@ -403,7 +404,7 @@ extension RestorauntsScreenViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return setupHeader(category: viewModel.returnHeaderName(meal: viewModel.dependencies.meals.meals[section]), section)
+        return setupHeader(category: viewModel.returnHeaderName(meal: viewModel.dependencies.meals.meals[section].type), section)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

@@ -17,6 +17,7 @@ class RestorauntsSingleModel {
         var loadScreenData: ReplaySubject<Bool>
         var saveMeal: PublishSubject<SaveToListEnum>
         var screenSelectionButtonSubject: PublishSubject<Bool>
+        var expandButtonStateSubject: ReplaySubject<Section>
     }
     
     struct Output {
@@ -27,6 +28,7 @@ class RestorauntsSingleModel {
         var errorSubject: PublishSubject<Bool>
         var popupSubject: PublishSubject<Bool>
         var buttonStateSubject: PublishSubject<Bool>
+        var expandButtonStateSubject: ReplaySubject<Bool>
     }
     
     struct Dependencies {
@@ -53,8 +55,9 @@ class RestorauntsSingleModel {
         disposables.append(setupData(subject: input.loadScreenData))
         disposables.append(addMealToWishList(subject: input.saveMeal))
         disposables.append(setupButtonState(subject: input.screenSelectionButtonSubject))
+        disposables.append(isCollapsed(subject: input.expandButtonStateSubject))
         
-        self.output = Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), disposables: disposables, screenData: nil, expandableHandler: PublishSubject(), errorSubject: PublishSubject<Bool>(), popupSubject: PublishSubject<Bool>(), buttonStateSubject: PublishSubject<Bool>())
+        self.output = Output(dataReady: ReplaySubject<Bool>.create(bufferSize: 1), disposables: disposables, screenData: nil, expandableHandler: PublishSubject(), errorSubject: PublishSubject<Bool>(), popupSubject: PublishSubject<Bool>(), buttonStateSubject: PublishSubject<Bool>(), expandButtonStateSubject: ReplaySubject<Bool>.create(bufferSize: 1))
         return output
     }
     //MARK: Setup data
@@ -94,8 +97,8 @@ class RestorauntsSingleModel {
         return RestorauntsSingleScreenStruct(title: data.name, mob: data.mob, tel: data.tel, workingHours: data.workingHours ?? "", section: section)
     }
     //MARK: Header Name
-    func returnHeaderName(meal: MealTypes) -> String {
-        switch meal.type {
+    func returnHeaderName(meal: MealTypeEnum) -> String {
+        switch meal {
         case .desert:
             return "Desert"
         case .additions:
@@ -127,8 +130,9 @@ class RestorauntsSingleModel {
         }
     }
     //MARK: Pizza check functions
-    func isPizza(category: String) -> Bool {
-        return category == "Pizza"
+    func isPizza(category: Section) -> Bool {
+        let type = returnHeaderName(meal: category.type)
+        return (type == "Pizza" && !category.isCollapsed)
     }
     
     func hasJumboPrice(price: String) -> Bool {
@@ -162,8 +166,13 @@ class RestorauntsSingleModel {
             self.output.expandableHandler.onNext(.colapse(indexpath))
         }
     }
-    func isCollapsed(section: Section) -> Bool {
-        return section.isCollapsed
+    func isCollapsed(subject: ReplaySubject<Section>) -> Disposable {
+        return subject
+        .subscribeOn(dependencies.scheduler)
+        .observeOn(MainScheduler.instance)
+        .subscribe(onNext: { [unowned self](section) in
+            self.output.expandButtonStateSubject.onNext(section.isCollapsed)
+        })
     }
     
     //MARK: Add meal to wish list
@@ -186,7 +195,7 @@ class RestorauntsSingleModel {
             })
             .subscribeOn(dependencies.scheduler)
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { (locations) in
+            .subscribe(onNext: { [unowned self](locations) in
                 self.output.popupSubject.onNext(true)
             },  onError: {[unowned self] (error) in
                 self.output.errorSubject.onNext(true)
